@@ -1,0 +1,82 @@
+<div class="animated fadeIn">
+  
+  
+   
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-responsive table-hover table-outline mb-0">
+            <thead class="thead-default">
+              <tr>
+                <th class="text-center"><i class="icon-people"></i></th>
+                <th>User</th> 
+                <th>Attendance</th> 
+                <th>Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of employeeAttendanceArrProcessed let i = index">
+                <td class="text-center">
+                  <div class="avatar">
+                    <img src="assets/img/avatars/1.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" src="assets/img/avatars/1.jpg">
+                    <span class="avatar-status badge-success"></span>
+                  </div>
+                </td>
+                <td>
+                  <div>{{item.name}}</div>
+                  <div class="small text-muted">
+                    <span>New</span> | Registered: Jan 1, 2018
+                  </div>
+                </td>
+                
+                <td>
+                  <div class="clearfix">
+                    <div class="float-left" >
+                      <strong>1/2Present</strong>
+                    </div>
+                     <br>
+                     <div class="float-left" >
+                      <strong>Absent</strong>
+                    </div>
+                    <br>
+                     <div class="float-left" >
+                      <strong>On WeeklyOff</strong>
+                    </div>
+                    <br>
+                     <div class="float-left" >
+                      <strong>Present</strong>
+                    </div>
+                    <br>
+                     <div class="float-left" >
+                      <strong>on leave(CL)</strong>
+                    </div>
+                    <br>
+                     <div class="float-left" >
+                      <strong>on leave(SL)</strong>
+                    </div>
+
+                    
+                    
+                  </div>
+                  
+                </td>
+                
+                <td> 
+                  <strong>-: {{item["1/2Present"]}}</strong>
+                  <br>
+                  <strong>-: {{item["Absent"]}}</strong>
+                  <br>
+                  <strong>-: {{item["On WeeklyOff"]}}</strong>
+                  <br>
+                  <strong>-: {{item["Present"]}}</strong>
+                  <br>
+                  <strong>-: {{item["on leave(CL)"]}}</strong>
+                  <br>
+                  <strong>-: {{item["on leave(SL)"]}}</strong>
+                  <br>
+                </td>
+              </tr> 
+            </tbody>
+          </table>
+    </div><!--/.col-->
+  </div><!--/.row-->
+</div>

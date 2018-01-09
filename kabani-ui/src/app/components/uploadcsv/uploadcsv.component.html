@@ -1,0 +1,68 @@
+<div class="animated fadeIn">
+
+  <div class="row">
+
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Horizontal</strong> Form
+        </div>
+        <div class="card-body">
+          <input type="file" (change)="fileChange($event)" placeholder="Upload file" >
+
+          <table class="table table-bordered table-striped table-sm">
+            <tr>  
+              <th>Date</th>
+              <th>Employee_Code</th>
+              <th>Employee_Name</th>
+              <th>Company</th>
+              <!-- <th>Department</th>
+              <th>Category</th>
+              <th>Designation</th>
+              <th>Grade</th>
+              <th>Team</th>
+              <th>Shift</th> -->
+              <th>In Time</th>
+              <th>Out Time</th>
+              <th>Duration</th>
+              <th>Early By</th>
+              <th>Late By</th>
+              <th>Status</th>
+              <th>Punch Records</th>
+              <!-- <th>Overtime</th> -->
+              <th>branch</th> 
+            </tr>
+            <tr *ngFor="let item of testarr"> 
+              <td>{{item.date}}</td>
+              <td>{{item.employeeCode}}</td>
+              <td>{{item.employeeName}}</td>
+              <td>{{item.company}}</td><!-- 
+              <td>{{item.Department}}</td>
+              <td>{{item.Category}}</td>
+              <td>{{item.Designation}}</td>
+              <td>{{item.Grade}}</td>
+              <td>{{item.Team}}</td>
+              <td>{{item.Shift}}</td> -->
+              <td>{{item.inTime}}</td>
+              <td>{{item.outTime}}</td>
+              <td>{{item.duration}}</td>
+              <td>{{item.earlyBy}}</td>
+              <td>{{item.lateBy}}</td>
+              <td>{{item.status}}</td>
+              <td>{{item.punchRecords}}</td>
+              <!-- <td>{{item.Overtime}}</td> -->
+              <td>{{item.branch}}</td> 
+            </tr> 
+          </table>
+
+        </div>
+        <div class="card-footer">
+          <button  (click)="fileChange($event)"  type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button> 
+        </div>
+      </div>
+      
+      
+
+    </div><!--/.col-->
+  </div>  
+</div>

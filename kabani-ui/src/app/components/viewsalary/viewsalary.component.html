@@ -1,0 +1,63 @@
+<div class="animated fadeIn">
+
+  <div class="row">
+
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Horizontal</strong> Form
+        </div>
+        <div class="card-body">
+          
+           <select [(ngModel)]="year" ><!-- (change)="objChanged()" -->
+              <option *ngFor = "let year of yearSelectArr" [value]="year" >{{year}}
+              </option>
+            </select>
+
+            <select [(ngModel)]="month" (change)="objChanged()">
+              <option *ngFor = "let month of monthSelectArr" [value]="month" >{{month}}
+              </option>
+            </select>
+
+            <button (click)="objChanged()">Submit</button>
+
+
+          <table class="table table-bordered table-striped table-sm">
+            
+            <tr> 
+              <th>No</th>
+              <th>name</th> 
+              <th>fullPresentDays</th> 
+              <th>halfPresentDays</th> 
+               <th>totalPresentDays</th> 
+               <th>salaryCalculation</th> 
+                 
+              <th>salary</th>  
+            </tr>
+            
+            <tr *ngFor="let item of employeeSalArr | filter : searchText; let i = index">
+              <td>{{i+1}}</td>
+              <td>{{item.name}}</td> 
+              <td>{{item.fullPresentDays}}</td> 
+               <td>{{item.halfPresentDays}}</td> 
+               <td>{{item.totalPresentDays}}</td> 
+               <td>{{item.salaryCalculation}}</td>  
+              <td>{{item.salary}}</td>  
+               
+            
+            </tr> 
+          </table>
+
+        </div>
+        <div class="card-footer">
+          
+        </div>
+      </div>
+      
+      
+
+    </div><!--/.col-->
+  </div>  
+</div>
+   
+

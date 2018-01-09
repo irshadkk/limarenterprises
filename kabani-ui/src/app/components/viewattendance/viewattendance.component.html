@@ -1,0 +1,155 @@
+<div class="animated fadeIn">
+
+  <div class="row">
+
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Horizontal</strong> Form
+        </div>
+        <div class="card-body">
+          
+
+          <table class="table table-bordered table-striped table-sm">
+            <tr> 
+            <td>&nbsp;</td>
+              <td><input type="date" [(ngModel)]="searchText" placeholder="search text goes here"/></td> 
+              <td><input [(ngModel)]="searchText" placeholder="search text goes here"/></td> 
+              <td>&nbsp;</td> 
+              <td>&nbsp;</td> 
+              <select [(ngModel)]="status" >
+              <option *ngFor = "let status of statusArr" [value]="status" >{{status}}
+              </option>
+            </select>
+              <td>&nbsp;</td> 
+              
+              <td>&nbsp;</td>
+              </tr>  
+            <tr> 
+              <th>No</th>
+              <th>Date</th> 
+              <th>Employee_Name</th> 
+              <th>In-Out Time</th> 
+              <th>Duration</th> 
+              <th>Status</th> 
+              <th>Comment</th>
+              <th>Branch</th> 
+              <th>Action</th> 
+            </tr>
+            
+            <tr *ngFor="let item of employeeAttendanceArr | filter : searchText; let i = index">
+              <td>{{i+1}}</td>
+              <td>{{item.date}}</td> 
+              <td>{{item.employeeName}}</td> 
+              <td>{{item.inTime}}---{{item.outTime}}</td> 
+              <td>{{item.duration}}</td> 
+              <td>{{item.status}}</td> 
+              <td>{{item.comment}}</td> 
+              <td>{{item.branch}}</td> 
+              <td><button type="button" class="btn btn-info" data-toggle="modal" (click)="onEditClick(infoModal,item)">
+            Edit
+          </button></td> 
+            </tr> 
+          </table>
+
+        </div>
+        <div class="card-footer">
+          
+        </div>
+      </div>
+      
+      
+
+    </div><!--/.col-->
+  </div>  
+</div>
+  
+ 
+ 
+
+<div bsModal #infoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Modal title</h4>
+        <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p> 
+         <table class="table table-bordered table-striped table-sm">
+            <tr> 
+              <th>Item</th>
+              <th>Value</th>
+            </tr>
+            <tr>
+              <td>Date</td>
+              <td>{{currentItem.date}}</td>
+            </tr>
+            <tr>
+            <td>Employee Code</td> 
+             <td>{{currentItem.employeeCode}}</td>
+           </tr>
+            <tr>
+            <td>Employee Name</td> 
+             <td>{{currentItem.employeeName}}</td>
+           </tr>
+
+            <tr>
+            <td>Company</td> 
+             <td>{{currentItem.company}}</td>
+           </tr>
+            <tr>
+            <td>Department</td> 
+             <td>{{currentItem.department}}</td>
+           </tr>
+            <tr>
+            <td>In Time</td> 
+             <td>{{currentItem.inTime}}</td>
+           </tr>
+            <tr>
+            <td>outTime</td> 
+             <td>{{currentItem.outTime}}</td>
+           </tr>
+            <tr>
+            <td>Duration</td> 
+             <td>{{currentItem.duration}}</td>
+           </tr>
+            <tr>
+            <td>Late By</td> 
+             <td>{{currentItem.lateBy}}</td>
+           </tr>
+            <tr>
+            <td>Early By</td> 
+             <td>{{currentItem.earlyBy}}</td>
+           </tr>
+            <tr>
+            <td>Status</td> 
+             <!-- /<td> <input type="text"[(ngModel)]="currentItem.status" class="form-control"> </td> -->
+            <select [(ngModel)]="currentItem.status" required>
+              <option *ngFor = "let status of statusArr" [value]="status" [selected]="status == currentItem.status">{{status}}
+              </option>
+            </select>
+ 
+           </tr>
+           <tr>
+            <td>Comment</td>
+            <td><input type="textarea" [(ngModel)]="currentItem.comment"></td>
+
+           </tr>
+            <tr>
+            <td>Punch Records</td> 
+             <td>{{currentItem.punchRecords}}</td>
+           </tr>
+          </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveChanges()">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
