@@ -14,7 +14,7 @@ export class DashboardComponent {
     this.loadAttendance();
   }
   loadAttendance() { 
-    this.dataService.getPostData('http://kabanip-dev.us-east-1.elasticbeanstalk.com/getDistinctEmployeesO',null).subscribe(data => {
+    this.dataService.getPostData(this.dataService.serviceurl+'getDistinctEmployeesO',null).subscribe(data => {
        
       this.employeeAttendanceArr=data;
       this.employeeAttendanceArr.forEach((item, index) => {

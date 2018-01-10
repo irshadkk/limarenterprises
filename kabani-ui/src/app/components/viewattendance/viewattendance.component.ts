@@ -16,7 +16,7 @@ export class ViewAttendanceComponent {
   
   
   loadAttendance() { 
-    this.dataService.getPostData('http://kabanip-dev.us-east-1.elasticbeanstalk.com/getAllAttandance',null).subscribe(data => { 
+    this.dataService.getPostData(this.dataService.serviceurl+'getAllAttandance',null).subscribe(data => { 
       this.employeeAttendanceArr=data;
 
      
@@ -26,7 +26,7 @@ export class ViewAttendanceComponent {
 
   saveChanges() { 
     console.log(JSON.stringify(this.currentItem))
-    this.dataService.getPostData('http://kabanip-dev.us-east-1.elasticbeanstalk.com/updateUserAttandance',this.currentItem).subscribe(data => { 
+    this.dataService.getPostData(this.dataService.serviceurl+'updateUserAttandance',this.currentItem).subscribe(data => { 
       alert(data)
 
      

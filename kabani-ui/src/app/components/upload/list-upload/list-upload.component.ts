@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
 import { UploadFileService } from '../upload-file.service';
+import { DataService } from '../../../data.service';
 
 @Component({
   selector: 'list-upload',
@@ -14,7 +15,7 @@ export class ListUploadComponent implements OnInit {
   
   progressArr=[];
 
-  constructor(private uploadService: UploadFileService) { }
+  constructor(private uploadService: UploadFileService,private dataService:DataService) { }
 
   ngOnInit() {
   }
@@ -25,7 +26,7 @@ export class ListUploadComponent implements OnInit {
   
   upload() {
   //let url='http://localhost:9000/demo/upload/'+this.dataService.getBranch();
-  let url='http://kabanip-dev.us-east-1.elasticbeanstalk.com/upload/branch1'; 
+  let url=this.dataService.serviceurl+'upload/branch1'; 
     for (var i=0;i<this.selectedFiles.length;i++){
     let progress = { percentage: 0 }
     console.log("000"+JSON.stringify(this.selectedFiles))

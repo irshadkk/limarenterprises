@@ -25,7 +25,7 @@ export class UploadCsvComponent {
         formData.append('file', file, file.name);
         let headers = new Headers();
         /** No need to include Content-Type in Angular 4 */
-        let url='http://kabanip-dev.us-east-1.elasticbeanstalk.com/upload/'+this.dataService.getBranch();
+        let url=this.dataService.serviceurl+'upload/'+this.dataService.getBranch();
         this.http.post(url, formData)
             .map(res => this.testarr=res.json())
             .catch(error => Observable.throw(error))

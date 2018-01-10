@@ -12,11 +12,14 @@ export class DataService {
   cars = [
     'Ford','Chevrolet','Buick'
   ];
+  serviceurl= 'http://localhost:8080/';
+  //serviceurl= 'http://kabanip-dev.us-east-1.elasticbeanstalk.com/';
+   
   branch="";
 
 
   getUser(name,password) {
-    return this.http.get('http://kabanip-dev.us-east-1.elasticbeanstalk.com/login/?name='+name+'&password='+password)
+    return this.http.get(this.serviceurl+'login/?name='+name+'&password='+password)
     .map((res:Response) => res.json());
   }
   getData(url) {

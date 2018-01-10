@@ -24,7 +24,7 @@ export class ViewSalaryComponent {
   
   loadAttendance(year,month) { 
   this.employeeSalArr=[]; 
-    this.dataService.getPostData('http://kabanip-dev.us-east-1.elasticbeanstalk.com/getSalary/'+year+'/'+month,null).subscribe(data => { 
+    this.dataService.getPostData(this.dataService.serviceurl+'getSalary/'+year+'/'+month,null).subscribe(data => { 
        this.employeeSalArr=data;
       console.log("---------------")
       console.log(data)
@@ -37,7 +37,7 @@ export class ViewSalaryComponent {
 
   saveChanges() { 
     console.log(JSON.stringify(this.currentItem))
-    this.dataService.getPostData('http://kabanip-dev.us-east-1.elasticbeanstalk.com/updateUserAttandance',this.currentItem).subscribe(data => { 
+    this.dataService.getPostData(this.dataService.serviceurl+'updateUserAttandance',this.currentItem).subscribe(data => { 
       alert(data)
 
      
