@@ -11,6 +11,10 @@ import { ListUploadComponent } from './upload/list-upload/list-upload.component'
 import { SwitchesComponent } from './switches.component';
 import { ViewAttendanceComponent } from './viewattendance/viewattendance.component';
 import { ViewSalaryComponent } from './viewsalary/viewsalary.component';
+import { ViewEmployeesComponent } from './viewemployees/viewemployees.component';
+import { ViewleavesummaryComponent } from './viewleavesummary/viewleavesummary.component'; 
+import { AddholidaysComponent } from './addholidays/addholidays.component'; 
+
 
  
 
@@ -65,10 +69,31 @@ const routes: Routes = [
         }
       },
       {
+        path: 'viewemployees',
+        component: ViewEmployeesComponent,
+        data: {
+          title: 'View Employees'
+        }
+      },
+      {
+        path: 'viewleavesummary',
+        component: ViewleavesummaryComponent,
+        data: {
+          title: 'View Employees'
+        }
+      },
+      {
         path: 'viewsalary',
         component: ViewSalaryComponent,
         data: {
           title: 'View Salary'
+        }
+      },
+      {
+        path: 'addholidays',
+        component: AddholidaysComponent,
+        data: {
+          title: 'Add Holidays'
         }
       }
        

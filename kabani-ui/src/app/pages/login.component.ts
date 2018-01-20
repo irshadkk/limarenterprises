@@ -9,8 +9,8 @@ import { ActivatedRoute, Router} from '@angular/router';
 export class LoginComponent {
 
   constructor(private dataService:DataService,private router: Router) { 
-    this.name="limar";
-    this.password="limar";
+    this.name="limar 1";
+    this.password="limar 1";
   }
 
   loadUser() {

@@ -5,6 +5,10 @@ import { HttpModule } from '@angular/http';
 import {HttpClientModule} from '@angular/common/http'; 
 import { CommonModule } from '@angular/common';
 import { FilterPipe} from '../filters/filter.pipe';
+import { DatePipe } from '@angular/common';
+
+
+
 
  
 
@@ -18,10 +22,15 @@ import {FormUploadComponent} from './upload/form-upload/form-upload.component';
 import {ListUploadComponent} from './upload/list-upload/list-upload.component';
 
 
+
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown'; 
 import { SwitchesComponent } from './switches.component';
 import { ViewAttendanceComponent } from './viewattendance/viewattendance.component';
 import { ViewSalaryComponent } from './viewsalary/viewsalary.component';
+import { ViewEmployeesComponent } from './viewemployees/viewemployees.component';
+import { ViewleavesummaryComponent } from './viewleavesummary/viewleavesummary.component'; 
+import { AddholidaysComponent } from './addholidays/addholidays.component'; 
+
 
 // Modal Component
 import { ModalModule } from 'ngx-bootstrap/modal'; 
@@ -42,10 +51,10 @@ import { ComponentsRoutingModule } from './components-routing.module';
   declarations: [ 
     UploadCsvComponent,DetailsUploadComponent,FormUploadComponent,ListUploadComponent,
     SwitchesComponent,
-    ViewAttendanceComponent,
+    ViewAttendanceComponent,ViewEmployeesComponent,ViewleavesummaryComponent,AddholidaysComponent,
     FilterPipe,
     ViewSalaryComponent
   ],
-   providers: [UploadFileService]
+   providers: [UploadFileService,DatePipe]
 })
 export class ComponentsModule { }

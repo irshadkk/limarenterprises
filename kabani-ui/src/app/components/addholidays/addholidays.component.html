@@ -1,0 +1,91 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-4 col-lg-2" *ngFor="let item of holidayArr">
+      <div class="card text-white bg-primary" >
+        <div class="card-body pb-0">
+
+          <div class="btn-group float-right" dropdown>
+            <button type="button" class="btn btn-transparent dropdown-toggle p-0" dropdownToggle>
+              <i class="icon-settings"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+               
+              <a class="dropdown-item" href="javascript:;" (click)="onEditClick(infoModal,item)">Edit</a>
+              <a class="dropdown-item" href="javascript:;" (click)="deleteHolidays(item)">Delete</a>
+            </div>
+          </div>
+
+          <h4 class="mb-0">{{item.nameOfHoliday}}</h4>
+          <p>{{item.typeOfHoliday}}</p>
+          <p>{{item.descOfHoliday}}</p>
+          <p>{{item.dateOfHoliday |date:'dd/MM/yyyy'}}</p>
+
+        </div>
+
+      </div>
+    </div>
+    <div class="col-sm-4 col-lg-2" (click)="onEditClick(infoModal,null)">
+
+      <div class="card text-white bg-primary">
+        <button class="mb-0">
+        <div class="card-body pb-0">
+          <h1 style="font-size:64px">+</h1> 
+        </div>
+          </button>
+      </div>
+
+
+    </div>
+
+  </div>
+</div>
+
+
+<div bsModal #infoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Modal title</h4>
+        <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+        <table class="table table-bordered table-striped table-sm">
+          <tr>
+            <th>Item</th>
+            <th>Value</th>
+          </tr>
+          <tr>
+            <td>Date</td>
+            <td><input type="date" [(ngModel)]="holidayCurrentObj.dateOfHoliday" placeholder="Holiday Date" /></td>
+          </tr>
+          <tr>
+            <td>Name</td>
+            <td><input type="text" [(ngModel)]="holidayCurrentObj.nameOfHoliday" placeholder="Holiday Comment" /></td>
+          </tr>
+          <tr>
+            <td>Type</td>
+            <td><input type="text" [(ngModel)]="holidayCurrentObj.typeOfHoliday" placeholder="Holiday Date" /></td>
+          </tr>
+          <tr>
+            <td>Description</td>
+            <td><input type="text" [(ngModel)]="holidayCurrentObj.descOfHoliday" placeholder="Holiday Comment" /></td>
+          </tr>
+
+
+
+        </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="addOrEditHolidays(infoModal)">Save changes</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
