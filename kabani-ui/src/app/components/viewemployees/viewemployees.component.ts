@@ -1,5 +1,6 @@
 import { Component, TemplateRef } from '@angular/core';
 import { DataService } from '../../data.service';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -7,11 +8,12 @@ import { DataService } from '../../data.service';
 })
 export class ViewEmployeesComponent {
   public employeeArr;
-  public currentItem = [];
+  public infoModal;
+  public currentItem = {};
   public currentSalaryItem = [];
   public currentLeaveItem = [];
   public statusArr = ["Absent", "Present", "1/2Present"]
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private datePipe: DatePipe) {
     this.loadEmployees();
 
   }
@@ -29,7 +31,15 @@ export class ViewEmployeesComponent {
   saveChanges() {
     console.log(JSON.stringify(this.currentItem))
     this.dataService.getPostData(this.dataService.serviceurl + 'employee/addorupdate', this.currentItem).subscribe(data => {
-      alert(data)
+      if(data===true){
+        alert("success")
+        this.loadEmployees()
+      }else{
+        alert("failure")
+        this.loadEmployees()
+      }
+      this.infoModal.hide()
+      
 
 
 
@@ -37,21 +47,45 @@ export class ViewEmployeesComponent {
 
   }
   onEditClick(infoModal, item) {
-    this.currentItem = item;
-    this.dataService.getData(this.dataService.serviceurl + 'salary/allempsal/' + item.employeeCode).subscribe(data => {
-      this.currentSalaryItem = data;
-      console.log('currentItem==' + JSON.stringify(this.currentItem))
-      console.log('currentSalaryItem==' + JSON.stringify(this.currentSalaryItem))
-      this.dataService.getData(this.dataService.serviceurl + 'leave/allempleave/' + item.employeeCode).subscribe(data => {
-        this.currentLeaveItem = data;
-         
-        console.log('currentSalaryItem==' + JSON.stringify(this.currentLeaveItem))
-        infoModal.show()
-      });
+    this.infoModal=infoModal;
+    if (item) {
+      console.log(JSON.stringify(item))
 
-    });
-
-
+      item.dateOfBirth = this.datePipe.transform(item.dateOfBirth, 'yyyy-MM-dd');
+      item.dateOfJoining = this.datePipe.transform(item.dateOfJoining, 'yyyy-MM-dd');
+      console.log(JSON.stringify(item.dateOfBirth))
+      this.currentItem = item;
+    }
+    else {
+      this.currentItem = {
+        employeeCode: '',
+        employeeBioDeviceCode: '',
+        employeeName: '',
+        branch: '',
+        designation: '',
+        department: '',
+        employeeAge: '',
+        employeeSex: '',
+        dateOfBirth: '',
+        nameOfGuardian: '',
+        designationCode: '',
+        dateOfJoining: '',
+        mobileNumber: '',
+        emailId: '',
+        bankName: '',
+        ifscCode: '',
+        bankAccountNumber: '',
+        hra: '',
+        da: '',
+        basic: '',
+        salary: '',
+        totalCasualAlloted: '',
+        casualLeavesTaken: '',
+        casualLeavesRemaining: '',
+        cityCompensationAllowence: ''
+      };
+    }
+    infoModal.show()
   }
 
 

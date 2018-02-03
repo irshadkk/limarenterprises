@@ -20,6 +20,7 @@ import { UploadCsvComponent } from './uploadcsv/uploadcsv.component';
 import {DetailsUploadComponent} from './upload/details-upload/details-upload.component';
 import {FormUploadComponent} from './upload/form-upload/form-upload.component';
 import {ListUploadComponent} from './upload/list-upload/list-upload.component';
+import { EmployeeUploadComponent } from './upload/employee-upload/employee-upload.component';
 
 
 
@@ -49,7 +50,7 @@ import { ComponentsRoutingModule } from './components-routing.module';
     TabsModule,HttpModule,CommonModule,FormsModule, ReactiveFormsModule,HttpClientModule 
   ],
   declarations: [ 
-    UploadCsvComponent,DetailsUploadComponent,FormUploadComponent,ListUploadComponent,
+    UploadCsvComponent,DetailsUploadComponent,FormUploadComponent,ListUploadComponent,EmployeeUploadComponent,
     SwitchesComponent,
     ViewAttendanceComponent,ViewEmployeesComponent,ViewleavesummaryComponent,AddholidaysComponent,
     FilterPipe,

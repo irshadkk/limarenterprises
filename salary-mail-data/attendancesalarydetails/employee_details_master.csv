@@ -1,0 +1,7 @@
+employeeCode,employeeBioDeviceCode,employeeName,branch,designation,department,employeeAge,employeeSex,dateOfBirth,nameOfGuardian,designationCode,dateOfJoining,mobileNumber,emailId,bankName,ifscCode,bankAccountNumber,basic,da,hra,salary,totalCasualAlloted,casualLeavesTaken,casualLeavesRemaining,cityCompensationAllowence
+LM/HO/002,1,Pradeep kumar,ho,Accounts Manager,hodeprt1,35,Male,30/MAR/1972,Damodaran Nair,1,05/MAR/2012,9747748878,pradeeppadembarayil@gmail.com,State Bank of Travancore ,SBTR0001217,67346713636,11206,5378,2800,28000,12,2,10,0
+LM/HO/003,1,Humayoon Kabeer,ho,CEO,hodeprt2,40,Male,26/MAY/1975,Sulaiman,2,01/MAY/2013,8086078240,nil,State Bank of Travancore ,SBTR0001217,67347467350,57046,27382,9381,93810,12,3,9,0
+LM/HO/006,2,Ansad P,ho,Finance Manager ,hodeprt1,27,Male,16/MAY/1988,Kunhikkoya,3,27/MAY/2015,9946338567,ansadp@yahoo.co.in,State Bank of Travancore ,SBTR0001217,67346713829,20067,9632,3300,33000,12,1,11,0
+LM/HO/008,3,Aboobaker Sidique P M,ho,Assistant Sales Manager ,hodeprt1,56,Male,30/JAN/1976,Moosa,4,01/JAN/2015,8086078245,nil,State Bank of Travancore ,SBTR0001217,67345986821,17331,8318,2850,28500,12,0,12,0
+LM/HO/010,4,Sajeer P,ho,Zonal Manager,hodeprt2,55,Male,03/FEB/1981,Kunjabdulla,5,01/FEB/2015,8086078271,nil,State Bank of Travancore ,SBTR0001217,67345992664,17108,8212,3150,31,500,12,1,11,0
+LM/HO/013,5,Noushad Ali P,ho,Sales Manager -Insitutios,hodeprt3,50,Male,28/DEC/1984,Kunjimuhammed ,6,01/APR/2015,8086078256,nil,State Bank of Travancore ,SBTR0001217,67347554469,24324,11675,4000,40000,12,1,11,0

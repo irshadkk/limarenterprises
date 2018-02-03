@@ -5,6 +5,7 @@ import { UploadCsvComponent } from './uploadcsv/uploadcsv.component';
 import { DetailsUploadComponent } from './upload/details-upload/details-upload.component';
 import { FormUploadComponent } from './upload/form-upload/form-upload.component';
 import { ListUploadComponent } from './upload/list-upload/list-upload.component';
+import { EmployeeUploadComponent } from './upload/employee-upload/employee-upload.component';
 
  
  
@@ -52,6 +53,13 @@ const routes: Routes = [
         component: ListUploadComponent,
         data: {
           title: 'List Upload Component '
+        }
+      }, 
+      {
+        path: 'employee-upload',
+        component: EmployeeUploadComponent,
+        data: {
+          title: 'Employee Upload  '
         }
       }, 
       {

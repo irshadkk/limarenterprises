@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.kabani"})
 public class KabaniApplication /*extends SpringBootServletInitializer*/ {
 
 	 
@@ -15,6 +15,6 @@ public class KabaniApplication /*extends SpringBootServletInitializer*/ {
     }*/
  
     public static void main(String[] args) {
-        SpringApplication.run(KabaniApplication.class, args);
+        SpringApplication.run(KabaniApplication.class, args); 
     }
 }

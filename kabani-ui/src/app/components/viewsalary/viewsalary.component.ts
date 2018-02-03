@@ -18,13 +18,13 @@ export class ViewSalaryComponent {
 
   }
   objChanged(){
-    this.loadAttendance(this.year,this.month);
+    this.loadSalary(this.year,this.month);
   }
   
   
-  loadAttendance(year,month) { 
+  loadSalary(year,month) { 
   this.employeeSalArr=[]; 
-    this.dataService.getPostData(this.dataService.serviceurl+'getSalary/'+year+'/'+month,null).subscribe(data => { 
+    this.dataService.getPostData(this.dataService.serviceurl+'salary/getSalary/'+year+'/'+month,null).subscribe(data => { 
        this.employeeSalArr=data;
       console.log("---------------")
       console.log(data)
