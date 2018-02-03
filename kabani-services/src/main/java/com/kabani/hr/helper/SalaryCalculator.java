@@ -131,6 +131,7 @@ public class SalaryCalculator {
 								employeeDetailsMasterObj.getCasualLeavesTaken() + casualLeavesRemaining);
 						employeeDetailsMasterObj.setCasualLeavesRemaining(0);
 					}
+					employeeDetailsMasterRepository.save(employeeDetailsMasterObj);
 
 				}
 				// setting totalPresentDays after all additions
@@ -176,7 +177,6 @@ public class SalaryCalculator {
 			
 
 		}
-		long start = System.nanoTime();
 		wpsRepository.save(result); 
 		 
 		return result;
