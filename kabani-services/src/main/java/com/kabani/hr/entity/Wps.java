@@ -22,11 +22,11 @@ public class Wps {
 	private String branch;
 	private String department;
 	private Date dateOfJoining;
-	private int mobileNumber;
+	private String mobileNumber;
 	private String emailId;
 	private String bankName;
 	private String ifscCode;
-	private int bankAccountNumber;
+	private String bankAccountNumber;
 	private float fullPresentDays;
 	private float halfPresentDays;
 	private float totalPresentDays;
@@ -146,10 +146,10 @@ public class Wps {
 	public void setDateOfJoining(Date dateOfJoining) {
 		this.dateOfJoining = dateOfJoining;
 	}
-	public int getMobileNumber() {
+	public String getMobileNumber() {
 		return mobileNumber;
 	}
-	public void setMobileNumber(int mobileNumber) {
+	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 	public String getEmailId() {
@@ -170,10 +170,10 @@ public class Wps {
 	public void setIfscCode(String ifscCode) {
 		this.ifscCode = ifscCode;
 	}
-	public int getBankAccountNumber() {
+	public String getBankAccountNumber() {
 		return bankAccountNumber;
 	}
-	public void setBankAccountNumber(int bankAccountNumber) {
+	public void setBankAccountNumber(String bankAccountNumber) {
 		this.bankAccountNumber = bankAccountNumber;
 	}
 	public float getFullPresentDays() {

@@ -1,7 +1,10 @@
 package com.kabani.hr.helper;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +79,7 @@ public class SalaryCalculator {
 				|| (null != userAttDetailsListHalfPresent && userAttDetailsListHalfPresent.size() > 0)) {
 			for (EmployeeDetailsMaster employeeDetailsMasterObj : allEmployeeMasterDetailsLst) {
 				Wps wpsOfOneEmployee = new Wps();
+				copyDataFromMaster(wpsOfOneEmployee,employeeDetailsMasterObj);
 				float halfPresentDays = 0f;
 				float fullPresentDays = 0f;
 				float totalPresentDays = 0f;
@@ -92,7 +96,7 @@ public class SalaryCalculator {
 				
 				float totalPF = 0f;
 				float totalESI = 0f;
-
+				
 				wpsOfOneEmployee.setEmployeeCode(employeeDetailsMasterObj.getEmployeeCode());
 				wpsOfOneEmployee.setEmployeeName(employeeDetailsMasterObj.getEmployeeName());
 
@@ -171,6 +175,10 @@ public class SalaryCalculator {
 				wpsOfOneEmployee.setNetWagesPaid(salary);
 				wpsOfOneEmployee.setTotalSalaryForThisMonth(salary);
 				
+				wpsOfOneEmployee.setDateOfPayment(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+				wpsOfOneEmployee.setBonus(0);
+				
+				
 				result.add(wpsOfOneEmployee);
 
 			}
@@ -182,6 +190,32 @@ public class SalaryCalculator {
 		return result;
 	}
 
+	private void copyDataFromMaster(Wps wps, EmployeeDetailsMaster master) {
+		wps.setBankAccountNumber(master.getBankAccountNumber());
+		wps.setBankName(master.getBankName());
+		wps.setBasic(master.getBasic());
+		wps.setBranch(master.getBranch());
+		wps.setCasualLeavesRemaining(master.getCasualLeavesRemaining());
+		wps.setCasualLeavesTaken(master.getCasualLeavesTaken());
+		wps.setCityCompensationAllowence(master.getCasualLeavesTaken());
+		wps.setDa(master.getDa());
+		wps.setDateOfBirth(master.getDateOfBirth());
+		wps.setDateOfJoining(master.getDateOfJoining());
+		wps.setDepartment(master.getDepartment());
+		wps.setDesignation(master.getDesignation());
+		wps.setDesignationCode(master.getDesignationCode());
+		wps.setEmailId(master.getEmailId());
+		wps.setEmployeeAge(master.getEmployeeAge());
+		wps.setEmployeeCode(master.getEmployeeCode());
+		wps.setEmployeeName(master.getEmployeeName());;
+		wps.setEmployeeSex(master.getEmployeeSex());
+		wps.setHra(master.getHra());
+		wps.setIfscCode(master.getIfscCode());
+		wps.setMobileNumber(master.getMobileNumber());
+		wps.setNameOfGuardian(master.getNameOfGuardian());
+		wps.setTotalSalaryOffered(master.getSalary());
+		wps.setTotalCasualAlloted(master.getTotalCasualAlloted());		
+	}
 	/**
 	 * @param totalSalaryOffered
 	 * @return
