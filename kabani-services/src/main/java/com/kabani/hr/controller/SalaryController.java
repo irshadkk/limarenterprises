@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -22,13 +24,14 @@ public class SalaryController {
 	@Autowired
 	private SalaryCalculator salaryCalculator;
 
-	 
+	@RequestMapping(value = "/salaryGenerated", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody int getSalaryStatus(@RequestParam String year, @RequestParam String month) {
+		return salaryCalculator.hasSalaryGenerated(year, month);
+	}
 	 
 
 	@PostMapping(path = "/getSalary/{year}/{month}")
 	public @ResponseBody List getSalary(@PathVariable String year, @PathVariable String month) {
-		System.out.println(" ************        processing salary details start ************************");
-
 		return salaryCalculator.calculateSalaryOfEmployees(year, month);
 	}
 

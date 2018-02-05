@@ -31,15 +31,15 @@ export class ViewEmployeesComponent {
   saveChanges() {
     console.log(JSON.stringify(this.currentItem))
     this.dataService.getPostData(this.dataService.serviceurl + 'employee/addorupdate', this.currentItem).subscribe(data => {
-      if(data===true){
+      if (data === true) {
         alert("success")
         this.loadEmployees()
-      }else{
+      } else {
         alert("failure")
         this.loadEmployees()
       }
       this.infoModal.hide()
-      
+
 
 
 
@@ -47,7 +47,7 @@ export class ViewEmployeesComponent {
 
   }
   onEditClick(infoModal, item) {
-    this.infoModal=infoModal;
+    this.infoModal = infoModal;
     if (item) {
       console.log(JSON.stringify(item))
 
@@ -82,7 +82,25 @@ export class ViewEmployeesComponent {
         totalCasualAlloted: '',
         casualLeavesTaken: '',
         casualLeavesRemaining: '',
-        cityCompensationAllowence: ''
+        cityCompensationAllowence: '',
+        numberOfWeeklyOffGranted: '',
+        numberOfLeaveGranted: '',
+        overTimeWages: '',
+        leaveWages: '',
+        nationalAndFestivalHolidayWages: '',
+        arrearPaid: '',
+        bonus: '',
+        maternityBenefit: '',
+        otherAllowances: '',
+        totalStaffAdvance: '',
+        totalSalaryAdvance: '',
+        advanceTotalAmount: '',
+        deductionOfFine: '',
+        deductionForLossAndDamages: '',
+        totalLineShort: '',
+        otherDeduction: '',
+        totalDeduction: ''
+
       };
     }
     infoModal.show()

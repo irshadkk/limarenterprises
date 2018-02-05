@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.kabani.hr.entity.EmployeeDetailsMaster;
 import com.kabani.hr.entity.SalaryIncometaxSlab;
 import com.kabani.hr.entity.SalaryProfessionaltaxSlab;
+import com.kabani.hr.entity.SalaryStatus;
 import com.kabani.hr.entity.Wps;
 import com.kabani.hr.repository.EmployeeDetailsMasterRepository;
 import com.kabani.hr.repository.HolidayDetailsMasterRepository;
@@ -20,13 +21,14 @@ import com.kabani.hr.repository.SalaryIncometaxSlabRepository;
 import com.kabani.hr.repository.SalaryProfessionaltaxSlabRepository;
 import com.kabani.hr.repository.UserAttendanceDetailsRepository;
 import com.kabani.hr.repository.WpsRepository;
+import com.kabani.hr.repository.SalaryStatusRepository;
 
 @Component
 public class SalaryCalculator {
 
 	@Autowired
 	private EmployeeDetailsMasterRepository employeeDetailsMasterRepository;
-	
+
 	@Autowired
 	private WpsRepository wpsRepository;
 
@@ -43,12 +45,14 @@ public class SalaryCalculator {
 	@Autowired
 	private HolidayDetailsMasterRepository holidayDetailsMasterRepository;
 
+	@Autowired
+	private SalaryStatusRepository salaryStatusRepository;
+
 	public List calculateSalaryOfEmployees(String year, String month) {
 		String[] monthArry = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 		int indexOfMonth = Arrays.asList(monthArry).indexOf(month);
 		int yr = Integer.parseInt(year);
-		System.out.println("------------------------------------------");
-		System.out.println("-" + year + "-" + month);
+		System.out.println("----------------calculateSalaryOfEmployees-------START-------------------");
 		int numberOfWorkingDays = 26;
 
 		int numberOfDaysInMonthYear = daysInYearAndMonthCalculator.calculateDaysInMonthAndYear(yr, indexOfMonth + 1);
@@ -79,12 +83,12 @@ public class SalaryCalculator {
 				|| (null != userAttDetailsListHalfPresent && userAttDetailsListHalfPresent.size() > 0)) {
 			for (EmployeeDetailsMaster employeeDetailsMasterObj : allEmployeeMasterDetailsLst) {
 				Wps wpsOfOneEmployee = new Wps();
-				copyDataFromMaster(wpsOfOneEmployee,employeeDetailsMasterObj);
+				copyDataFromMaster(wpsOfOneEmployee, employeeDetailsMasterObj);
 				float halfPresentDays = 0f;
 				float fullPresentDays = 0f;
 				float totalPresentDays = 0f;
 				float totalPresentDaysPlus26PercentageAddition = 0f;
-				
+
 				float totalLeaveDays = 0f;
 				float casualLeavesRemaining = 0f;
 
@@ -93,10 +97,10 @@ public class SalaryCalculator {
 				float totalIncomeTax = 0f;
 				float totalProffessionalTax = 0f;
 				float employeeWelfareAmount = 20f;
-				
+
 				float totalPF = 0f;
 				float totalESI = 0f;
-				
+
 				wpsOfOneEmployee.setEmployeeCode(employeeDetailsMasterObj.getEmployeeCode());
 				wpsOfOneEmployee.setEmployeeName(employeeDetailsMasterObj.getEmployeeName());
 
@@ -110,7 +114,7 @@ public class SalaryCalculator {
 				// calculating total present days
 				totalPresentDays = fullPresentDays + (halfPresentDays / 2);
 				wpsOfOneEmployee.setTotalPresentDays(totalPresentDays);
-				
+
 				// adding % of total days adding to all employees to make it 26
 				float percentageOfNumberOfDaysToAddWithPresentDaysOfEmployeeFor26 = numberOfDaysToAddWithPresentDaysOfEmployeeFor26
 						* (totalPresentDays / numberOfActualWorkingDays);
@@ -140,53 +144,54 @@ public class SalaryCalculator {
 				}
 				// setting totalPresentDays after all additions
 				wpsOfOneEmployee.setDaysOfAttandance(totalPresentDays);
-				wpsOfOneEmployee.setLossOfPayDays(numberOfWorkingDays-totalPresentDays);
+				wpsOfOneEmployee.setLossOfPayDays(numberOfWorkingDays - totalPresentDays);
 
 				// finding salary offered by the company
 				totalSalaryOffered = employeeDetailsMasterObj.getSalary();
 				wpsOfOneEmployee.setGrossMonthlyWages(totalSalaryOffered);
 				wpsOfOneEmployee.setTotalSalaryOffered(totalSalaryOffered);
-				
-				
+
 				// finding income tax
-				totalIncomeTax=getIncomeTaxOfAnEmployee(SalaryIncometaxSlabArr, totalSalaryOffered);
+				totalIncomeTax = getIncomeTaxOfAnEmployee(SalaryIncometaxSlabArr, totalSalaryOffered);
 				wpsOfOneEmployee.setTotalIncomeTax(totalIncomeTax);
-				wpsOfOneEmployee.setTaxDeductedAtSource(totalIncomeTax); 
-				
-				
+				wpsOfOneEmployee.setTaxDeductedAtSource(totalIncomeTax);
+
 				// finding professional tax
-				totalProffessionalTax=getProfessionalTaxOfAnEmployee(SalaryProfessionaltaxSlabArr, totalSalaryOffered);
+				totalProffessionalTax = getProfessionalTaxOfAnEmployee(SalaryProfessionaltaxSlabArr,
+						totalSalaryOffered);
 				wpsOfOneEmployee.setTotalProfessionalTax(totalProffessionalTax);
 
 				// employee welfare fund
-				wpsOfOneEmployee.setTotalEmployeeWelfareFund(getWelfareFundOfAnEmployee(employeeDetailsMasterObj, totalSalaryOffered,
-						employeeWelfareAmount));
+				wpsOfOneEmployee.setTotalEmployeeWelfareFund(getWelfareFundOfAnEmployee(employeeDetailsMasterObj,
+						totalSalaryOffered, employeeWelfareAmount));
 
 				// pf only for those who have salary less than 15000 12 % of offered salary
-				totalPF=getPFOfanEmployee(totalSalaryOffered);
+				totalPF = getPFOfanEmployee(totalSalaryOffered);
 				wpsOfOneEmployee.setTotalPF(totalPF);
 
 				// esi is applicable for all and reducing 1% for this year
-				totalESI=getESIOfanEmployee(totalSalaryOffered);
+				totalESI = getESIOfanEmployee(totalSalaryOffered);
 				wpsOfOneEmployee.setTotalESI(totalESI);
 
 				// calculating salary
-				float salary = calculateSalary(wpsOfOneEmployee,totalSalaryOffered,numberOfWorkingDays);
+				float salary = calculateSalary(wpsOfOneEmployee, totalSalaryOffered, numberOfWorkingDays);
 				wpsOfOneEmployee.setNetWagesPaid(salary);
 				wpsOfOneEmployee.setTotalSalaryForThisMonth(salary);
-				
-				wpsOfOneEmployee.setDateOfPayment(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+
+				wpsOfOneEmployee
+						.setDateOfPayment(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 				wpsOfOneEmployee.setBonus(0);
-				
-				
+
 				result.add(wpsOfOneEmployee);
 
 			}
-			
 
 		}
-		wpsRepository.save(result); 
-		 
+
+		wpsRepository.save(result);
+		salaryStatusRepository.save(new SalaryStatus(indexOfMonth + 1, Integer.parseInt(year),
+				Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant())));
+		System.out.println("----------------calculateSalaryOfEmployees-------END-------------------");
 		return result;
 	}
 
@@ -207,15 +212,36 @@ public class SalaryCalculator {
 		wps.setEmailId(master.getEmailId());
 		wps.setEmployeeAge(master.getEmployeeAge());
 		wps.setEmployeeCode(master.getEmployeeCode());
-		wps.setEmployeeName(master.getEmployeeName());;
+		wps.setEmployeeName(master.getEmployeeName());
 		wps.setEmployeeSex(master.getEmployeeSex());
 		wps.setHra(master.getHra());
 		wps.setIfscCode(master.getIfscCode());
 		wps.setMobileNumber(master.getMobileNumber());
 		wps.setNameOfGuardian(master.getNameOfGuardian());
 		wps.setTotalSalaryOffered(master.getSalary());
-		wps.setTotalCasualAlloted(master.getTotalCasualAlloted());		
+		wps.setTotalCasualAlloted(master.getTotalCasualAlloted());
+		
+		wps.setNumberOfWeeklyOffGranted(master.getNumberOfWeeklyOffGranted());
+		wps.setNumberOfLeaveGranted(master.getNumberOfLeaveGranted());
+		wps.setTotalCasualAlloted(master.getTotalCasualAlloted());
+		wps.setOverTimeWages(master.getOverTimeWages());
+		wps.setLeaveWages(master.getLeaveWages());
+		wps.setNationalAndFestivalHolidayWages(master.getNationalAndFestivalHolidayWages());
+		wps.setArrearPaid(master.getArrearPaid());
+		wps.setBonus(master.getBonus());
+		wps.setMaternityBenefit(master.getMaternityBenefit());
+		wps.setOtherAllowances(master.getOtherAllowances());
+		wps.setTotalStaffAdvance(master.getTotalStaffAdvance());
+		wps.setTotalSalaryAdvance(master.getTotalSalaryAdvance());
+		wps.setAdvanceTotalAmount(master.getAdvanceTotalAmount());
+		wps.setDeductionOfFine(master.getDeductionOfFine());
+		wps.setDeductionForLossAndDamages(master.getDeductionForLossAndDamages());
+		wps.setTotalLineShort(master.getTotalLineShort());
+		wps.setOtherDeduction(master.getOtherDeduction());
+		wps.setTotalDeduction(master.getTotalDeduction());
+
 	}
+
 	/**
 	 * @param totalSalaryOffered
 	 * @return
@@ -229,11 +255,11 @@ public class SalaryCalculator {
 	 * @param totalSalaryOffered
 	 */
 	private float getPFOfanEmployee(float totalSalaryOffered) {
-		float totalPF=0f;
-		if (totalSalaryOffered < 15000) { 
-			totalPF=(totalSalaryOffered * 12 / 100);
+		float totalPF = 0f;
+		if (totalSalaryOffered < 15000) {
+			totalPF = (totalSalaryOffered * 12 / 100);
 		} else {
-			totalPF=0;
+			totalPF = 0;
 		}
 		return totalPF;
 	}
@@ -244,13 +270,13 @@ public class SalaryCalculator {
 	 * @param totalSalaryOffered
 	 * @param employeeWelfareAmount
 	 */
-	private float getWelfareFundOfAnEmployee(EmployeeDetailsMaster employeeDetailsMasterObj,  
-			float totalSalaryOffered, float employeeWelfareAmount) {
-		float employeeWelfare=0f;
+	private float getWelfareFundOfAnEmployee(EmployeeDetailsMaster employeeDetailsMasterObj, float totalSalaryOffered,
+			float employeeWelfareAmount) {
+		float employeeWelfare = 0f;
 		if (employeeDetailsMasterObj.getEmployeeAge() < 55 && totalSalaryOffered >= 15000) {
-			employeeWelfare=employeeWelfareAmount;
+			employeeWelfare = employeeWelfareAmount;
 		} else {
-			employeeWelfare=0;
+			employeeWelfare = 0;
 		}
 		return employeeWelfare;
 	}
@@ -258,13 +284,14 @@ public class SalaryCalculator {
 	/**
 	 * @param SalaryProfessionaltaxSlabArr
 	 */
-	private float getProfessionalTaxOfAnEmployee(List<SalaryProfessionaltaxSlab> SalaryProfessionaltaxSlabArr,float totalSalaryOffered) {
-		float totalProffessionalTax=0f;
+	private float getProfessionalTaxOfAnEmployee(List<SalaryProfessionaltaxSlab> SalaryProfessionaltaxSlabArr,
+			float totalSalaryOffered) {
+		float totalProffessionalTax = 0f;
 		for (SalaryProfessionaltaxSlab objSalaryProfessionaltaxSlab : SalaryProfessionaltaxSlabArr) {
 
 			if ((totalSalaryOffered) >= objSalaryProfessionaltaxSlab.getSlabamountstart()
 					&& (totalSalaryOffered) <= objSalaryProfessionaltaxSlab.getSlabamountend()) {
-				totalProffessionalTax = objSalaryProfessionaltaxSlab.getSlabamount(); 
+				totalProffessionalTax = objSalaryProfessionaltaxSlab.getSlabamount();
 				break;
 			}
 		}
@@ -278,7 +305,7 @@ public class SalaryCalculator {
 	 */
 	private float getIncomeTaxOfAnEmployee(List<SalaryIncometaxSlab> SalaryIncometaxSlabArr, float totalSalaryOffered) {
 		float taxableIncomePerMonth;
-		float totalIncomeTax=0f;
+		float totalIncomeTax = 0f;
 		// finding income tax
 		for (SalaryIncometaxSlab objSalaryIncometaxSlab : SalaryIncometaxSlabArr) {
 
@@ -288,7 +315,7 @@ public class SalaryCalculator {
 						/ 12;
 				totalIncomeTax = ((taxableIncomePerMonth * objSalaryIncometaxSlab.getSlabpercentage()) / 100)
 						+ (objSalaryIncometaxSlab.getSlabadditionalamount() / 12);
-				
+
 				break;
 			}
 		}
@@ -315,9 +342,9 @@ public class SalaryCalculator {
 		return halfPresentDays;
 	}
 
-	public float calculateSalary(Wps wpsObj,float totalSalaryOffered,float numberOfWorkingDays) {
-		float salary = 0f; 
-		float totalPresentDays = wpsObj.getDaysOfAttandance(); 
+	public float calculateSalary(Wps wpsObj, float totalSalaryOffered, float numberOfWorkingDays) {
+		float salary = 0f;
+		float totalPresentDays = wpsObj.getDaysOfAttandance();
 		float totalIncomeTax = wpsObj.getTotalIncomeTax();
 		float totalProfessionalTax = wpsObj.getTotalProfessionalTax();
 		float totalPF = wpsObj.getTotalPF();
@@ -328,11 +355,17 @@ public class SalaryCalculator {
 		float employeeWelfareAmount = wpsObj.getTotalEmployeeWelfareFund();
 
 		float totalEarnedThisMonth = totalSalaryOffered * totalPresentDays / numberOfWorkingDays;
-		float totalDeductedThisMonth = totalIncomeTax + totalProfessionalTax +totalPF+ totalESI + totalStaffAdvance
+		float totalDeductedThisMonth = totalIncomeTax + totalProfessionalTax + totalPF + totalESI + totalStaffAdvance
 				+ totalLineShort + totalSalaryAdvance + employeeWelfareAmount;
 		salary = totalEarnedThisMonth - totalDeductedThisMonth;
 
 		return salary;
+	}
+
+	public int hasSalaryGenerated(String year, String month) {
+		int returnValue = 0;
+		returnValue=salaryStatusRepository.isSalaryGenerated(Integer.parseInt(year), Integer.parseInt(month));
+		return returnValue;
 	}
 
 }
