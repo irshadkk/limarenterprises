@@ -24,7 +24,9 @@
 
 
           <table class="table table-bordered table-striped table-sm">
-
+            <tr *ngIf="employeeSalArr?.length>0">
+              <td colspan="11"><button (click)="generateExcel()">Generate Excel</button> </td>
+            </tr>
             <tr>
               <th>No</th>
               <th>name</th>
@@ -39,8 +41,10 @@
               <th>salary</th>
             </tr>
             <tr *ngIf="loading" style="border:0px solid red;">
-              <td colspan="11" nowrap="nowrap" style="color:red;text-align:center" ><img src="../../../assets/img/giphy.gif" height="50" align="middle"></td>
-                        </tr>
+              <td colspan="11" nowrap="nowrap" style="color:red;text-align:center">
+                <img src="../../../assets/img/giphy.gif" height="50" align="middle">
+              </td>
+            </tr>
 
             <tr *ngFor="let item of employeeSalArr | filter : searchText; let i = index">
               <td>{{i+1}}</td>

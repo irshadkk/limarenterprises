@@ -24,6 +24,9 @@ export class ViewSalaryComponent {
     this.employeeSalArr=[];
     this.loadSalary(this.year, this.month);
   }
+  generateExcel(){
+    this.salaryService.generateSalaryExcel(this.year, this.monthSelectArr.indexOf(this.month.toString()))
+  }
 
 
   loadSalary(year, month: string) {

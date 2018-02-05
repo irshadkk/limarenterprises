@@ -1,5 +1,9 @@
 package com.kabani.hr.helper;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -7,6 +11,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -180,8 +188,8 @@ public class SalaryCalculator {
 
 				wpsOfOneEmployee
 						.setDateOfPayment(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-				wpsOfOneEmployee.setBonus(0);
-
+				wpsOfOneEmployee.setYear(Integer.parseInt(year));
+				wpsOfOneEmployee.setMonth(indexOfMonth + 1);
 				result.add(wpsOfOneEmployee);
 
 			}
@@ -220,7 +228,7 @@ public class SalaryCalculator {
 		wps.setNameOfGuardian(master.getNameOfGuardian());
 		wps.setTotalSalaryOffered(master.getSalary());
 		wps.setTotalCasualAlloted(master.getTotalCasualAlloted());
-		
+
 		wps.setNumberOfWeeklyOffGranted(master.getNumberOfWeeklyOffGranted());
 		wps.setNumberOfLeaveGranted(master.getNumberOfLeaveGranted());
 		wps.setTotalCasualAlloted(master.getTotalCasualAlloted());
@@ -364,8 +372,184 @@ public class SalaryCalculator {
 
 	public int hasSalaryGenerated(String year, String month) {
 		int returnValue = 0;
-		returnValue=salaryStatusRepository.isSalaryGenerated(Integer.parseInt(year), Integer.parseInt(month));
+		returnValue = salaryStatusRepository.isSalaryGenerated(Integer.parseInt(year), Integer.parseInt(month));
 		return returnValue;
+	}
+
+	public void genereteExcel(int year, int month) {
+		String[] heading = { "Employee Code", "Employee Name", "Name of Father/Husband", "Sex", "Date Of Birth",
+				"Designation", "Designation Code/ Grade as in Government Order", "Date of Joining", "Mobile Number",
+				"Email Id", "Bank Name", "IFSC Code", "Bank Account Number", "Days of Attendance", "Loss of pay days",
+				"Number of weekly off granted", "Number of Leave granted", "Basic", "DA", "HRA",
+				"City Compensation allowances", "Gross Monthly Wages", "Overtime wages", "Leave wages",
+				"National & Festival Holidays wages", "Arrear paid", "Bonus", "Maternity Benefit", "Other Allowances",
+				"Advance", "Total Amount", "Employees Provident Fund", "Employees State Insurance", "Advances",
+				"Welfare Fund", "Professional Tax", "Tax Deducted at Source", "Deduction of Fine",
+				"Deduction  for  Loss & Damages", "Other Deduction", "Total Deduction", "Net wages paid",
+				"Date of payment", "Remarks" };
+
+		try {
+			List<Wps> returnValue = wpsRepository.findForCurrentMonth(year, month);
+			// Read the spreadsheet that needs to be updated
+			FileInputStream fsIP = new FileInputStream(new File(""));
+
+			XSSFWorkbook workbook = new XSSFWorkbook(fsIP);
+
+			Object[][] salaryExcel = new Object[returnValue.size()][heading.length];
+			int i = 0;
+			XSSFSheet sheet = workbook.createSheet("Salary");
+			int rowCount = 0;
+			Row row = sheet.createRow(rowCount++);
+			int cellCount = 0;
+			for (String cellHeading : heading) {
+				Cell cell = row.createCell(cellCount++);
+				cell.setCellValue(cellHeading);
+			}
+			for (Wps excelRow : returnValue) {
+				row = sheet.createRow(rowCount++);
+				Cell cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getEmployeeCode());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getEmployeeName());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getNameOfGuardian());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getEmployeeSex());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getDateOfBirth());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getDesignation());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getDesignationCode());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getDateOfJoining());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getMobileNumber());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getMobileNumber());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getEmailId());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getBankName());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getIfscCode());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getBankAccountNumber());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getLossOfPayDays());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getNumberOfWeeklyOffGranted());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getNumberOfLeaveGranted());
+								
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getBasic());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getDa());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getHra());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getCityCompensationAllowence());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getGrossMonthlyWages());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getOverTimeWages());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getLeaveWages());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getNationalAndFestivalHolidayWages());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getArrearPaid());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getBonus());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getMaternityBenefit());
+
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getOtherAllowances());
+
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getTotalStaffAdvance());
+
+				cell = row.createCell(cellCount++);
+				cell.setCellValue("");//Total Amount
+
+				cell = row.createCell(cellCount++);
+				cell.setCellValue("");//Provident Fund
+
+				cell = row.createCell(cellCount++);
+				cell.setCellValue("");//State INsurance
+
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getTotalStaffAdvance());
+
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getTotalEmployeeWelfareFund());
+
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getTotalProfessionalTax());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getTotalProfessionalTax());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getTaxDeductedAtSource());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getDeductionOfFine());
+
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getDeductionForLossAndDamages());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getOtherDeduction());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getTotalDeduction());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getNetWagesPaid());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue(excelRow.getDateOfPayment());
+				
+				cell = row.createCell(cellCount++);
+				cell.setCellValue("");//REMARKSss			
+			}
+			System.out.println("XXXXXXXXXXX--nO OF rOWS IN EXCEL--->>" + rowCount);
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

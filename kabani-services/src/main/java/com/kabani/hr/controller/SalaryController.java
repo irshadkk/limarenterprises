@@ -16,10 +16,9 @@ import com.kabani.hr.helper.SalaryCalculator;
 
 @CrossOrigin
 @Controller // This means that this class is a Controller
- @RequestMapping(path = "/salary") // This means URL's start with /demo (after
+@RequestMapping(path = "/salary") // This means URL's start with /demo (after
 // Application path)
 public class SalaryController {
-	 
 
 	@Autowired
 	private SalaryCalculator salaryCalculator;
@@ -28,11 +27,18 @@ public class SalaryController {
 	public @ResponseBody int getSalaryStatus(@RequestParam String year, @RequestParam String month) {
 		return salaryCalculator.hasSalaryGenerated(year, month);
 	}
-	 
 
 	@PostMapping(path = "/getSalary/{year}/{month}")
 	public @ResponseBody List getSalary(@PathVariable String year, @PathVariable String month) {
 		return salaryCalculator.calculateSalaryOfEmployees(year, month);
+	}
+
+	@RequestMapping(value = "/getSalaryExcel", method = RequestMethod.GET, produces = "application/json")
+	public void getSalaryExel(@RequestParam String year, @RequestParam String month) {
+		// response.setContentType("application/vnd.ms-excel");
+		// response.setHeader("Content-Disposition", "attachment; filename=" +
+		// fileName);
+		salaryCalculator.genereteExcel(Integer.parseInt(year), Integer.parseInt(month));
 	}
 
 }
