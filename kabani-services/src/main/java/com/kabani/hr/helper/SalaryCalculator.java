@@ -390,7 +390,7 @@ public class SalaryCalculator {
 	}
 
 	public WritableWorkbook genereteExcel(int year, int month, HttpServletResponse response) {
-		String fileName = "salary_wps.xls";
+		String fileName = "Salary_Wps_" + year + "_" + month + ".xls";
 		WritableWorkbook workbook = null;
 		String[] heading = { "Employee Code", "Employee Name", "Name of Father/Husband", "Sex", "Date Of Birth",
 				"Designation", "Designation Code/ Grade as in Government Order", "Date of Joining", "Mobile Number",
@@ -406,48 +406,176 @@ public class SalaryCalculator {
 		try {
 			List<Wps> returnValue = wpsRepository.findForCurrentMonth(year, month);
 			Object[][] salaryExcel = new Object[returnValue.size()][heading.length];
-			
+
 			response.setContentType("application/vnd.ms-excel");
 			response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
-			
+
 			workbook = Workbook.createWorkbook(response.getOutputStream());
 			WritableSheet excelOutputsheet = workbook.createSheet("Salary", 0);
-			addExcelOutputHeader(excelOutputsheet,heading);
-	         writeExcelOutputData(excelOutputsheet,returnValue);
-	           
+			addExcelOutputHeader(excelOutputsheet, heading);
+			writeExcelOutputData(excelOutputsheet, returnValue, heading);
+
 			workbook.write();
 			workbook.close();
-			 
-			 
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		 catch ( Exception e) {
-				e.printStackTrace();
-			}
 		return workbook;
 
 	}
-	private void addExcelOutputHeader(WritableSheet sheet,String[] heading) throws RowsExceededException, WriteException{
-	        for (int cell=0;cell<heading.length;cell++) {
-	        	sheet.addCell(new Label(cell, 0, heading[cell]));
-			}   
-		 
-	    }
-	 private void writeExcelOutputData(WritableSheet sheet,List<Wps> returnValue) throws RowsExceededException, WriteException{
-         
-	       for(int rowNo = 1; rowNo<=returnValue.size(); rowNo++){
-	    	   for(int colNo = 0; colNo<=24; colNo++){
-	    		   //Wps.getSomething()
-	              sheet.addCell(new Label(colNo, rowNo, "Col Data "));
-	               
-	    	   }
 
-	       }
+	private void addExcelOutputHeader(WritableSheet sheet, String[] heading)
+			throws RowsExceededException, WriteException {
+		for (int cell = 0; cell < heading.length; cell++) {
+			sheet.addCell(new Label(cell, 0, heading[cell]));
+		}
 
-	    }
+	}
+
+	private void writeExcelOutputData(WritableSheet sheet, List<Wps> returnValue, String[] heading)
+			throws RowsExceededException, WriteException {
+
+		int rowNo=0,colNo=0;
+		for (Wps excelRow : returnValue) {
+			++rowNo;
+			colNo=0;
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getEmployeeCode()));			
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getEmployeeName()));
+			//cell.setCellValue(excelRow.getEmployeeName());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getNameOfGuardian()));
+			//cell.setCellValue(excelRow.getNameOfGuardian());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getEmployeeSex()));
+			//cell.setCellValue(excelRow.getEmployeeSex());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getDateOfBirth().toString()));
+			//cell.setCellValue(excelRow.getDateOfBirth());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getDesignation()));
+			//cell.setCellValue(excelRow.getDesignation());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getDesignationCode()));
+			//cell.setCellValue(excelRow.getDesignationCode());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getDateOfJoining().toString()));
+			//cell.setCellValue(excelRow.getDateOfJoining());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getMobileNumber()));
+			//cell.setCellValue(excelRow.getMobileNumber());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getEmailId()));
+			//cell.setCellValue(excelRow.getEmailId());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getBankName()));
+			//cell.setCellValue(excelRow.getBankName());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getIfscCode()));
+			//cell.setCellValue(excelRow.getIfscCode());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getBankAccountNumber()));
+			//cell.setCellValue(excelRow.getBankAccountNumber());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getLossOfPayDays()+""));
+			//cell.setCellValue(excelRow.getLossOfPayDays());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getNumberOfWeeklyOffGranted()+""));
+			//cell.setCellValue(excelRow.getNumberOfWeeklyOffGranted());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getNumberOfLeaveGranted()+""));
+			//cell.setCellValue(excelRow.getNumberOfLeaveGranted());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getBasic()+""));
+			//cell.setCellValue(excelRow.getBasic());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getDa()+""));
+			//cell.setCellValue(excelRow.getDa());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getHra()+""));
+			//cell.setCellValue(excelRow.getHra());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getCityCompensationAllowence()+""));
+			//cell.setCellValue(excelRow.getCityCompensationAllowence());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getGrossMonthlyWages()+""));
+			//cell.setCellValue(excelRow.getGrossMonthlyWages());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getOverTimeWages()+""));
+			//cell.setCellValue(excelRow.getOverTimeWages());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getLeaveWages()+""));
+			//cell.setCellValue(excelRow.getLeaveWages());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getNationalAndFestivalHolidayWages()+""));
+			//cell.setCellValue(excelRow.getNationalAndFestivalHolidayWages());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getArrearPaid()+""));
+			//cell.setCellValue(excelRow.getArrearPaid());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getBonus()+""));
+			//cell.setCellValue(excelRow.getBonus());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getMaternityBenefit()+""));
+			//cell.setCellValue(excelRow.getMaternityBenefit());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getOtherAllowances()+""));
+			//cell.setCellValue(excelRow.getOtherAllowances());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalStaffAdvance()+""));
+			//cell.setCellValue(excelRow.getTotalStaffAdvance());
+
+			sheet.addCell(new Label(colNo++, rowNo, ""));// Total Amount
+			//cell.setCellValue("");
+
+			sheet.addCell(new Label(colNo++, rowNo, ""));// Provident Fund
+			//cell.setCellValue("");// Provident Fund
+
+			sheet.addCell(new Label(colNo++, rowNo, ""));/// State INsurance
+			//cell.setCellValue("");// State INsurance
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalStaffAdvance()+""));
+			//cell.setCellValue(excelRow.getTotalStaffAdvance());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalEmployeeWelfareFund()+""));
+			//cell.setCellValue(excelRow.getTotalEmployeeWelfareFund());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalProfessionalTax()+""));
+			//cell.setCellValue(excelRow.getTotalProfessionalTax());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalProfessionalTax()+""));
+			//cell.setCellValue(excelRow.getTotalProfessionalTax());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getTaxDeductedAtSource()+""));
+			//cell.setCellValue(excelRow.getTaxDeductedAtSource());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getDeductionOfFine()+""));
+			//cell.setCellValue(excelRow.getDeductionOfFine());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getDeductionForLossAndDamages()+""));
+			//cell.setCellValue(excelRow.getDeductionForLossAndDamages());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getOtherDeduction()+""));
+			//cell.setCellValue(excelRow.getOtherDeduction());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalDeduction()+""));
+			//cell.setCellValue(excelRow.getTotalDeduction());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getNetWagesPaid()+""));
+			//cell.setCellValue(excelRow.getNetWagesPaid());
+
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getDateOfPayment()+""));
+			//cell.setCellValue(excelRow.getDateOfPayment());
+
+			sheet.addCell(new Label(colNo++, rowNo, ""));//Remarks
+			//cell.setCellValue("");// REMARKSss
+		}
+
+	}
 
 }
