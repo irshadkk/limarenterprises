@@ -1,26 +1,24 @@
 package com.kabani.hr.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.kabani.hr.helper.ExcelOutputServiceImpl;
 import com.kabani.hr.helper.SalaryCalculator;
-
-import javassist.bytecode.stackmap.BasicBlock.Catch;
 
 @CrossOrigin
 @Controller // This means that this class is a Controller
@@ -30,6 +28,9 @@ public class SalaryController {
 
 	@Autowired
 	private SalaryCalculator salaryCalculator;
+	@Autowired
+	private ExcelOutputServiceImpl excelOutputServiceImpl;
+	
 
 	@RequestMapping(value = "/salaryGenerated", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody int getSalaryStatus(@RequestParam String year, @RequestParam String month) {
@@ -46,9 +47,9 @@ public class SalaryController {
 		return salaryCalculator.getSalary(Integer.parseInt(year), Integer.parseInt(month));
 	}
 
-	@RequestMapping(value = "/getSalaryExcel", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<InputStreamResource> getSalaryExel(@RequestParam String year, @RequestParam String month) {
-		salaryCalculator.genereteExcel(Integer.parseInt(year), Integer.parseInt(month));
+	@RequestMapping(value = "/getSalaryExcel", method = RequestMethod.GET)
+	public ModelAndView getSalaryExel(@RequestParam String year, @RequestParam String month,HttpServletResponse response) {
+		salaryCalculator.genereteExcel(Integer.parseInt(year), Integer.parseInt(month),response); 
 		/*ClassLoader loader = getClass().getClassLoader();
 		try {
 			File file = new File(loader.getResource("ho_wps_template.xlsx").getFile());
@@ -61,5 +62,11 @@ public class SalaryController {
 		}*/
 		return null;		
 	}
+	 @RequestMapping(value="/download", method=RequestMethod.GET)
+	    public ModelAndView downloadExcelOutputExl(HttpServletResponse response){
+	      
+		 excelOutputServiceImpl.createExcelOutputExcel(response);
+	       return null;
+	    }
 
 }

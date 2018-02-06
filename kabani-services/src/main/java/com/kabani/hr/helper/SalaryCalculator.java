@@ -11,10 +11,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,9 +29,16 @@ import com.kabani.hr.repository.EmployeeDetailsMasterRepository;
 import com.kabani.hr.repository.HolidayDetailsMasterRepository;
 import com.kabani.hr.repository.SalaryIncometaxSlabRepository;
 import com.kabani.hr.repository.SalaryProfessionaltaxSlabRepository;
+import com.kabani.hr.repository.SalaryStatusRepository;
 import com.kabani.hr.repository.UserAttendanceDetailsRepository;
 import com.kabani.hr.repository.WpsRepository;
-import com.kabani.hr.repository.SalaryStatusRepository;
+
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
 
 @Component
 public class SalaryCalculator {
@@ -380,7 +389,9 @@ public class SalaryCalculator {
 		return returnValue;
 	}
 
-	public void genereteExcel(int year, int month) {
+	public WritableWorkbook genereteExcel(int year, int month, HttpServletResponse response) {
+		String fileName = "salary_wps.xls";
+		WritableWorkbook workbook = null;
 		String[] heading = { "Employee Code", "Employee Name", "Name of Father/Husband", "Sex", "Date Of Birth",
 				"Designation", "Designation Code/ Grade as in Government Order", "Date of Joining", "Mobile Number",
 				"Email Id", "Bank Name", "IFSC Code", "Bank Account Number", "Days of Attendance", "Loss of pay days",
@@ -394,168 +405,49 @@ public class SalaryCalculator {
 
 		try {
 			List<Wps> returnValue = wpsRepository.findForCurrentMonth(year, month);
-			ClassLoader loader = getClass().getClassLoader();
-			FileInputStream fsIP = new FileInputStream(new File(loader.getResource("ho_wps_template.xlsx").getFile()));
-System.out.println("xxx-->>"+loader.getResource("ho_wps_template.xlsx").getFile());
-			XSSFWorkbook workbook = new XSSFWorkbook(fsIP);
-
 			Object[][] salaryExcel = new Object[returnValue.size()][heading.length];
 			
-			XSSFSheet sheet = workbook.createSheet("Salary");
-			int rowCount = 0;
-			Row row = sheet.createRow(rowCount++);
-			int cellCount = 0;
-			for (String cellHeading : heading) {
-				Cell cell = row.createCell(cellCount++);
-				cell.setCellValue(cellHeading);
-			}
-			for (Wps excelRow : returnValue) {
-				System.out.println("xxxxx--"+excelRow.toString());
-				row = sheet.createRow(rowCount++);
-				Cell cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getEmployeeCode());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getEmployeeName());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getNameOfGuardian());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getEmployeeSex());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getDateOfBirth());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getDesignation());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getDesignationCode());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getDateOfJoining());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getMobileNumber());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getMobileNumber());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getEmailId());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getBankName());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getIfscCode());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getBankAccountNumber());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getLossOfPayDays());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getNumberOfWeeklyOffGranted());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getNumberOfLeaveGranted());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getBasic());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getDa());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getHra());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getCityCompensationAllowence());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getGrossMonthlyWages());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getOverTimeWages());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getLeaveWages());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getNationalAndFestivalHolidayWages());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getArrearPaid());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getBonus());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getMaternityBenefit());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getOtherAllowances());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getTotalStaffAdvance());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue("");// Total Amount
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue("");// Provident Fund
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue("");// State INsurance
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getTotalStaffAdvance());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getTotalEmployeeWelfareFund());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getTotalProfessionalTax());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getTotalProfessionalTax());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getTaxDeductedAtSource());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getDeductionOfFine());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getDeductionForLossAndDamages());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getOtherDeduction());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getTotalDeduction());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getNetWagesPaid());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue(excelRow.getDateOfPayment());
-
-				cell = row.createCell(cellCount++);
-				cell.setCellValue("");// REMARKSss
-			}
-			System.out.println(sheet.toString());
+			response.setContentType("application/vnd.ms-excel");
+			response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
 			
+			workbook = Workbook.createWorkbook(response.getOutputStream());
+			WritableSheet excelOutputsheet = workbook.createSheet("Salary", 0);
+			addExcelOutputHeader(excelOutputsheet,heading);
+	         writeExcelOutputData(excelOutputsheet,returnValue);
+	           
+			workbook.write();
+			workbook.close();
+			 
+			 
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		 catch ( Exception e) {
+				e.printStackTrace();
+			}
+		return workbook;
+
 	}
+	private void addExcelOutputHeader(WritableSheet sheet,String[] heading) throws RowsExceededException, WriteException{
+	        for (int cell=0;cell<heading.length;cell++) {
+	        	sheet.addCell(new Label(cell, 0, heading[cell]));
+			}   
+		 
+	    }
+	 private void writeExcelOutputData(WritableSheet sheet,List<Wps> returnValue) throws RowsExceededException, WriteException{
+         
+	       for(int rowNo = 1; rowNo<=returnValue.size(); rowNo++){
+	    	   for(int colNo = 0; colNo<=24; colNo++){
+	    		   //Wps.getSomething()
+	              sheet.addCell(new Label(colNo, rowNo, "Col Data "));
+	               
+	    	   }
+
+	       }
+
+	    }
 
 }

@@ -47,13 +47,14 @@ export class SalaryService {
   }
 
   generateSalaryExcel(year: any, month: any) {
-    this.headers = this.createHeader();
-    return this.http.get(this.dataService.serviceurl + `salary/getSalaryExcel?year=${year}&month=${month + 1}`, { headers: this.headers })
-      .toPromise()
-      .then(response => {
-        return response;
-      })
-      .catch(this.handleError);
+    // this.headers = this.createHeader();
+    // return this.http.get(this.dataService.serviceurl + `salary/getSalaryExcel?year=${year}&month=${month + 1}`, { headers: this.headers })
+    //   .toPromise()
+    //   .then(response => {
+    //     return response;
+    //   })
+    //   .catch(this.handleError);
+    window.open(this.dataService.serviceurl + `salary/getSalaryExcel?year=${year}&month=${month + 1}`, "_target")
   }
 
 
