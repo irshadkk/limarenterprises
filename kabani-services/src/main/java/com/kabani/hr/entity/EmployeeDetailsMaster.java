@@ -18,7 +18,7 @@ public class EmployeeDetailsMaster {
 	private String branch;
 	private String designation;
 	private String department;
-	private int employeeAge;
+	private float employeeAge;
 	private String employeeSex;
 	private Date dateOfBirth;
 	private String nameOfGuardian;
@@ -64,11 +64,11 @@ public class EmployeeDetailsMaster {
 		this.id = id;
 	}
 
-	public int getEmployeeAge() {
+	public float getEmployeeAge() {
 		return employeeAge;
 	}
 
-	public void setEmployeeAge(int employeeAge) {
+	public void setEmployeeAge(float employeeAge) {
 		this.employeeAge = employeeAge;
 	}
 

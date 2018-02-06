@@ -17,7 +17,7 @@ public class Wps {
 	private String nameOfGuardian;
 	private String employeeSex;
 	private Date dateOfBirth;
-	private int employeeAge;
+	private float employeeAge;
 	private String designation;
 	private String designationCode;
 	private String branch;
@@ -130,11 +130,11 @@ public class Wps {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public int getEmployeeAge() {
+	public float getEmployeeAge() {
 		return employeeAge;
 	}
 
-	public void setEmployeeAge(int employeeAge) {
+	public void setEmployeeAge(float employeeAge) {
 		this.employeeAge = employeeAge;
 	}
 
