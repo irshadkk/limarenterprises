@@ -38,7 +38,8 @@
     "ngx-bootstrap": "1.8.1",
     "rxjs": "5.4.3",
     "ts-helpers": "1.1.2",
-    "zone.js": "0.8.16"
+    "zone.js": "0.8.16",
+    "ng-block-ui": "latest"
   },
   "devDependencies": {
     "@angular/cli": "^1.6.5",
@@ -57,7 +58,8 @@
     "protractor": "5.1.2",
     "ts-node": "3.3.0",
     "tslint": "5.6.0",
-    "typescript": "2.4.2"
+    "typescript": "2.4.2",
+    "webpack": "^3.10.0"
   },
   "engines": {
     "node": ">= 6.9.0",

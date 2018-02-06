@@ -26,6 +26,7 @@ import {UploadFileService} from './components/upload/upload-file.service';
 import { FullLayoutComponent } from './layouts/full-layout.component';
 import { SimpleLayoutComponent } from './layouts/simple-layout.component';
 import { LoginComponent } from './pages/login.component';
+import { BlockUIModule } from 'ng-block-ui';
 
 @NgModule({
   imports: [
@@ -33,7 +34,7 @@ import { LoginComponent } from './pages/login.component';
     AppRoutingModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
-    ChartsModule, HttpModule,HttpClientModule
+    ChartsModule, HttpModule,HttpClientModule,BlockUIModule
   ],
   declarations: [
   LoginComponent,

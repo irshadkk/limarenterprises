@@ -1,13 +1,14 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
 import { SalaryService } from './salary.service';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 
 @Component({
   templateUrl: 'viewsalary.component.html',
   providers: [SalaryService]
 })
-export class ViewSalaryComponent {
+export class ViewSalaryComponent implements OnInit {
   loading: boolean = false;
   public employeeSalArr;
   public currentItem = [];
@@ -17,19 +18,27 @@ export class ViewSalaryComponent {
     "2022", "2023", "2024", "2025", "2026", "2027"];
   public month = this.monthSelectArr[0];
   public year = this.yearSelectArr[0];
+  @BlockUI() blockUI: NgBlockUI;
   constructor(private dataService: DataService, private salaryService: SalaryService) {
 
   }
+  ngOnInit() {
+    if(this.dataService.appDefined()){
+      
+    }
+  }
   objChanged() {
-    this.employeeSalArr=[];
+    this.employeeSalArr = [];
     this.loadSalary(this.year, this.month);
   }
-  generateExcel(){
+  generateExcel() {
     this.salaryService.generateSalaryExcel(this.year, this.monthSelectArr.indexOf(this.month.toString()))
   }
 
-
+  salaryAlreadyGenerated: boolean = false;
   loadSalary(year, month: string) {
+    this.blockUI.start("Loading..");
+    this.salaryAlreadyGenerated = false;
     this.loading = true;
     this.salaryService.getSalaryStatus(year, this.monthSelectArr.indexOf(month.toString()))
       .then(response => {
@@ -38,15 +47,29 @@ export class ViewSalaryComponent {
             .then(data => {
               this.employeeSalArr = data;
               this.loading = false;
+              setTimeout(() => {
+                this.blockUI.stop();
+              }, 1500);
             })
         } else {
-          alert('Salary Generated for selected month')
-          this.loading = false;
+          this.salaryAlreadyGenerated = true;
+          this.salaryService.getSalary(year, this.monthSelectArr.indexOf(month.toString()))
+            .then(data => {
+              this.employeeSalArr = data;
+              this.loading = false;
+              setTimeout(() => {
+                this.blockUI.stop();
+              }, 1500);
+            })
+
         }
       })
       .catch(error => {
         alert('Error Occured during salary generation')
         this.loading = false;
+        setTimeout(() => {
+          this.blockUI.stop();
+        }, 1500);
       })
   }
 

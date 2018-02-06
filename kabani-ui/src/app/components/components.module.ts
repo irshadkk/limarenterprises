@@ -41,13 +41,14 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 
 // Components Routing
 import { ComponentsRoutingModule } from './components-routing.module';
+import { BlockUIModule } from 'ng-block-ui';
 
 @NgModule({
   imports: [
     ComponentsRoutingModule,
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
-    TabsModule,HttpModule,CommonModule,FormsModule, ReactiveFormsModule,HttpClientModule 
+    TabsModule,HttpModule,CommonModule,FormsModule, ReactiveFormsModule,HttpClientModule,BlockUIModule
   ],
   declarations: [ 
     UploadCsvComponent,DetailsUploadComponent,FormUploadComponent,ListUploadComponent,EmployeeUploadComponent,

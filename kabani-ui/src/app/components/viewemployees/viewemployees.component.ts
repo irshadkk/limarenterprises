@@ -1,52 +1,59 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
 import { DatePipe } from '@angular/common';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 
 @Component({
   templateUrl: 'viewemployees.component.html'
 })
-export class ViewEmployeesComponent {
+export class ViewEmployeesComponent implements OnInit {
   public employeeArr;
   public infoModal;
   public currentItem = {};
   public currentSalaryItem = [];
   public currentLeaveItem = [];
-  public statusArr = ["Absent", "Present", "1/2Present"]
-  constructor(private dataService: DataService, private datePipe: DatePipe) {
-    this.loadEmployees();
+  public statusArr = ["Absent", "Present", "1/2Present"];
+  @BlockUI() blockUI: NgBlockUI;
 
+  constructor(private dataService: DataService, private datePipe: DatePipe) {
+
+
+  }
+  ngOnInit() {
+    if (this.dataService.appDefined()) {
+      this.loadEmployees();
+    }
   }
 
 
   loadEmployees() {
+    this.blockUI.start("Loading..");
     this.dataService.getData(this.dataService.serviceurl + 'employee/all').subscribe(data => {
       this.employeeArr = data;
-
+      setTimeout(() => {
+        this.blockUI.stop();
+      }, 1500);
 
 
     });
   }
 
   saveChanges() {
+    this.blockUI.start("Saving..");
     console.log(JSON.stringify(this.currentItem))
     this.dataService.getPostData(this.dataService.serviceurl + 'employee/addorupdate', this.currentItem).subscribe(data => {
       if (data === true) {
-        alert("success")
         this.loadEmployees()
       } else {
-        alert("failure")
         this.loadEmployees()
       }
       this.infoModal.hide()
-
-
-
-
     });
 
   }
   onEditClick(infoModal, item) {
+    this.blockUI.start("Loading..");
     this.infoModal = infoModal;
     if (item) {
       console.log(JSON.stringify(item))
@@ -103,7 +110,9 @@ export class ViewEmployeesComponent {
 
       };
     }
-    infoModal.show()
+    infoModal.show(); setTimeout(() => {
+      this.blockUI.stop();
+    }, 1500);
   }
 
 

@@ -1,11 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, TemplateRef, OnInit } from '@angular/core';
+import { DataService } from '../data.service';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './full-layout.component.html'
 })
 export class FullLayoutComponent implements OnInit {
+  @BlockUI() blockUI: NgBlockUI;
 
+  constructor(private router: Router,private dataService: DataService) {
+  }
+
+  ngOnInit() {
+    if(this.dataService.appDefined()){
+      
+    }
+  }
   public disabled = false;
   public status: {isopen: boolean} = {isopen: false};
 
@@ -18,6 +30,9 @@ export class FullLayoutComponent implements OnInit {
     $event.stopPropagation();
     this.status.isopen = !this.status.isopen;
   }
+  logout(){
+    localStorage.clear();
+    this.router.navigate(['/login']);
+   }
 
-  ngOnInit(): void {}
 }
