@@ -1,4 +1,4 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
 import { SalaryService } from './salary.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
@@ -8,7 +8,7 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
   templateUrl: 'viewsalary.component.html',
   providers: [SalaryService]
 })
-export class ViewSalaryComponent {
+export class ViewSalaryComponent implements OnInit {
   loading: boolean = false;
   public employeeSalArr;
   public currentItem = [];
@@ -21,6 +21,11 @@ export class ViewSalaryComponent {
   @BlockUI() blockUI: NgBlockUI;
   constructor(private dataService: DataService, private salaryService: SalaryService) {
 
+  }
+  ngOnInit() {
+    if(this.dataService.appDefined()){
+      
+    }
   }
   objChanged() {
     this.employeeSalArr = [];

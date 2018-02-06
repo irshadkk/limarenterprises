@@ -1,10 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, OnInit } from '@angular/core';
+import { DataService } from '../data.service';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
   templateUrl: 'register.component.html'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
 
-  constructor() { }
+  @BlockUI() blockUI: NgBlockUI;
+
+  constructor(private dataService: DataService) { }
+
+  ngOnInit() {
+
+  }
 
 }

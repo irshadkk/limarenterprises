@@ -1,4 +1,5 @@
-import {Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { DataService } from '../../../data.service';
 
 @Component({
   selector: 'details-upload',
@@ -9,9 +10,12 @@ export class DetailsUploadComponent implements OnInit {
 
   @Input() fileUpload: string;
 
-  constructor() {}
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
+    if (this.dataService.appDefined()) {
+
+    }
   }
 
 }

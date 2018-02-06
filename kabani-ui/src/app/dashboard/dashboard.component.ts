@@ -12,10 +12,12 @@ export class DashboardComponent implements OnInit {
 
   constructor(private dataService: DataService) {
   }
-  
+
   @BlockUI() blockUI: NgBlockUI;
   ngOnInit() {
-    this.loadAttendance();
+    if (this.dataService.appDefined()) {
+      this.loadAttendance();
+    }
   }
   loadAttendance() {
     this.blockUI.start("Loading..");

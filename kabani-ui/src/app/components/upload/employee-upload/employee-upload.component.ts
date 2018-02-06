@@ -14,9 +14,12 @@ export class EmployeeUploadComponent implements OnInit {
   currentFileUpload: File
   progress: { percentage: number } = { percentage: 0 }
 
-  constructor(private uploadService: UploadFileService,private dataService:DataService) { }
+  constructor(private uploadService: UploadFileService, private dataService: DataService) { }
 
   ngOnInit() {
+    if (this.dataService.appDefined()) {
+
+    }
   }
 
   selectFile(event) {
@@ -25,9 +28,9 @@ export class EmployeeUploadComponent implements OnInit {
 
   upload() {
     this.progress.percentage = 0;
-let url=this.dataService.serviceurl+'employeeupload/bulk'; 
+    let url = this.dataService.serviceurl + 'employeeupload/bulk';
     this.currentFileUpload = this.selectedFiles.item(0)
-    this.uploadService.pushFileToStorage(this.currentFileUpload,url).subscribe(event => {
+    this.uploadService.pushFileToStorage(this.currentFileUpload, url).subscribe(event => {
       if (event.type === HttpEventType.UploadProgress) {
         this.progress.percentage = Math.round(100 * event.loaded / event.total);
       } else if (event instanceof HttpResponse) {

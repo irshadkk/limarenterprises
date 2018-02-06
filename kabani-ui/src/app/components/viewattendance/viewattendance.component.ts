@@ -1,45 +1,54 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
-  
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+
 
 @Component({
   templateUrl: 'viewattendance.component.html'
 })
-export class ViewAttendanceComponent {
+export class ViewAttendanceComponent implements OnInit {
   public employeeAttendanceArr;
-  public currentItem=[];
-  public statusArr=["Absent","Present","1/2Present"]
-  constructor(private dataService:DataService) {
-    this.loadAttendance();
+  public currentItem = [];
+  public statusArr = ["Absent", "Present", "1/2Present"];
+  @BlockUI() blockUI: NgBlockUI;
 
-  }
-  
-  
-  loadAttendance() { 
-    this.dataService.getPostData(this.dataService.serviceurl+'getAllAttandance',null).subscribe(data => { 
-      this.employeeAttendanceArr=data;
+  constructor(private dataService: DataService) { }
 
-     
-
-     });
+  ngOnInit() {
+    if (this.dataService.appDefined()) {
+      this.loadAttendance();
+    }
   }
 
-  saveChanges() { 
+
+  loadAttendance() {
+    this.blockUI.start("Loading..");
+    this.dataService.getPostData(this.dataService.serviceurl + 'getAllAttandance', null).subscribe(data => {
+      this.employeeAttendanceArr = data;
+      setTimeout(() => {
+        this.blockUI.stop();
+      }, 1500);
+
+
+    });
+  }
+
+  saveChanges() {
     console.log(JSON.stringify(this.currentItem))
-    this.dataService.getPostData(this.dataService.serviceurl+'updateUserAttandance',this.currentItem).subscribe(data => { 
+    this.dataService.getPostData(this.dataService.serviceurl + 'updateUserAttandance', this.currentItem).subscribe(data => {
       alert(data)
 
-     
 
-     });
-     
+
+    });
+
   }
-  onEditClick(infoModal,item) {  
-     this.currentItem=item;
-     console.log(JSON.stringify(this.currentItem))
-     infoModal.show()
-    
+  onEditClick(infoModal, item) {
+    this.currentItem = item;
+    console.log(JSON.stringify(this.currentItem))
+    infoModal.show()
+
   }
-   
+
 
 }

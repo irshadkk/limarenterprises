@@ -1,4 +1,4 @@
-import { Component, TemplateRef , OnInit} from '@angular/core';
+import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
 import { DatePipe } from '@angular/common';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
@@ -21,7 +21,9 @@ export class ViewEmployeesComponent implements OnInit {
 
   }
   ngOnInit() {
-    this.loadEmployees();
+    if (this.dataService.appDefined()) {
+      this.loadEmployees();
+    }
   }
 
 

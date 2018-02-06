@@ -6,15 +6,17 @@ import { DatePipe } from '@angular/common';
 @Component({
   templateUrl: 'addholidays.component.html'
 })
-export class AddholidaysComponent {
+export class AddholidaysComponent implements OnInit {
   public date: ''
   public comment: ''
   public holidayCurrentObj = { typeOfHoliday: '', nameOfHoliday: '', descOfHoliday: '', dateOfHoliday: '' }
   public holidayArr = [];
 
-  constructor(private dataService: DataService,private datePipe: DatePipe) {
-
-    this.loadHolidays();
+  constructor(private dataService: DataService, private datePipe: DatePipe) { }
+  ngOnInit() {
+    if (this.dataService.appDefined()) {
+      this.loadHolidays();
+    }
   }
 
   public brandPrimary = '#20a8d8';
@@ -31,16 +33,16 @@ export class AddholidaysComponent {
   }
   onEditClick(infoModal, item) {
     if (item) {
-      console.log(JSON.stringify(item)) 
-      
-      item.dateOfHoliday=this.datePipe.transform(item.dateOfHoliday, 'yyyy-MM-dd');
+      console.log(JSON.stringify(item))
+
+      item.dateOfHoliday = this.datePipe.transform(item.dateOfHoliday, 'yyyy-MM-dd');
       console.log(JSON.stringify(item.dateOfHoliday))
       this.holidayCurrentObj = item;
     }
-    else{
+    else {
       this.holidayCurrentObj = { typeOfHoliday: '', nameOfHoliday: '', descOfHoliday: '', dateOfHoliday: '' };
     }
-    infoModal.show() 
+    infoModal.show()
   }
   addOrEditHolidays(infoModal) {
     this.dataService.getPostData(this.dataService.serviceurl + 'holiday/addorupdate', this.holidayCurrentObj).subscribe(data => {
@@ -54,7 +56,7 @@ export class AddholidaysComponent {
     this.dataService.getPostData(this.dataService.serviceurl + 'holiday/delete', item).subscribe(data => {
       if (data) {
         this.loadHolidays()
-      
+
       }
     });
   }

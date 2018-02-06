@@ -18,7 +18,9 @@ export class ViewleavesummaryComponent implements OnInit {
 
   constructor(private dataService: DataService) { }
   ngOnInit() {
-    this.loadEmployees();
+    if (this.dataService.appDefined()) {
+      this.loadEmployees();
+    }
   }
 
 
