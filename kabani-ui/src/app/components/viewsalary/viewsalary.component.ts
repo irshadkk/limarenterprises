@@ -1,6 +1,7 @@
 import { Component, TemplateRef } from '@angular/core';
 import { DataService } from '../../data.service';
 import { SalaryService } from './salary.service';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class ViewSalaryComponent {
     "2022", "2023", "2024", "2025", "2026", "2027"];
   public month = this.monthSelectArr[0];
   public year = this.yearSelectArr[0];
+  @BlockUI() blockUI: NgBlockUI;
   constructor(private dataService: DataService, private salaryService: SalaryService) {
 
   }
@@ -25,12 +27,12 @@ export class ViewSalaryComponent {
     this.loadSalary(this.year, this.month);
   }
   generateExcel() {
-    alert('xxxxxxxxxxxx00000')
     this.salaryService.generateSalaryExcel(this.year, this.monthSelectArr.indexOf(this.month.toString()))
   }
 
   salaryAlreadyGenerated: boolean = false;
   loadSalary(year, month: string) {
+    this.blockUI.start("Loading..");
     this.salaryAlreadyGenerated = false;
     this.loading = true;
     this.salaryService.getSalaryStatus(year, this.monthSelectArr.indexOf(month.toString()))
@@ -40,6 +42,9 @@ export class ViewSalaryComponent {
             .then(data => {
               this.employeeSalArr = data;
               this.loading = false;
+              setTimeout(() => {
+                this.blockUI.stop();
+              }, 1500);
             })
         } else {
           this.salaryAlreadyGenerated = true;
@@ -47,6 +52,9 @@ export class ViewSalaryComponent {
             .then(data => {
               this.employeeSalArr = data;
               this.loading = false;
+              setTimeout(() => {
+                this.blockUI.stop();
+              }, 1500);
             })
 
         }
@@ -54,6 +62,9 @@ export class ViewSalaryComponent {
       .catch(error => {
         alert('Error Occured during salary generation')
         this.loading = false;
+        setTimeout(() => {
+          this.blockUI.stop();
+        }, 1500);
       })
   }
 
