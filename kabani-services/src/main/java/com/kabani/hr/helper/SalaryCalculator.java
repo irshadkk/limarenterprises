@@ -56,6 +56,10 @@ public class SalaryCalculator {
 	@Autowired
 	private SalaryStatusRepository salaryStatusRepository;
 
+	public List<Wps> getSalary(int year, int month) {
+		return wpsRepository.findForCurrentMonth(year, month);
+	}
+
 	public List calculateSalaryOfEmployees(String year, String month) {
 		String[] monthArry = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 		int indexOfMonth = Arrays.asList(monthArry).indexOf(month);
@@ -390,13 +394,13 @@ public class SalaryCalculator {
 
 		try {
 			List<Wps> returnValue = wpsRepository.findForCurrentMonth(year, month);
-			// Read the spreadsheet that needs to be updated
-			FileInputStream fsIP = new FileInputStream(new File(""));
-
+			ClassLoader loader = getClass().getClassLoader();
+			FileInputStream fsIP = new FileInputStream(new File(loader.getResource("ho_wps_template.xlsx").getFile()));
+System.out.println("xxx-->>"+loader.getResource("ho_wps_template.xlsx").getFile());
 			XSSFWorkbook workbook = new XSSFWorkbook(fsIP);
 
 			Object[][] salaryExcel = new Object[returnValue.size()][heading.length];
-			int i = 0;
+			
 			XSSFSheet sheet = workbook.createSheet("Salary");
 			int rowCount = 0;
 			Row row = sheet.createRow(rowCount++);
@@ -406,88 +410,89 @@ public class SalaryCalculator {
 				cell.setCellValue(cellHeading);
 			}
 			for (Wps excelRow : returnValue) {
+				System.out.println("xxxxx--"+excelRow.toString());
 				row = sheet.createRow(rowCount++);
 				Cell cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getEmployeeCode());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getEmployeeName());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getNameOfGuardian());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getEmployeeSex());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getDateOfBirth());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getDesignation());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getDesignationCode());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getDateOfJoining());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getMobileNumber());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getMobileNumber());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getEmailId());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getBankName());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getIfscCode());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getBankAccountNumber());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getLossOfPayDays());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getNumberOfWeeklyOffGranted());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getNumberOfLeaveGranted());
-								
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getBasic());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getDa());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getHra());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getCityCompensationAllowence());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getGrossMonthlyWages());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getOverTimeWages());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getLeaveWages());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getNationalAndFestivalHolidayWages());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getArrearPaid());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getBonus());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getMaternityBenefit());
 
@@ -498,13 +503,13 @@ public class SalaryCalculator {
 				cell.setCellValue(excelRow.getTotalStaffAdvance());
 
 				cell = row.createCell(cellCount++);
-				cell.setCellValue("");//Total Amount
+				cell.setCellValue("");// Total Amount
 
 				cell = row.createCell(cellCount++);
-				cell.setCellValue("");//Provident Fund
+				cell.setCellValue("");// Provident Fund
 
 				cell = row.createCell(cellCount++);
-				cell.setCellValue("");//State INsurance
+				cell.setCellValue("");// State INsurance
 
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getTotalStaffAdvance());
@@ -514,42 +519,43 @@ public class SalaryCalculator {
 
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getTotalProfessionalTax());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getTotalProfessionalTax());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getTaxDeductedAtSource());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getDeductionOfFine());
 
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getDeductionForLossAndDamages());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getOtherDeduction());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getTotalDeduction());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getNetWagesPaid());
-				
+
 				cell = row.createCell(cellCount++);
 				cell.setCellValue(excelRow.getDateOfPayment());
-				
+
 				cell = row.createCell(cellCount++);
-				cell.setCellValue("");//REMARKSss			
+				cell.setCellValue("");// REMARKSss
 			}
-			System.out.println("XXXXXXXXXXX--nO OF rOWS IN EXCEL--->>" + rowCount);
+			System.out.println(sheet.toString());
+			
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
 	}
 
 }

@@ -18,7 +18,7 @@ export class SalaryService {
   }
   getSalaryStatus(year: number, month: number): Promise<number> {
     this.headers = this.createHeader();
-    return this.http.get(this.dataService.serviceurl + `salary/salaryGenerated?year=${year}&month=${month+1}`, { headers: this.headers })
+    return this.http.get(this.dataService.serviceurl + `salary/salaryGenerated?year=${year}&month=${month + 1}`, { headers: this.headers })
       .toPromise()
       .then(response => {
         return response.json();
@@ -28,7 +28,17 @@ export class SalaryService {
 
   generateSalary(year: any, month: any) {
     this.headers = this.createHeader();
-    return this.http.post(this.dataService.serviceurl + `salary/getSalary/${year}/${month}`, { headers: this.headers })
+    return this.http.post(this.dataService.serviceurl + `salary/generateSalary/${year}/${month}`, { headers: this.headers })
+      .toPromise()
+      .then(response => {
+        return response.json();
+      })
+      .catch(this.handleError);
+  }
+
+  getSalary(year: any, month: any) {
+    this.headers = this.createHeader();
+    return this.http.get(this.dataService.serviceurl + `salary/getSalary?year=${year}&month=${month + 1}`, { headers: this.headers })
       .toPromise()
       .then(response => {
         return response.json();
@@ -38,10 +48,10 @@ export class SalaryService {
 
   generateSalaryExcel(year: any, month: any) {
     this.headers = this.createHeader();
-    return this.http.get(this.dataService.serviceurl + `salary/getSalaryExcel?year=${year}&month=${month+1}`, { headers: this.headers })
+    return this.http.get(this.dataService.serviceurl + `salary/getSalaryExcel?year=${year}&month=${month + 1}`, { headers: this.headers })
       .toPromise()
       .then(response => {
-        return response.json();
+        return response;
       })
       .catch(this.handleError);
   }

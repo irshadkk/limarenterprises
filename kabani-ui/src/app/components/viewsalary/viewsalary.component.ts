@@ -21,15 +21,17 @@ export class ViewSalaryComponent {
 
   }
   objChanged() {
-    this.employeeSalArr=[];
+    this.employeeSalArr = [];
     this.loadSalary(this.year, this.month);
   }
-  generateExcel(){
+  generateExcel() {
+    alert('xxxxxxxxxxxx00000')
     this.salaryService.generateSalaryExcel(this.year, this.monthSelectArr.indexOf(this.month.toString()))
   }
 
-
+  salaryAlreadyGenerated: boolean = false;
   loadSalary(year, month: string) {
+    this.salaryAlreadyGenerated = false;
     this.loading = true;
     this.salaryService.getSalaryStatus(year, this.monthSelectArr.indexOf(month.toString()))
       .then(response => {
@@ -40,8 +42,13 @@ export class ViewSalaryComponent {
               this.loading = false;
             })
         } else {
-          alert('Salary Generated for selected month')
-          this.loading = false;
+          this.salaryAlreadyGenerated = true;
+          this.salaryService.getSalary(year, this.monthSelectArr.indexOf(month.toString()))
+            .then(data => {
+              this.employeeSalArr = data;
+              this.loading = false;
+            })
+
         }
       })
       .catch(error => {
