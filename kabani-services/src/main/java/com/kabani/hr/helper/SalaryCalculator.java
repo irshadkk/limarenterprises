@@ -1,5 +1,6 @@
 package com.kabani.hr.helper;
 
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -30,7 +31,11 @@ import com.kabani.hr.repository.UserAttendanceDetailsRepository;
 import com.kabani.hr.repository.WpsRepository;
 
 import jxl.Workbook;
+import jxl.format.Colour;
+import jxl.format.Pattern;
 import jxl.write.Label;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
@@ -445,6 +450,8 @@ public class SalaryCalculator {
 				"Welfare Fund", "Professional Tax", "Tax Deducted at Source", "Deduction of Fine",
 				"Deduction  for  Loss & Damages", "Other Deduction", "Total Deduction", "Net wages paid",
 				"Date of payment", "Remarks" };
+		Integer[] array = { 0, 1, 2, 3, 4, 5, 7, 10, 11, 12, 13, 17, 18, 21, 30, 41, 42 };
+		List<Integer> redFontIndex = Arrays.asList(array);
 
 		try {
 			List<Wps> returnValue = wpsRepository.findForCurrentMonth(year, month);
@@ -455,7 +462,7 @@ public class SalaryCalculator {
 
 			workbook = Workbook.createWorkbook(response.getOutputStream());
 			WritableSheet excelOutputsheet = workbook.createSheet("Salary", 0);
-			addExcelOutputHeader(excelOutputsheet, heading);
+			addExcelOutputHeader(excelOutputsheet, heading, redFontIndex);
 			writeExcelOutputData(excelOutputsheet, returnValue, heading);
 
 			workbook.write();
@@ -475,12 +482,21 @@ public class SalaryCalculator {
 
 	}
 
-	private void addExcelOutputHeader(WritableSheet sheet, String[] heading)
+	private void addExcelOutputHeader(WritableSheet sheet, String[] heading,List<Integer> redFontIndex)
 			throws RowsExceededException, WriteException {
 		for (int cell = 0; cell < heading.length; cell++) {
-			sheet.addCell(new Label(cell, 0, heading[cell]));
+			sheet.setColumnView(cell, 20);
+			sheet.addCell(new Label(cell, 0, heading[cell],getCellFormat(redFontIndex.contains(cell)?Colour.RED:Colour.BLACK, Pattern.GRAY_25)));
 		}
 
+	}
+
+	private static WritableCellFormat getCellFormat(Colour colour, Pattern pattern) throws WriteException {
+		WritableFont cellFont = new WritableFont(WritableFont.ARIAL, 16);
+		cellFont.setPointSize(10);
+		cellFont.setColour(colour);
+		WritableCellFormat cellFormat = new WritableCellFormat(cellFont);
+		return cellFormat;
 	}
 
 	private void writeExcelOutputData(WritableSheet sheet, List<Wps> returnValue, String[] heading) throws Exception {
@@ -523,9 +539,11 @@ public class SalaryCalculator {
 
 				sheet.addCell(new Label(colNo++, rowNo, excelRow.getIfscCode()));
 				// cell.setCellValue(excelRow.getIfscCode());
-
-				sheet.addCell(new Label(colNo++, rowNo, excelRow.getBankAccountNumber()));
+				
+				sheet.addCell(new Label(colNo++, rowNo, excelRow.getBankAccountNumber(),getCellFormat(Colour.RED, Pattern.GRAY_25)));
 				// cell.setCellValue(excelRow.getBankAccountNumber());
+				
+				sheet.addCell(new Label(colNo++, rowNo, excelRow.getDaysOfAttandance()+""));
 
 				sheet.addCell(new Label(colNo++, rowNo, excelRow.getLossOfPayDays() + ""));
 				// cell.setCellValue(excelRow.getLossOfPayDays());
@@ -575,13 +593,13 @@ public class SalaryCalculator {
 				sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalStaffAdvance() + ""));
 				// cell.setCellValue(excelRow.getTotalStaffAdvance());
 
-				sheet.addCell(new Label(colNo++, rowNo, ""));// Total Amount
+				sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalSalaryForThisMonth()+""));// Total Amount
 				// cell.setCellValue("");
 
-				sheet.addCell(new Label(colNo++, rowNo, ""));// Provident Fund
+				sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalPF()+""));// Provident Fund
 				// cell.setCellValue("");// Provident Fund
 
-				sheet.addCell(new Label(colNo++, rowNo, ""));/// State INsurance
+				sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalESI()+""));/// State INsurance
 				// cell.setCellValue("");// State INsurance
 
 				sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalStaffAdvance() + ""));
@@ -589,9 +607,6 @@ public class SalaryCalculator {
 
 				sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalEmployeeWelfareFund() + ""));
 				// cell.setCellValue(excelRow.getTotalEmployeeWelfareFund());
-
-				sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalProfessionalTax() + ""));
-				// cell.setCellValue(excelRow.getTotalProfessionalTax());
 
 				sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalProfessionalTax() + ""));
 				// cell.setCellValue(excelRow.getTotalProfessionalTax());
