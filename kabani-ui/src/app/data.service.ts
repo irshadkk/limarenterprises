@@ -13,7 +13,7 @@ export class DataService {
   cars = [
     'Ford', 'Chevrolet', 'Buick'
   ];
-  serviceurl = 'http://localhost:8080/';
+  serviceurl = 'http://localhost:8888/';
   //serviceurl= 'http://kabanip-dev.us-east-1.elasticbeanstalk.com/';
 
   branch = "";
