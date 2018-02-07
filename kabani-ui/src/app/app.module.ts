@@ -27,6 +27,7 @@ import { FullLayoutComponent } from './layouts/full-layout.component';
 import { SimpleLayoutComponent } from './layouts/simple-layout.component';
 import { LoginComponent } from './pages/login.component';
 import { BlockUIModule } from 'ng-block-ui';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { BlockUIModule } from 'ng-block-ui';
     AppRoutingModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
+    SimpleNotificationsModule,
     ChartsModule, HttpModule,HttpClientModule,BlockUIModule
   ],
   declarations: [

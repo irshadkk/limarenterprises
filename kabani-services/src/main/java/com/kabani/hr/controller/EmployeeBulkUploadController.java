@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,12 +25,12 @@ import com.kabani.hr.repository.EmployeeDetailsMasterRepository;
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/employeeupload") // This means URL's start with /demo (after Application path)
 public class EmployeeBulkUploadController {
-
+	private final Logger logger = LogManager.getLogger(this.getClass());
 	@Autowired
 	private EmployeeDetailsMasterRepository employeeDetailsMasterRepository;
 
 	@PostMapping(path = "/bulk")
-	public @ResponseBody Iterable<EmployeeDetailsMaster> handleFileUpload(@RequestParam("file") MultipartFile file) {
+	public @ResponseBody Iterable<EmployeeDetailsMaster> handleFileUpload(@RequestParam("file") MultipartFile file) throws Exception {
 		InputStream is = null;
 		BufferedReader bfReader = null;
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
@@ -207,7 +209,8 @@ public class EmployeeBulkUploadController {
 				employeeDetailsMasterRepository.save(employeeDetailsMasterArrList);
 
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("****Exception in updateOrAddEmployee()  "+e.getMessage());
+				throw e;
 			} finally {
 				try {
 					if (is != null)
@@ -227,7 +230,7 @@ public class EmployeeBulkUploadController {
 	}
 
 	public String parseInput(String inputString) {
-		String in=inputString.replaceAll("\"", "");
+		String in = inputString.replaceAll("\"", "");
 		return in.replaceAll(",", "");
 	}
 

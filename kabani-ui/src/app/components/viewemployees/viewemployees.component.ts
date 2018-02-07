@@ -2,6 +2,7 @@ import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
 import { DatePipe } from '@angular/common';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { NotificationsService } from 'angular2-notifications';
 
 
 @Component({
@@ -15,8 +16,15 @@ export class ViewEmployeesComponent implements OnInit {
   public currentLeaveItem = [];
   public statusArr = ["Absent", "Present", "1/2Present"];
   @BlockUI() blockUI: NgBlockUI;
-
-  constructor(private dataService: DataService, private datePipe: DatePipe) {
+  public notificationOptions = {
+    position: ["bottom", "right"],
+    timeOut: 5000,
+    lastOnBottom: true,
+    showProgressBar: true,
+    pauseOnHover: true,
+    clickToClose: true,
+  }
+  constructor(private dataService: DataService, private datePipe: DatePipe, public pushService: NotificationsService) {
 
 
   }
@@ -34,9 +42,8 @@ export class ViewEmployeesComponent implements OnInit {
       setTimeout(() => {
         this.blockUI.stop();
       }, 1500);
-
-
-    });
+    },
+    (error => { this.handleError(error,"loadEmployees()");}));
   }
 
   saveChanges() {
@@ -49,7 +56,8 @@ export class ViewEmployeesComponent implements OnInit {
         this.loadEmployees()
       }
       this.infoModal.hide()
-    });
+    },
+    (error => { this.handleError(error,"saveChanges()");}));
 
   }
   onEditClick(infoModal, item) {
@@ -113,6 +121,13 @@ export class ViewEmployeesComponent implements OnInit {
     infoModal.show(); setTimeout(() => {
       this.blockUI.stop();
     }, 1500);
+  }
+
+  private handleError(error: any, method: any): Promise<any> {
+    console.error('An error occurred in ViewEmployeesComponent at method ' + method, +" " + error);
+    this.pushService.error('Error', 'An error occurred in ViewEmployeesComponent at method ' + method, +" " + error);
+    this.blockUI.stop();
+    return Promise.reject(error.message || error);
   }
 
 

@@ -23,7 +23,7 @@ export class SalaryService {
       .then(response => {
         return response.json();
       })
-      .catch(this.handleError);
+      .catch(error=>{ return this.handleError(error,'getSalaryStatus')});
   }
 
   generateSalary(year: any, month: any) {
@@ -33,7 +33,7 @@ export class SalaryService {
       .then(response => {
         return response.json();
       })
-      .catch(this.handleError);
+      .catch(error=>{ return this.handleError(error,'generateSalary')});
   }
 
   getSalary(year: any, month: any) {
@@ -43,7 +43,7 @@ export class SalaryService {
       .then(response => {
         return response.json();
       })
-      .catch(this.handleError);
+      .catch(error=>{ return this.handleError(error,'getSalary')});
   }
 
   generateSalaryExcel(year: any, month: any) {
@@ -59,8 +59,8 @@ export class SalaryService {
 
 
 
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred in Salary Service', error);
+  private handleError(error: any,method:string): Promise<any> {
+    console.error('An error occurred in Salary Service @ method'+method, error);
     return Promise.reject(error.message || error);
   }
 }

@@ -33,6 +33,7 @@ import { ViewleavesummaryComponent } from './viewleavesummary/viewleavesummary.c
 import { AddholidaysComponent } from './addholidays/addholidays.component'; 
 
 
+
 // Modal Component
 import { ModalModule } from 'ngx-bootstrap/modal'; 
 
@@ -42,12 +43,14 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 // Components Routing
 import { ComponentsRoutingModule } from './components-routing.module';
 import { BlockUIModule } from 'ng-block-ui';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 
 @NgModule({
   imports: [
     ComponentsRoutingModule,
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
+    SimpleNotificationsModule,
     TabsModule,HttpModule,CommonModule,FormsModule, ReactiveFormsModule,HttpClientModule,BlockUIModule
   ],
   declarations: [ 

@@ -1,7 +1,7 @@
 import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
-
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   templateUrl: 'viewleavesummary.component.html'
@@ -15,8 +15,15 @@ export class ViewleavesummaryComponent implements OnInit {
   public currentLeaveItem = [];
   public statusArr = ["Absent", "Present", "1/2Present"]
   @BlockUI() blockUI: NgBlockUI;
-
-  constructor(private dataService: DataService) { }
+  public notificationOptions = {
+    position: ["bottom", "right"],
+    timeOut: 5000,
+    lastOnBottom: true,
+    showProgressBar: true,
+    pauseOnHover: true,
+    clickToClose: true,
+  }
+  constructor(private dataService: DataService, public pushService: NotificationsService) { }
   ngOnInit() {
     if (this.dataService.appDefined()) {
       this.loadEmployees();
@@ -33,7 +40,8 @@ export class ViewleavesummaryComponent implements OnInit {
       }, 1500);
 
 
-    });
+    },
+    (error => { this.handleError(error,"loadEmployees()");}));
   }
 
   saveChanges() {
@@ -42,7 +50,8 @@ export class ViewleavesummaryComponent implements OnInit {
       setTimeout(() => {
         this.blockUI.stop();
       }, 1500);
-    });
+    },
+    (error => { this.handleError(error,"saveChanges()");}));
 
   }
   onEditClick(infoModal, item) {
@@ -60,7 +69,8 @@ export class ViewleavesummaryComponent implements OnInit {
         setTimeout(() => {
           this.blockUI.stop();
         }, 1500);
-      });
+      },
+      (error => { this.handleError(error,"onEditClick()");}));
 
     });
 
@@ -77,8 +87,17 @@ export class ViewleavesummaryComponent implements OnInit {
 
 
 
-      });
+      },
+      (error => { this.handleError(error,"onResetClick()");}));
     });
+  }
+
+  
+  private handleError(error: any, method: any): Promise<any> {
+    console.error('An error occurred in ViewleavesummaryComponent at method ' + method, +" " + error);
+    this.pushService.error('Error', 'An error occurred in ViewleavesummaryComponent at method ' + method, +" " + error);
+    this.blockUI.stop();
+    return Promise.reject(error.message || error);
   }
 
 
