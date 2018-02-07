@@ -1,7 +1,5 @@
 package com.kabani.hr.helper;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -13,10 +11,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -488,8 +482,7 @@ public class SalaryCalculator {
 			sheet.addCell(new Label(colNo++, rowNo, excelRow.getNumberOfWeeklyOffGranted()+""));
 			//cell.setCellValue(excelRow.getNumberOfWeeklyOffGranted());
 
-			sheet.addCell(new Label(colNo++, rowNo, excelRow.getNumberOfLeaveGranted()+""));
-			//cell.setCellValue(excelRow.getNumberOfLeaveGranted());
+			
 
 			sheet.addCell(new Label(colNo++, rowNo, excelRow.getBasic()+""));
 			//cell.setCellValue(excelRow.getBasic());
@@ -499,6 +492,9 @@ public class SalaryCalculator {
 
 			sheet.addCell(new Label(colNo++, rowNo, excelRow.getHra()+""));
 			//cell.setCellValue(excelRow.getHra());
+			
+			sheet.addCell(new Label(colNo++, rowNo, excelRow.getNumberOfLeaveGranted()+""));
+			//cell.setCellValue(excelRow.getNumberOfLeaveGranted());
 
 			sheet.addCell(new Label(colNo++, rowNo, excelRow.getCityCompensationAllowence()+""));
 			//cell.setCellValue(excelRow.getCityCompensationAllowence());
