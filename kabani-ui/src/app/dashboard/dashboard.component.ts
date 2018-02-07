@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   templateUrl: 'dashboard.component.html'
@@ -10,10 +11,18 @@ export class DashboardComponent implements OnInit {
   public employeeAttendanceArr = [];
   public employeeAttendanceArrProcessed = [];
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService,public pushService: NotificationsService) {
   }
 
   @BlockUI() blockUI: NgBlockUI;
+  public notificationOptions = {
+    position: ["bottom", "right"],
+    timeOut: 5000,
+    lastOnBottom: true,
+    showProgressBar: true,
+    pauseOnHover: true,
+    clickToClose: true,
+  }
   ngOnInit() {
     if (this.dataService.appDefined()) {
       this.loadAttendance();
@@ -40,11 +49,18 @@ export class DashboardComponent implements OnInit {
           this.blockUI.stop();
         }, 1500);
 
-      });
+      },
+      (error => { this.handleError(error,"loadAttendance()");}));
 
       console.log("----" + JSON.stringify(this.employeeAttendanceArrProcessed))
 
     });
+  }
+  private handleError(error: any, method: any): Promise<any> {
+    console.error('An error occurred in DashboardComponent at method ' + method, +" " + error);
+    this.pushService.error('Error', 'An error occurred in DashboardComponent at method ' + method, +" " + error);
+    this.blockUI.stop();
+    return Promise.reject(error.message || error);
   }
 
 }

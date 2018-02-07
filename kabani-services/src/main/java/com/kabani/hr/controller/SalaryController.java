@@ -1,12 +1,13 @@
 package com.kabani.hr.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,48 +26,70 @@ import com.kabani.hr.helper.SalaryCalculator;
 @RequestMapping(path = "/salary") // This means URL's start with /demo (after
 // Application path)
 public class SalaryController {
+	private final Logger logger = LogManager.getLogger(this.getClass());
 
 	@Autowired
 	private SalaryCalculator salaryCalculator;
 	@Autowired
 	private ExcelOutputServiceImpl excelOutputServiceImpl;
-	
 
 	@RequestMapping(value = "/salaryGenerated", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody int getSalaryStatus(@RequestParam String year, @RequestParam String month) {
-		return salaryCalculator.hasSalaryGenerated(year, month);
+	public @ResponseBody int getSalaryStatus(@RequestParam String year, @RequestParam String month) throws Exception {
+		int response = 0;
+		try {
+			response = salaryCalculator.hasSalaryGenerated(year, month);
+		} catch (Exception e) {
+			logger.error("****Exception in getSalaryStatus() " + e.getMessage());
+			throw e;
+		}
+		return response;
 	}
 
 	@PostMapping(path = "/generateSalary/{year}/{month}")
-	public @ResponseBody List generateSalary(@PathVariable String year, @PathVariable String month) {
-		return salaryCalculator.calculateSalaryOfEmployees(year, month);
+	public @ResponseBody List generateSalary(@PathVariable String year, @PathVariable String month) throws Exception {
+		List returnValue = new ArrayList<>();
+		try {
+			returnValue = salaryCalculator.calculateSalaryOfEmployees(year, month);
+		} catch (Exception e) {
+			logger.error("****Exception in generateSalary() " + e.getMessage());
+			throw e;
+		}
+		return returnValue;
 	}
 
 	@RequestMapping(value = "/getSalary", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List getSalary(@RequestParam String year, @RequestParam String month) {
-		return salaryCalculator.getSalary(Integer.parseInt(year), Integer.parseInt(month));
+	public @ResponseBody List getSalary(@RequestParam String year, @RequestParam String month) throws Exception {
+		List returnValue = new ArrayList<>();
+		try {
+			returnValue = salaryCalculator.getSalary(Integer.parseInt(year), Integer.parseInt(month));
+		} catch (Exception e) {
+			logger.error("****Exception in getSalary() " + e.getMessage());
+			throw e;
+		}
+		return returnValue;
 	}
 
 	@RequestMapping(value = "/getSalaryExcel", method = RequestMethod.GET)
-	public ModelAndView getSalaryExel(@RequestParam String year, @RequestParam String month,HttpServletResponse response) {
-		salaryCalculator.genereteExcel(Integer.parseInt(year), Integer.parseInt(month),response); 
-		/*ClassLoader loader = getClass().getClassLoader();
+	public ModelAndView getSalaryExel(@RequestParam String year, @RequestParam String month,
+			HttpServletResponse response) throws Exception {
 		try {
-			File file = new File(loader.getResource("ho_wps_template.xlsx").getFile());
-			System.out.println("xxxxxxxxxxxxx--->>"+loader.getResource("ho_wps_template.xlsx").getFile());
-			FileInputStream fsIP = new FileInputStream(file);
-			return ResponseEntity.ok().contentLength(file.length())
-					.contentType(MediaType.parseMediaType("application/octet-stream")).body(new InputStreamResource(fsIP));
+			salaryCalculator.genereteExcel(Integer.parseInt(year), Integer.parseInt(month), response);
 		} catch (Exception e) {
-
-		}*/
-		return null;		
+			logger.error("****Exception in getSalaryExel() " + e.getMessage());
+			throw e;
+		}
+		return null;
 	}
-	 @RequestMapping(value="/download", method=RequestMethod.GET)
-	    public ModelAndView downloadExcelOutputExl(HttpServletResponse response){
-	      
-		 excelOutputServiceImpl.createExcelOutputExcel(response);
-	       return null;
-	    }
+
+	@RequestMapping(value = "/download", method = RequestMethod.GET)
+	public ModelAndView downloadExcelOutputExl(HttpServletResponse response) throws Exception {
+		try {
+			excelOutputServiceImpl.createExcelOutputExcel(response);
+		} catch (Exception e) {
+			logger.error("****Exception in downloadExcelOutputExl() " + e.getMessage());
+			throw e;
+		}
+		return null;
+	}
 
 }

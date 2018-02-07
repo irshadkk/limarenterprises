@@ -2,7 +2,7 @@ import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
 import { SalaryService } from './salary.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
-
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   templateUrl: 'viewsalary.component.html',
@@ -19,7 +19,15 @@ export class ViewSalaryComponent implements OnInit {
   public month = this.monthSelectArr[0];
   public year = this.yearSelectArr[0];
   @BlockUI() blockUI: NgBlockUI;
-  constructor(private dataService: DataService, private salaryService: SalaryService) {
+  public notificationOptions = {
+    position: ["bottom", "right"],
+    timeOut: 5000,
+    lastOnBottom: true,
+    showProgressBar: true,
+    pauseOnHover: true,
+    clickToClose: true,
+  }
+  constructor(private dataService: DataService, private salaryService: SalaryService, public pushService: NotificationsService) {
 
   }
   ngOnInit() {
@@ -51,6 +59,7 @@ export class ViewSalaryComponent implements OnInit {
                 this.blockUI.stop();
               }, 1500);
             })
+            .catch(err=>this.handleError(err,"loadSalary()"));
         } else {
           this.salaryAlreadyGenerated = true;
           this.salaryService.getSalary(year, this.monthSelectArr.indexOf(month.toString()))
@@ -61,11 +70,11 @@ export class ViewSalaryComponent implements OnInit {
                 this.blockUI.stop();
               }, 1500);
             })
-
+            .catch(err=>this.handleError(err,"loadSalary()"));
         }
       })
       .catch(error => {
-        alert('Error Occured during salary generation')
+        this.handleError(error,"loadSalary()");
         this.loading = false;
         setTimeout(() => {
           this.blockUI.stop();
@@ -88,6 +97,13 @@ export class ViewSalaryComponent implements OnInit {
     console.log(JSON.stringify(this.currentItem))
     infoModal.show()
 
+  }
+  private handleError(error: any,method:any): Promise<any> {
+    this.loading = false;
+    console.error('An error occurred in SalaryComponent at method '+method,+" "+ error);
+    this.pushService.error('Error', 'An error occurred in SalaryComponent at method '+method,+" "+ error);
+    this.blockUI.stop();
+    return Promise.reject(error.message || error);
   }
 
 
