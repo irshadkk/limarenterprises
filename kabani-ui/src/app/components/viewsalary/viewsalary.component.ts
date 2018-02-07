@@ -1,8 +1,8 @@
 import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
 import { SalaryService } from './salary.service';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { NotificationsService } from 'angular2-notifications';
+import { BlockUI, NgBlockUI } from 'ng-block-ui'; 
+import {NotificationsService} from 'angular4-notify';
 
 @Component({
   templateUrl: 'viewsalary.component.html',
@@ -27,7 +27,7 @@ export class ViewSalaryComponent implements OnInit {
     pauseOnHover: true,
     clickToClose: true,
   }
-  constructor(private dataService: DataService, private salaryService: SalaryService, public pushService: NotificationsService) {
+  constructor(private dataService: DataService, private salaryService: SalaryService ,protected notificationsService: NotificationsService) {
 
   }
   ngOnInit() {
@@ -45,6 +45,8 @@ export class ViewSalaryComponent implements OnInit {
 
   salaryAlreadyGenerated: boolean = false;
   loadSalary(year, month: string) {
+    this.notificationsService.addError('Error message here');
+    this.notificationsService.addInfo('This is info')
     this.blockUI.start("Loading..");
     this.salaryAlreadyGenerated = false;
     this.loading = true;
@@ -101,8 +103,7 @@ export class ViewSalaryComponent implements OnInit {
   private handleError(error: any,method:any): Promise<any> {
     this.loading = false;
     console.error('An error occurred in SalaryComponent at method '+method,+" "+ error);
-    this.pushService.error('Error', 'An error occurred in SalaryComponent at method '+method,+" "+ error);
-    this.blockUI.stop();
+     this.blockUI.stop();
     return Promise.reject(error.message || error);
   }
 

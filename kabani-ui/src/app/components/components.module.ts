@@ -42,15 +42,13 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 
 // Components Routing
 import { ComponentsRoutingModule } from './components-routing.module';
-import { BlockUIModule } from 'ng-block-ui';
-import { SimpleNotificationsModule } from 'angular2-notifications';
+import { BlockUIModule } from 'ng-block-ui'; 
 
 @NgModule({
   imports: [
     ComponentsRoutingModule,
     BsDropdownModule.forRoot(),
-    ModalModule.forRoot(),
-    SimpleNotificationsModule,
+    ModalModule.forRoot(), 
     TabsModule,HttpModule,CommonModule,FormsModule, ReactiveFormsModule,HttpClientModule,BlockUIModule
   ],
   declarations: [ 

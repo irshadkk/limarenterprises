@@ -6,15 +6,14 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DataService } from '../data.service';
-import { BlockUIModule } from 'ng-block-ui';
-import { SimpleNotificationsModule } from 'angular2-notifications';
+import { BlockUIModule } from 'ng-block-ui'; 
 
 @NgModule({
   imports: [
     DashboardRoutingModule,
     ChartsModule,
     BsDropdownModule,
-    CommonModule,BlockUIModule,  SimpleNotificationsModule
+    CommonModule,BlockUIModule 
   ],
   providers:[ DataService],
   declarations: [ DashboardComponent ]

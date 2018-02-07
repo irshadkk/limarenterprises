@@ -1,7 +1,6 @@
 import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { NotificationsService } from 'angular2-notifications';
+import { BlockUI, NgBlockUI } from 'ng-block-ui'; 
 
 
 @Component({
@@ -20,7 +19,7 @@ export class ViewAttendanceComponent implements OnInit {
     pauseOnHover: true,
     clickToClose: true,
   }
-  constructor(private dataService: DataService, public pushService: NotificationsService) { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
     if (this.dataService.appDefined()) {
@@ -54,7 +53,7 @@ export class ViewAttendanceComponent implements OnInit {
   }
   private handleError(error: any, method: any): Promise<any> {
     console.error('An error occurred in ViewAttendanceComponent at method ' + method, +" " + error);
-    this.pushService.error('Error', 'An error occurred in ViewAttendanceComponent at method ' + method, +" " + error);
+  
     this.blockUI.stop();
     return Promise.reject(error.message || error);
   }

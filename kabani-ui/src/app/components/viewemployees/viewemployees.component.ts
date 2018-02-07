@@ -1,8 +1,7 @@
 import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
 import { DatePipe } from '@angular/common';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { NotificationsService } from 'angular2-notifications';
+import { BlockUI, NgBlockUI } from 'ng-block-ui'; 
 
 
 @Component({
@@ -24,7 +23,7 @@ export class ViewEmployeesComponent implements OnInit {
     pauseOnHover: true,
     clickToClose: true,
   }
-  constructor(private dataService: DataService, private datePipe: DatePipe, public pushService: NotificationsService) {
+  constructor(private dataService: DataService, private datePipe: DatePipe) {
 
 
   }
@@ -125,7 +124,7 @@ export class ViewEmployeesComponent implements OnInit {
 
   private handleError(error: any, method: any): Promise<any> {
     console.error('An error occurred in ViewEmployeesComponent at method ' + method, +" " + error);
-    this.pushService.error('Error', 'An error occurred in ViewEmployeesComponent at method ' + method, +" " + error);
+    
     this.blockUI.stop();
     return Promise.reject(error.message || error);
   }

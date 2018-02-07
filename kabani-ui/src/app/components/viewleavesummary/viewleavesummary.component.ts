@@ -1,7 +1,6 @@
 import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { NotificationsService } from 'angular2-notifications';
+import { BlockUI, NgBlockUI } from 'ng-block-ui'; 
 
 @Component({
   templateUrl: 'viewleavesummary.component.html'
@@ -23,7 +22,7 @@ export class ViewleavesummaryComponent implements OnInit {
     pauseOnHover: true,
     clickToClose: true,
   }
-  constructor(private dataService: DataService, public pushService: NotificationsService) { }
+  constructor(private dataService: DataService) { }
   ngOnInit() {
     if (this.dataService.appDefined()) {
       this.loadEmployees();
@@ -95,8 +94,7 @@ export class ViewleavesummaryComponent implements OnInit {
   
   private handleError(error: any, method: any): Promise<any> {
     console.error('An error occurred in ViewleavesummaryComponent at method ' + method, +" " + error);
-    this.pushService.error('Error', 'An error occurred in ViewleavesummaryComponent at method ' + method, +" " + error);
-    this.blockUI.stop();
+     this.blockUI.stop();
     return Promise.reject(error.message || error);
   }
 

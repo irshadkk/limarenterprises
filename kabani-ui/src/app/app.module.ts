@@ -26,17 +26,16 @@ import {UploadFileService} from './components/upload/upload-file.service';
 import { FullLayoutComponent } from './layouts/full-layout.component';
 import { SimpleLayoutComponent } from './layouts/simple-layout.component';
 import { LoginComponent } from './pages/login.component';
-import { BlockUIModule } from 'ng-block-ui';
-import { SimpleNotificationsModule } from 'angular2-notifications';
+import { BlockUIModule } from 'ng-block-ui'; 
+import {NotificationsModule, NotificationsService} from 'angular4-notify';
 
 @NgModule({
   imports: [
     BrowserModule,FormsModule,
     AppRoutingModule,
     BsDropdownModule.forRoot(),
-    TabsModule.forRoot(),
-    SimpleNotificationsModule,
-    ChartsModule, HttpModule,HttpClientModule,BlockUIModule
+    TabsModule.forRoot(), 
+    ChartsModule, HttpModule,HttpClientModule,BlockUIModule,NotificationsModule
   ],
   declarations: [
   LoginComponent,
@@ -51,7 +50,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
-  },DataService,UploadFileService],
+  },DataService,UploadFileService,NotificationsService],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

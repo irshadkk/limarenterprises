@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { NotificationsService } from 'angular2-notifications';
+import { BlockUI, NgBlockUI } from 'ng-block-ui'; 
 
 @Component({
   templateUrl: 'dashboard.component.html'
@@ -11,7 +10,7 @@ export class DashboardComponent implements OnInit {
   public employeeAttendanceArr = [];
   public employeeAttendanceArrProcessed = [];
 
-  constructor(private dataService: DataService,public pushService: NotificationsService) {
+  constructor(private dataService: DataService) {
   }
 
   @BlockUI() blockUI: NgBlockUI;
@@ -58,8 +57,7 @@ export class DashboardComponent implements OnInit {
   }
   private handleError(error: any, method: any): Promise<any> {
     console.error('An error occurred in DashboardComponent at method ' + method, +" " + error);
-    this.pushService.error('Error', 'An error occurred in DashboardComponent at method ' + method, +" " + error);
-    this.blockUI.stop();
+     this.blockUI.stop();
     return Promise.reject(error.message || error);
   }
 
