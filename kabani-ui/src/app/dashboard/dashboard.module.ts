@@ -7,15 +7,16 @@ import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DataService } from '../data.service';
 import { BlockUIModule } from 'ng-block-ui'; 
+import {NotificationsModule, NotificationsService} from 'angular4-notify';
 
 @NgModule({
   imports: [
     DashboardRoutingModule,
     ChartsModule,
     BsDropdownModule,
-    CommonModule,BlockUIModule 
+    CommonModule,BlockUIModule ,NotificationsModule
   ],
-  providers:[ DataService],
+  providers:[ DataService,NotificationsService],
   declarations: [ DashboardComponent ]
 })
 export class DashboardModule { }

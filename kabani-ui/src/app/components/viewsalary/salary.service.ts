@@ -3,7 +3,8 @@ import { Headers, Http } from '@angular/http';
 import { DataService } from '../../data.service';
 
 import 'rxjs/add/operator/toPromise';
-
+import { Observable } from "rxjs/Observable";
+import "rxjs/Rx";
 
 @Injectable()
 export class SalaryService {
@@ -16,34 +17,25 @@ export class SalaryService {
     header.append(key, value);
     return header
   }
-  getSalaryStatus(year: number, month: number): Promise<number> {
+  getSalaryStatus(year: number, month: number): Observable<number> {
     this.headers = this.createHeader();
     return this.http.get(this.dataService.serviceurl + `salary/salaryGenerated?year=${year}&month=${month + 1}`, { headers: this.headers })
-      .toPromise()
-      .then(response => {
-        return response.json();
-      })
-      .catch(error=>{ return this.handleError(error,'getSalaryStatus')});
+      .map(response => { return response.json(); })
+      .catch(error => { return this.handleError(error, 'getSalaryStatus') })
   }
 
   generateSalary(year: any, month: any) {
     this.headers = this.createHeader();
     return this.http.post(this.dataService.serviceurl + `salary/generateSalary/${year}/${month}`, { headers: this.headers })
-      .toPromise()
-      .then(response => {
-        return response.json();
-      })
-      .catch(error=>{ return this.handleError(error,'generateSalary')});
+      .map(response => { return response.json(); })
+      .catch(error => { return this.handleError(error, 'generateSalary') })
   }
 
   getSalary(year: any, month: any) {
     this.headers = this.createHeader();
     return this.http.get(this.dataService.serviceurl + `salary/getSalary?year=${year}&month=${month + 1}`, { headers: this.headers })
-      .toPromise()
-      .then(response => {
-        return response.json();
-      })
-      .catch(error=>{ return this.handleError(error,'getSalary')});
+      .map(response => { return response.json(); })
+      .catch(error => { return this.handleError(error, 'getSalary') })
   }
 
   generateSalaryExcel(year: any, month: any) {
@@ -59,8 +51,8 @@ export class SalaryService {
 
 
 
-  private handleError(error: any,method:string): Promise<any> {
-    console.error('An error occurred in Salary Service @ method'+method, error);
-    return Promise.reject(error.message || error);
+  private handleError(error: any, method: string): Observable<any> {
+    console.error('An error occurred in Salary Service @ method' + method, error);
+    return Observable.throw(error.message || error);
   }
 }

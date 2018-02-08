@@ -1,6 +1,7 @@
 import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui'; 
+import { NotificationsService } from 'angular4-notify';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class ViewAttendanceComponent implements OnInit {
     pauseOnHover: true,
     clickToClose: true,
   }
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, protected notificationsService: NotificationsService) { }
 
   ngOnInit() {
     if (this.dataService.appDefined()) {
@@ -38,11 +39,18 @@ export class ViewAttendanceComponent implements OnInit {
     },
       (error => { this.handleError(error,"loadAttendance()");}));
   }
-
+ View
   saveChanges() {
-    console.log(JSON.stringify(this.currentItem))
+    this.blockUI.start("Saving..");
     this.dataService.getPostData(this.dataService.serviceurl + 'updateUserAttandance', this.currentItem).subscribe(data => {
-      alert(data)
+      if(data==true){
+        this.notificationsService.addInfo('Changes Saved');
+      }else{
+        this.notificationsService.addWarning('Changes couldnt be saved');
+      }
+      setTimeout(() => {
+        this.blockUI.stop();
+      }, 1500);
     },(error => { this.handleError(error,"saveChanges()");}));
   }
   onEditClick(infoModal, item) {
@@ -51,12 +59,11 @@ export class ViewAttendanceComponent implements OnInit {
     infoModal.show()
 
   }
-  private handleError(error: any, method: any): Promise<any> {
+  private handleError(error: any, method: any) {
     console.error('An error occurred in ViewAttendanceComponent at method ' + method, +" " + error);
-  
     this.blockUI.stop();
-    return Promise.reject(error.message || error);
-  }
+    this.notificationsService.addError('An error occurred in ViewAttendanceComponent at method ' + method + " " + error);
+   }
 
 
 }

@@ -14,11 +14,11 @@
 
           <table class="table table-bordered table-striped table-sm">
             <tr>
-              <td colspan="9">
+              <td colspan="8">
                 <input [(ngModel)]="searchText" placeholder="search text goes here" />
               </td>
-              <td>
-                <button type="button" class="btn btn-info" data-toggle="modal" (click)="onResetClick()">
+              <td colspan="2">
+                <button type="button" class="btn btn-info" style="float:right;" data-toggle="modal" (click)="onResetClick()">
             Reset Original
           </button>
               </td>
@@ -48,9 +48,7 @@
               <td>{{item.totalCasualAlloted}}</td>
               <td>{{item.casualLeavesTaken}}</td>
               <td>{{item.casualLeavesRemaining}}</td>
-              <td><button type="button" class="btn btn-info" data-toggle="modal" (click)="onEditClick(infoModal,item)">
-            Edit
-          </button></td>
+              <td><button type="button" class="btn btn-info" data-toggle="modal" (click)="onEditClick(infoModal,item)">Edit</button></td>
             </tr>
           </table>
 
@@ -74,66 +72,81 @@
   <div class="modal-dialog modal-info" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Modal title</h4>
+        <h4 class="modal-title">Modify Leave</h4>
         <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <angular4-notify-notifications-container></angular4-notify-notifications-container>
+        
       <div class="modal-body">
-        <p>One fine body&hellip;</p>
+        <!--<p>One fine body&hellip;</p>-->
         <table class="table table-bordered table-striped table-sm">
           <tr>
             <th>Item</th>
             <th>Value</th>
+            <th>Change Value</th>
           </tr>
           <tr>
             <td>ECode</td>
             <td>{{currentItem.employeeCode}}</td>
+             <td>&nbsp</td>
           </tr>
           <tr>
             <td>EBioDevCd</td>
             <td>{{currentItem.employeeBioDeviceCode}}</td>
+            <td>&nbsp</td>
           </tr>
           <tr>
             <td>Employee Name</td>
             <td>{{currentItem.employeeName}}</td>
+            <td>&nbsp</td>
           </tr>
 
           <tr>
             <td>branch</td>
             <td>{{currentItem.branch}}</td>
+            <td>&nbsp</td>
           </tr>
           <tr>
             <td>designation</td>
             <td>{{currentItem.designation}}</td>
+            <td>&nbsp</td>
           </tr>
           <tr>
             <td>department</td>
             <td>{{currentItem.department}}</td>
+            <td>&nbsp</td>
           </tr>
           <tr>
             <td>employeeAge</td>
             <td>{{currentItem.employeeAge}}</td>
+            <td>&nbsp</td>
           </tr>
           <tr>
             <td>employeeSex</td>
             <td>{{currentItem.employeeSex}}</td>
+            <td>&nbsp</td>
           </tr>
           <tr>
             <td>Salary Total</td>
-            <td>{{currentSalaryItem.total}}</td>
+            <td>{{currentItem.total}}</td>
+            <td>&nbsp</td>
           </tr>
           <tr>
             <td>Total Leave Allotted</td>
-            <td>{{currentLeaveItem.totalCasualAlloted}}</td>
+            <td>{{currentItem.totalCasualAlloted}}</td>
+            <td><input type="number" [(ngModel)]="currentItem.totalCasualAlloted" (change)="changeinLeave()"><span style="color:red">* number</span></td>
           </tr>
           <tr>
             <td>Total Leave Taken</td>
-            <td>{{currentLeaveItem.casualLeavesTaken}}</td>
+            <td>{{currentItem.casualLeavesTaken}}</td>
+            <td><input type="number" [(ngModel)]="currentItem.casualLeavesTaken" (change)="changeinLeave()"><span style="color:red">* number</span></td>
           </tr>
           <tr>
             <td>Total Leave Remaining</td>
-            <td>{{currentLeaveItem.casualLeavesRemaining}}</td>
+            <td>{{currentItem.casualLeavesRemaining}}</td>
+            <td>{{currentItem.casualLeavesRemaining}}</td>
           </tr>
           <!-- <tr>
             <td>Comment</td>

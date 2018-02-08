@@ -2,6 +2,7 @@ import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
 import { DatePipe } from '@angular/common';
 import { BlockUI, NgBlockUI } from 'ng-block-ui'; 
+import { NotificationsService } from 'angular4-notify';
 
 
 @Component({
@@ -15,15 +16,8 @@ export class ViewEmployeesComponent implements OnInit {
   public currentLeaveItem = [];
   public statusArr = ["Absent", "Present", "1/2Present"];
   @BlockUI() blockUI: NgBlockUI;
-  public notificationOptions = {
-    position: ["bottom", "right"],
-    timeOut: 5000,
-    lastOnBottom: true,
-    showProgressBar: true,
-    pauseOnHover: true,
-    clickToClose: true,
-  }
-  constructor(private dataService: DataService, private datePipe: DatePipe) {
+ 
+  constructor(private dataService: DataService, private datePipe: DatePipe,protected notificationsService: NotificationsService) {
 
 
   }
@@ -122,12 +116,11 @@ export class ViewEmployeesComponent implements OnInit {
     }, 1500);
   }
 
-  private handleError(error: any, method: any): Promise<any> {
+  private handleError(error: any, method: any) {
     console.error('An error occurred in ViewEmployeesComponent at method ' + method, +" " + error);
-    
     this.blockUI.stop();
-    return Promise.reject(error.message || error);
-  }
+    this.notificationsService.addError('An error occurred in ViewEmployeesComponent at method ' + method + " " + error);
+   }
 
 
 }

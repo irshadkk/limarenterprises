@@ -1,6 +1,7 @@
 import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
-import { BlockUI, NgBlockUI } from 'ng-block-ui'; 
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { NotificationsService } from 'angular4-notify';
 
 @Component({
   templateUrl: 'viewleavesummary.component.html'
@@ -9,7 +10,7 @@ export class ViewleavesummaryComponent implements OnInit {
 
 
   public employeeArr;
-  public currentItem = [];
+  public currentItem :any= [];
   public currentSalaryItem = [];
   public currentLeaveItem = [];
   public statusArr = ["Absent", "Present", "1/2Present"]
@@ -22,7 +23,7 @@ export class ViewleavesummaryComponent implements OnInit {
     pauseOnHover: true,
     clickToClose: true,
   }
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, protected notificationsService: NotificationsService) { }
   ngOnInit() {
     if (this.dataService.appDefined()) {
       this.loadEmployees();
@@ -32,7 +33,7 @@ export class ViewleavesummaryComponent implements OnInit {
 
   loadEmployees() {
     this.blockUI.start("Loading..");
-    this.dataService.getData(this.dataService.serviceurl + 'leave/allempleave').subscribe(data => {
+    this.dataService.getData(this.dataService.serviceurl + 'employee/all').subscribe(data => {
       this.employeeArr = data;
       setTimeout(() => {
         this.blockUI.stop();
@@ -40,41 +41,37 @@ export class ViewleavesummaryComponent implements OnInit {
 
 
     },
-    (error => { this.handleError(error,"loadEmployees()");}));
+      (error => { this.handleError(error, "loadEmployees()"); }));
   }
 
   saveChanges() {
     this.blockUI.start("Saving..");
     this.dataService.getPostData(this.dataService.serviceurl + 'employee/addorupdate', this.currentItem).subscribe(data => {
+      if(data==true){
+        this.notificationsService.addInfo('Changes Saved');
+      }else{
+        this.notificationsService.addWarning('Changes couldnt be saved');
+      }
       setTimeout(() => {
         this.blockUI.stop();
       }, 1500);
     },
-    (error => { this.handleError(error,"saveChanges()");}));
+      (error => { this.handleError(error, "saveChanges()"); }));
 
   }
   onEditClick(infoModal, item) {
     this.blockUI.start("Loading..");
     this.currentItem = item;
-    this.dataService.getData(this.dataService.serviceurl + 'salary/allempsal/' + item.employeeCode).subscribe(data => {
-      this.currentSalaryItem = data;
-      console.log('currentItem==' + JSON.stringify(this.currentItem))
-      console.log('currentSalaryItem==' + JSON.stringify(this.currentSalaryItem))
-      this.dataService.getData(this.dataService.serviceurl + 'leave/allempleave/' + item.employeeCode).subscribe(data => {
-        this.currentLeaveItem = data;
 
-        console.log('currentSalaryItem==' + JSON.stringify(this.currentLeaveItem))
-        infoModal.show()
-        setTimeout(() => {
-          this.blockUI.stop();
-        }, 1500);
-      },
-      (error => { this.handleError(error,"onEditClick()");}));
-
-    });
-
-
+    infoModal.show();
+    setTimeout(() => {
+      this.blockUI.stop();
+    }, 100);
   }
+  changeinLeave(){
+    this.currentItem.casualLeavesRemaining=parseInt(this.currentItem.totalCasualAlloted)-parseInt( this.currentItem.casualLeavesTaken)
+  }
+
   onResetClick() {
     this.employeeArr.forEach(element => {
       element.casualLeavesTaken = 0;
@@ -87,15 +84,14 @@ export class ViewleavesummaryComponent implements OnInit {
 
 
       },
-      (error => { this.handleError(error,"onResetClick()");}));
+        (error => { this.handleError(error, "onResetClick()"); }));
     });
   }
 
-  
-  private handleError(error: any, method: any): Promise<any> {
+  private handleError(error: any, method: any) {
     console.error('An error occurred in ViewleavesummaryComponent at method ' + method, +" " + error);
-     this.blockUI.stop();
-    return Promise.reject(error.message || error);
+    this.blockUI.stop();
+    this.notificationsService.addError('An error occurred in ViewleavesummaryComponent at method ' + method + " " + error);
   }
 
 

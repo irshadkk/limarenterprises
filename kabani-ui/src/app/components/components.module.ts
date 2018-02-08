@@ -44,12 +44,14 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ComponentsRoutingModule } from './components-routing.module';
 import { BlockUIModule } from 'ng-block-ui'; 
 
+import {NotificationsModule, NotificationsService} from 'angular4-notify';
+
 @NgModule({
   imports: [
     ComponentsRoutingModule,
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(), 
-    TabsModule,HttpModule,CommonModule,FormsModule, ReactiveFormsModule,HttpClientModule,BlockUIModule
+    TabsModule,HttpModule,CommonModule,FormsModule, ReactiveFormsModule,HttpClientModule,BlockUIModule,NotificationsModule
   ],
   declarations: [ 
     UploadCsvComponent,DetailsUploadComponent,FormUploadComponent,ListUploadComponent,EmployeeUploadComponent,
@@ -58,6 +60,6 @@ import { BlockUIModule } from 'ng-block-ui';
     FilterPipe,
     ViewSalaryComponent
   ],
-   providers: [UploadFileService,DatePipe]
+   providers: [UploadFileService,DatePipe,NotificationsService]
 })
 export class ComponentsModule { }
