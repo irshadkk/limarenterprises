@@ -50,7 +50,9 @@ public class SalaryStatus {
 	public void setGeneratedOn(Date generatedOn) {
 		this.generatedOn = generatedOn;
 	}
-
+	public SalaryStatus(){
+		
+	}
 	public SalaryStatus(int month,int year, Date generatedOn){
 		this.month=month;
 		this.year=year;

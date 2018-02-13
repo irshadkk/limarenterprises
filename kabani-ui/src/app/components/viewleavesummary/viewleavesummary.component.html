@@ -14,7 +14,7 @@
 
           <table class="table table-bordered table-striped table-sm">
             <tr>
-              <td colspan="8">
+              <td colspan="6">
                 <input [(ngModel)]="searchText" placeholder="search text goes here" />
               </td>
               <td colspan="2">
@@ -29,9 +29,9 @@
               <th>No</th>
               <th>ECode</th>
               <th>EName</th>
-              <th>branch</th>
+              <!-- <th>branch</th>
               <th>designation</th>
-              <th>department</th>
+              <th>department</th> -->
               <th>totalCasualAlloted</th>
               <th>casualLeavesTaken</th>
               <th>casualLeavesRemaining</th>
@@ -42,9 +42,9 @@
               <td>{{i+1}}</td>
               <td>{{item.employeeCode}}</td>
               <td>{{item.employeeName}}</td>
-              <td>{{item.branch}}</td>
+              <!-- <td>{{item.branch}}</td>
               <td>{{item.designation}}</td>
-              <td>{{item.department}}</td>
+              <td>{{item.department}}</td> -->
               <td>{{item.totalCasualAlloted}}</td>
               <td>{{item.casualLeavesTaken}}</td>
               <td>{{item.casualLeavesRemaining}}</td>
@@ -77,7 +77,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <angular4-notify-notifications-container></angular4-notify-notifications-container>
+      
         
       <div class="modal-body">
         <!--<p>One fine body&hellip;</p>-->

@@ -12,14 +12,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kabani.hr.entity.SalaryStatus;
 import com.kabani.hr.helper.ExcelOutputServiceImpl;
 import com.kabani.hr.helper.SalaryCalculator;
+import com.kabani.hr.repository.SalaryStatusRepository;
+import com.kabani.hr.repository.WpsRepository;
 
 @CrossOrigin
 @Controller // This means that this class is a Controller
@@ -30,6 +34,11 @@ public class SalaryController {
 
 	@Autowired
 	private SalaryCalculator salaryCalculator;
+	
+	@Autowired
+	private SalaryStatusRepository salaryStatusRepository;
+	@Autowired
+	private WpsRepository wpsRepository;
 	@Autowired
 	private ExcelOutputServiceImpl excelOutputServiceImpl;
 
@@ -91,5 +100,41 @@ public class SalaryController {
 		}
 		return null;
 	}
+	
+	@RequestMapping(value = "/salaryStatusAll", method = RequestMethod.GET)
+	public @ResponseBody List getSalaryStatusAll() throws Exception {
+		 List<SalaryStatus> result;
+		try {
+			result= salaryStatusRepository.findAll();
+		} catch (Exception e) {
+			logger.error("****Exception in getSalaryStatusAll() " + e.getMessage());
+			throw e;
+		}
+		return result;
+	}
+	@RequestMapping(value = "/salaryStatusRemove", method = RequestMethod.POST)
+	public boolean salaryStatusRemove(@RequestBody SalaryStatus salaryStatus) throws Exception {
+		try {
+			salaryStatusRepository.delete(salaryStatus);
+		} catch (Exception e) {
+			logger.error("****Exception in getSalaryStatusAll() " + e.getMessage());
+			throw e;
+		}
+		return true;
+	}
+	@RequestMapping(value = "/salaryStatusResetAll", method = RequestMethod.GET)
+	public String salaryStatusRemove() throws Exception {
+		String result="";
+		try {
+			salaryStatusRepository.resetAll();
+			wpsRepository.resetAll();
+		} catch (Exception e) {
+			logger.error("****Exception in getSalaryStatusAll() " + e.getMessage());
+			throw e;
+		}
+		return result;
+	}
+	
+	 
 
 }

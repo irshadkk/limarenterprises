@@ -30,6 +30,7 @@ public class Wps {
 	private String bankAccountNumber;
 	private float fullPresentDays;
 	private float halfPresentDays;
+	private float totalCasualLeavesDays;
 	private float totalPresentDays;
 	private float totalPresentDaysPlus26PercentageAddition;
 	private float daysOfAttandance;
@@ -553,4 +554,13 @@ public class Wps {
 	public void setYear(int year) {
 		this.year = year;
 	}
+
+	public float getTotalCasualLeavesDays() {
+		return totalCasualLeavesDays;
+	}
+
+	public void setTotalCasualLeavesDays(float totalCasualLeavesDays) {
+		this.totalCasualLeavesDays = totalCasualLeavesDays;
+	}
+	
 }

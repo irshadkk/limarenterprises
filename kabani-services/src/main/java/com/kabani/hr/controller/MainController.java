@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -22,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kabani.hr.entity.User;
 import com.kabani.hr.entity.UserAttendanceDetails;
-import com.kabani.hr.helper.SalaryCalculator;
 import com.kabani.hr.repository.UserAttendanceDetailsRepository;
 import com.kabani.hr.repository.UserRepository;
 
@@ -72,19 +72,23 @@ public class MainController {
 	}
 
 	@PostMapping(path = "/upload/{name}")
-	public @ResponseBody Iterable<UserAttendanceDetails> handleFileUpload(@RequestParam("file") MultipartFile file,
+	public @ResponseBody String[] handleFileUpload(@RequestParam("file") MultipartFile file,
 			@PathVariable String name) throws Exception {
+		String[] response= {""};
 		InputStream is = null;
 		BufferedReader bfReader = null;
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+		ArrayList employeeDataList=new ArrayList();
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
 				is = new ByteArrayInputStream(bytes);
 				bfReader = new BufferedReader(new InputStreamReader(is));
 				bfReader.readLine();// it reads the first line so it removes the heading from the file
+				String  employeeAttendanceString = null;
 				String[] employeeAttendance = null;
-				while ((employeeAttendance = bfReader.readLine().split(",")) != null) {
+				//employeeAttendance = bfReader.readLine().split(",")) != null
+				while (((employeeAttendanceString = bfReader.readLine()) != null ) && (( employeeAttendance =employeeAttendanceString.split(",")) != null) )  {
 
 					UserAttendanceDetails userAttendanceDetails = new UserAttendanceDetails();
 
@@ -137,13 +141,16 @@ public class MainController {
 					userAttendanceDetails.setComment("");
 
 					userAttendanceDetails.setBranch(name);
-
-					userAttendanceDetailsRepository.save(userAttendanceDetails);
+					employeeDataList.add(userAttendanceDetails);
+					
 
 				}
+				userAttendanceDetailsRepository.save(employeeDataList);
+				response[0]="The file "+file.getOriginalFilename()+"is uploaded successfully";
 
 			} catch (Exception e) {
 				logger.error("****Exception in handleFileUpload() " + e.getMessage());
+				response[0]="****Exception in handleFileUpload() " + e.getMessage();
 				throw e;
 			} finally {
 				try {
@@ -153,8 +160,10 @@ public class MainController {
 
 				}
 			}
+		}else {
+			response[0]="The file is empty";
 		}
-		return userAttendanceDetailsRepository.findAll();
+		return response;
 	}
 
 	@PostMapping(path = "/getAllAttandance")

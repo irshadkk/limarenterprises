@@ -38,6 +38,13 @@ export class SalaryService {
       .catch(error => { return this.handleError(error, 'getSalary') })
   }
 
+    deletItem(item) {
+    this.headers = this.createHeader();
+    return this.http.post(this.dataService.serviceurl + `salary/resetAll`, { headers: this.headers })
+      .map(response => { return response.json(); })
+      .catch(error => { return this.handleError(error, 'resetAll') })
+  }
+
   generateSalaryExcel(year: any, month: any) {
     // this.headers = this.createHeader();
     // return this.http.get(this.dataService.serviceurl + `salary/getSalaryExcel?year=${year}&month=${month + 1}`, { headers: this.headers })

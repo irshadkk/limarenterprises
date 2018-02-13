@@ -16,9 +16,7 @@ import { DatePipe } from '@angular/common';
 
 import {UploadFileService} from './upload/upload-file.service';
 import { UploadCsvComponent } from './uploadcsv/uploadcsv.component';
-
-import {DetailsUploadComponent} from './upload/details-upload/details-upload.component';
-import {FormUploadComponent} from './upload/form-upload/form-upload.component';
+ 
 import {ListUploadComponent} from './upload/list-upload/list-upload.component';
 import { EmployeeUploadComponent } from './upload/employee-upload/employee-upload.component';
 
@@ -31,6 +29,8 @@ import { ViewSalaryComponent } from './viewsalary/viewsalary.component';
 import { ViewEmployeesComponent } from './viewemployees/viewemployees.component';
 import { ViewleavesummaryComponent } from './viewleavesummary/viewleavesummary.component'; 
 import { AddholidaysComponent } from './addholidays/addholidays.component'; 
+import { AddPresentComponent } from './addpresent/addpresent.component'; 
+
 
 
 
@@ -43,23 +43,23 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 // Components Routing
 import { ComponentsRoutingModule } from './components-routing.module';
 import { BlockUIModule } from 'ng-block-ui'; 
-
-import {NotificationsModule, NotificationsService} from 'angular4-notify';
+ 
 
 @NgModule({
   imports: [
     ComponentsRoutingModule,
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(), 
-    TabsModule,HttpModule,CommonModule,FormsModule, ReactiveFormsModule,HttpClientModule,BlockUIModule,NotificationsModule
+    TabsModule,HttpModule,CommonModule,FormsModule, ReactiveFormsModule,HttpClientModule,BlockUIModule
   ],
   declarations: [ 
-    UploadCsvComponent,DetailsUploadComponent,FormUploadComponent,ListUploadComponent,EmployeeUploadComponent,
+    UploadCsvComponent,ListUploadComponent,EmployeeUploadComponent,
     SwitchesComponent,
-    ViewAttendanceComponent,ViewEmployeesComponent,ViewleavesummaryComponent,AddholidaysComponent,
+    ViewAttendanceComponent,ViewEmployeesComponent,ViewleavesummaryComponent,
+    AddholidaysComponent,AddPresentComponent,
     FilterPipe,
     ViewSalaryComponent
   ],
-   providers: [UploadFileService,DatePipe,NotificationsService]
+   providers: [UploadFileService,DatePipe]
 })
 export class ComponentsModule { }

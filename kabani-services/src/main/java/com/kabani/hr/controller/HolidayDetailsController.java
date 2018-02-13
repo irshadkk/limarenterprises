@@ -1,5 +1,6 @@
 package com.kabani.hr.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,9 +34,10 @@ public class HolidayDetailsController {
 	}
 
 	@GetMapping(path = "/all/{month}/{year}")
-	public @ResponseBody int getAllHolidayInYearMonth() {
+	public @ResponseBody List<HolidayDetailsMaster> getAllHolidayInYearMonth(@PathVariable int year, @PathVariable int month) {
+		 
 		// This returns a JSON or XML with the users
-		return holidayDetailsMasterRepository.findCountOfHolidayByYearMonth();
+		return holidayDetailsMasterRepository.findHolidaysByYearMonth(year,month);
 	}
 
 	@PostMapping(path = "/addorupdate")

@@ -11,11 +11,17 @@ export class AddholidaysComponent implements OnInit {
   public comment: ''
   public holidayCurrentObj = { typeOfHoliday: '', nameOfHoliday: '', descOfHoliday: '', dateOfHoliday: '' }
   public holidayArr = [];
+  public monthSelectArr = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  public yearSelectArr = ["2017", "2018", "2019", "2020", "2020", "2021",
+    "2022", "2023", "2024", "2025", "2026", "2027"];
+  public month = this.monthSelectArr[0];
+  public year = this.yearSelectArr[0];
 
   constructor(private dataService: DataService, private datePipe: DatePipe) { }
   ngOnInit() {
     if (this.dataService.appDefined()) {
-      this.loadHolidays();
+      this.loadHolidaysByYearMonth();
     }
   }
 
@@ -30,6 +36,18 @@ export class AddholidaysComponent implements OnInit {
     this.dataService.getPostData(this.dataService.serviceurl + 'holiday/all', null).subscribe(data => {
       this.holidayArr = data;
     });
+  }
+   objChanged() {
+    this.holidayArr = [];
+    this.loadHolidaysByYearMonth();
+  }
+  loadHolidaysByYearMonth() {//(this.year, )
+    this.dataService.getData(this.dataService.serviceurl + 'holiday/all/'+(this.monthSelectArr.indexOf(this.month.toString())+1)+'/'+this.year).subscribe(data => {
+      this.holidayArr = data;
+    });
+    //  this.dataService.getData(this.dataService.serviceurl + 'holiday/all/12/2017').subscribe(data => {
+    //   this.holidayArr = data;
+    // });
   }
   onEditClick(infoModal, item) {
     if (item) {

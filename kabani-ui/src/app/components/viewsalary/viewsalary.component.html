@@ -1,82 +1,53 @@
+<block-ui>
+  <div class="animated fadeIn">
 
-<block-ui><div class="animated fadeIn">
+    <div class="row">
 
-  <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <button (click)="resetAll()">resetAll</button>
+            <strong>Horizontal</strong> Form
+          </div>
+          <div class="card-body">
 
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header">
-          <strong>Horizontal</strong> Form
-        </div>
-        <div class="card-body">
-
-          <select [(ngModel)]="year">
+            <select [(ngModel)]="year">
             <!-- (change)="objChanged()" -->
             <option *ngFor="let year of yearSelectArr" [value]="year">{{year}}
             </option>
           </select>
 
-          <select [(ngModel)]="month" (change)="objChanged()">
+            <select [(ngModel)]="month" (change)="objChanged()">
             <option *ngFor="let month of monthSelectArr" [value]="month">{{month}}
             </option>
           </select>
 
-          <button (click)="objChanged()">Submit</button>
+            <button (click)="objChanged()">Submit</button>
+            <button (click)="resetAll()">ResetAll</button>
+
+            <table class="table table-bordered table-striped table-sm">
 
 
-          <table class="table table-bordered table-striped table-sm">
-            <tr *ngIf="employeeSalArr?.length>0">
-              <td colspan="11"><button (click)="generateExcel()">Generate Excel</button> </td>
-            </tr>
-            <tr *ngIf="salaryAlreadyGenerated">
-                <td colspan="11" style="color:RED">Salary Already Generated for this month. Displaying the generated values.. </td>
+
+              <tr *ngFor="let item of employeeSalStatusArr ; trackBy:index">
+                <td>{{index+1}}</td>
+                <td>{{item.month}}</td>
+                <td>{{item.year}}</td>
+                <td><button (click)="generateExcel(item.year,item.month)">Generate Excel</button></td>
+                <!-- <td><button (click)="deletItem(item)">Reset</button></td> -->
               </tr>
-            <tr>
-              <th>No</th>
-              <th>name</th>
-              <th>fullPresentDays</th>
-              <th>halfPresentDays</th>
-              <th>totalPresentDays</th>
-              <th>GrossSalary</th>
-              <th>Tax Slab</th>
-              <th>Income Tax</th>
-              <th>Welfare Fund</th>
-              <th>salaryCalculation</th>
-              <th>salary</th>
-            </tr>
-            <tr *ngIf="loading" style="border:0px solid red;">
-              <td colspan="11" nowrap="nowrap" style="color:red;text-align:center">
-                <img src="../../../assets/img/giphy.gif" height="50" align="middle">
-              </td>
-            </tr>
+            </table>
 
-            <tr *ngFor="let item of employeeSalArr | filter : searchText; let i = index">
-              <td>{{i+1}}</td>
-              <td>{{item.employeeName}}</td>
-              <td>{{item.fullPresentDays}}</td>
-              <td>{{item.halfPresentDays}}</td>
-              <td>{{item.totalPresentDays}}</td>
-              <td>{{item.grossMonthlyWages}}</td>
-              <td>{{item.taxSlab}}</td>
-              <td>{{item.totalIncomeTax}}</td>
-              <td>{{item.totalEmployeeWelfareFund}}</td>
-              <td>{{item.salaryCalculation}}</td>
-              <td>{{item.totalSalaryForThisMonth}}</td>
+          </div>
+          <div class="card-footer">
 
-
-            </tr>
-          </table>
-
+          </div>
         </div>
-        <div class="card-footer">
 
-        </div>
+
+
       </div>
-
-
-
+      <!--/.col-->
     </div>
-    <!--/.col-->
   </div>
-</div>
 </block-ui>

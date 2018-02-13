@@ -1,0 +1,142 @@
+
+<block-ui><div class="animated fadeIn"> 
+  <div class="row">
+ 
+
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Horizontal</strong> Form
+        </div>
+        <div class="card-body">
+
+
+          <table class="table table-bordered table-striped table-sm">
+            <tr>
+              <td colspan="8">
+                <input [(ngModel)]="searchText" placeholder="search text goes here" />
+              </td>
+              <td colspan="2">
+                <button type="button" class="btn btn-info" style="float:right;" data-toggle="modal" (click)="onAddClick(infoModal)">
+           Add
+          </button>
+              </td>
+
+
+            </tr>
+            <tr>
+              <th>No</th>
+              <th>ECode</th>
+              <th>EName</th> 
+              <th>26% Addition</th>
+              <th>Extra Day Worked</th>
+              <th>Date</th>  
+              <th>Other Extra Days</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+            
+            <tr *ngFor="let item of employeeAttendanceArr | filter : searchText; let i = index">
+              <td>{{i+1}}</td>
+              <td>{{item.employeeCode}}</td>
+              <td>{{item.employeeName}}</td> 
+              <td>{{item.twentySixPercentageAddition}}</td> 
+              <td>{{item.extraDaysWorked}}</td> 
+              <td>{{item.dayOfextraDay |date:'dd/MM/yyyy'}}</td> 
+              <td>{{item.otherExtraDays }}</td> 
+              <td>{{item.dayOfOtherExtraDay |date:'dd/MM/yyyy'}}</td> 
+               
+              <td><button type="button" class="btn btn-info" data-toggle="modal" (click)="onEditClick(infoModal,item)">Edit</button></td>
+            </tr>
+          </table>
+
+        </div>
+        <div class="card-footer">
+
+        </div>
+      </div>
+
+
+
+    </div>
+    <!--/.col-->
+  </div>
+</div>
+
+
+
+
+<div bsModal #infoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Modify Leave</h4>
+        <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+        
+      <div class="modal-body">
+        <!--<p>One fine body&hellip;</p>-->
+        <table class="table table-bordered table-striped table-sm">
+          <tr>
+            <th>Item</th>
+            <th>Value</th>
+            <th>Change Value</th>
+          </tr>
+          <tr>
+            <td>ECode</td>
+            <td>{{currentItem.employeeCode}}</td>
+             <td> 
+               <select [(ngModel)]="currentItem_employeeCode" (ngModelChange)="onChange($event)">
+                <option *ngFor="let x of employeeArr" [ngValue]="x">{{x.employeeName}}</option>
+                 </select>
+             </td>
+          </tr> 
+          <tr>
+            <td>Employee Name</td>
+            <td>{{currentItem.employeeName}}</td>
+            <td>&nbsp</td>
+          </tr>
+ 
+          <tr>
+            <td>26 % Addition</td>
+            <td>{{currentItem.twentySixPercentageAddition}}</td>
+            <td><input type="number" [(ngModel)]="currentItem.twentySixPercentageAddition"  ><span style="color:red">* number</span></td>
+          </tr>
+          <tr>
+            <td>ExtraDaysWorked</td>
+            <td>{{currentItem.extraDaysWorked}}</td>
+            <td><input type="number" [(ngModel)]="currentItem.extraDaysWorked"  ><span style="color:red">* number</span></td>
+          </tr>
+          <tr>
+            <td>dayOfextraDay</td>
+            <td>{{currentItem.dayOfextraDay}}</td>
+            <td><input type="date" [(ngModel)]="currentItem.dayOfextraDay"  ></td>
+          </tr>
+          <tr>
+            <td>otherExtraDays</td>
+            <td>{{currentItem.otherExtraDays}}</td>
+            <td><input type="number" [(ngModel)]="currentItem.otherExtraDays"  ><span style="color:red">* number</span></td>
+          </tr>
+          <tr>
+            <td>dayOfOtherExtraDay</td>
+            <td>{{currentItem.dayOfOtherExtraDay}}</td>
+            <td><input type="date" [(ngModel)]="currentItem.dayOfOtherExtraDay"  ></td>
+          </tr>
+
+        </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveChanges()">Save changes</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+</block-ui>

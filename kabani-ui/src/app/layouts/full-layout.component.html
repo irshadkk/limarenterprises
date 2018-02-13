@@ -1,5 +1,14 @@
 <header class="app-header navbar">
-
+<style>
+  .nav-dropdown-toggle{
+        background-color: #63c2de !important;
+        border-bottom: 1px solid gray;
+  }
+      .icon-star{
+        color: yellow !important;
+         
+  }
+</style>
   <button class="navbar-toggler d-lg-none" type="button" appMobileSidebarToggler>&#9776;</button>
   <a class="navbar-brand" href="#"></a>
   <button class="navbar-toggler d-md-down-none" type="button" appSidebarToggler>&#9776;</button>
@@ -77,9 +86,26 @@
             <li class="nav-item">
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/employee-upload']"><i class="icon-star"></i> Upload Employees</a>
             </li>
+             
+          </ul>
+        </li>
+
+        <li class="nav-item nav-dropdown" appNavDropdown>
+          <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-star"></i>Manage Leave</a>
+          <ul class="nav-dropdown-items">
+           
+             
             <li class="nav-item">
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewleavesummary']"><i class="icon-star"></i> View Leave Summary</a>
             </li>
+           
+          </ul>
+        </li>
+
+        <li class="nav-item nav-dropdown" appNavDropdown>
+          <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-star"></i> Manage Holidays</a>
+          <ul class="nav-dropdown-items">
+            
             <li class="nav-item">
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/addholidays']"><i class="icon-star"></i> Manage Annual Holidays</a>
             </li>
@@ -90,17 +116,19 @@
         <li class="nav-item nav-dropdown" appNavDropdown>
           <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-star"></i> Attendance</a>
           <ul class="nav-dropdown-items">
+            
             <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/form-upload']"><i class="icon-star"></i> Upload Single CSV</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/list-upload']"><i class="icon-star"></i> Upload Multiple CSV</a>
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/list-upload']"><i class="icon-star"></i> Upload Attendance CSV</a>
             </li>
             <!-- <li class="nav-item">
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/uploadcsv']"><i class="icon-star"></i> Upload CSV</a>
             </li> -->
             <li class="nav-item">
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewattendance']"><i class="icon-star"></i> View Attendance</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/addpresent']"><i class="icon-star"></i> Add Attendance</a>
             </li>
 
           </ul>
@@ -141,9 +169,9 @@
       </li>
     </ol>
     
-    <angular4-notify-notifications-container></angular4-notify-notifications-container>
+   
     <div class="container-fluid">
-
+ <angular4-notify-notifications-container></angular4-notify-notifications-container>
       <router-outlet></router-outlet>
     </div>
   </main>

@@ -1,0 +1,330 @@
+KABANI LOG 2018-02-09 11:31:29  INFO NB3111721233 --- [nio-8888-exec-2]
+			c.k.h.h.SalaryCalculator : ----------------calculateSalaryOfEmployees2017--Dec-----START-------------------
+KABANI LOG 2018-02-09 11:33:25  INFO NB3111721233 --- [nio-8888-exec-2]
+			c.k.h.h.SalaryCalculator : ----------------calculateSalaryOfEmployees2017--Dec-----END-------------------
+KABANI LOG 2018-02-09 11:36:12  INFO NB3111721233 --- [io-8888-exec-10]
+			c.k.h.h.SalaryCalculator : ----------------calculateSalaryOfEmployees2017--Feb-----START-------------------
+KABANI LOG 2018-02-09 11:36:20  INFO NB3111721233 --- [io-8888-exec-10]
+			c.k.h.h.SalaryCalculator : ----------------calculateSalaryOfEmployees2017--Feb-----END-------------------
+KABANI LOG 2018-02-09 11:47:21  INFO NB3111721233 --- [      main]
+			c.k.h.KabaniApplication : --***---KABANI APP STARTING UP--***---
+KABANI LOG 2018-02-09 11:47:21  INFO NB3111721233 --- [restartedMain]
+			c.k.h.KabaniApplication : --***---KABANI APP STARTING UP--***---
+KABANI LOG 2018-02-09 11:47:21  INFO NB3111721233 --- [restartedMain]
+			c.k.h.KabaniApplication : Starting KabaniApplication on NB3111721233 with PID 13280 (C:\PERSONAL\Projects\fr\kabani-branches\irshad_working_dev\kabani-services\target\classes started by S799975 in C:\PERSONAL\Projects\fr\kabani-branches\irshad_working_dev\kabani-services)
+KABANI LOG 2018-02-09 11:47:21  INFO NB3111721233 --- [restartedMain]
+			c.k.h.KabaniApplication : No active profile set, falling back to default profiles: default
+KABANI LOG 2018-02-09 11:47:22  INFO NB3111721233 --- [restartedMain]
+			ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@10ed9d0: startup date [Fri Feb 09 11:47:22 GST 2018]; root of context hierarchy
+KABANI LOG 2018-02-09 11:47:22  INFO NB3111721233 --- [kground-preinit]
+			o.h.v.i.u.Version    : HV000001: Hibernate Validator 5.3.6.Final
+KABANI LOG 2018-02-09 11:47:24  INFO NB3111721233 --- [restartedMain]
+			s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8888 (http)
+KABANI LOG 2018-02-09 11:47:24  INFO NB3111721233 --- [restartedMain]
+			o.a.c.c.StandardService : Starting service [Tomcat]
+KABANI LOG 2018-02-09 11:47:24  INFO NB3111721233 --- [restartedMain]
+			o.a.c.c.StandardEngine : Starting Servlet Engine: Apache Tomcat/8.5.23
+KABANI LOG 2018-02-09 11:47:25  INFO NB3111721233 --- [ost-startStop-1]
+			o.a.c.c.C.[.[.[/]    : Initializing Spring embedded WebApplicationContext
+KABANI LOG 2018-02-09 11:47:25  INFO NB3111721233 --- [ost-startStop-1]
+			o.s.w.c.ContextLoader : Root WebApplicationContext: initialization completed in 2963 ms
+KABANI LOG 2018-02-09 11:47:25  INFO NB3111721233 --- [ost-startStop-1]
+			o.s.b.w.s.ServletRegistrationBean : Mapping servlet: 'dispatcherServlet' to [/]
+KABANI LOG 2018-02-09 11:47:25  INFO NB3111721233 --- [ost-startStop-1]
+			o.s.b.w.s.FilterRegistrationBean : Mapping filter: 'characterEncodingFilter' to: [/*]
+KABANI LOG 2018-02-09 11:47:25  INFO NB3111721233 --- [ost-startStop-1]
+			o.s.b.w.s.FilterRegistrationBean : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+KABANI LOG 2018-02-09 11:47:25  INFO NB3111721233 --- [ost-startStop-1]
+			o.s.b.w.s.FilterRegistrationBean : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+KABANI LOG 2018-02-09 11:47:25  INFO NB3111721233 --- [ost-startStop-1]
+			o.s.b.w.s.FilterRegistrationBean : Mapping filter: 'requestContextFilter' to: [/*]
+KABANI LOG 2018-02-09 11:47:47  INFO NB3111721233 --- [restartedMain]
+			j.LocalContainerEntityManagerFactoryBean : Building JPA container EntityManagerFactory for persistence unit 'default'
+KABANI LOG 2018-02-09 11:47:47  INFO NB3111721233 --- [restartedMain]
+			o.h.j.i.u.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+KABANI LOG 2018-02-09 11:47:48  INFO NB3111721233 --- [restartedMain]
+			o.h.Version          : HHH000412: Hibernate Core {5.0.12.Final}
+KABANI LOG 2018-02-09 11:47:48  INFO NB3111721233 --- [restartedMain]
+			o.h.c.Environment    : HHH000206: hibernate.properties not found
+KABANI LOG 2018-02-09 11:47:48  INFO NB3111721233 --- [restartedMain]
+			o.h.c.Environment    : HHH000021: Bytecode provider name : javassist
+KABANI LOG 2018-02-09 11:47:48  INFO NB3111721233 --- [restartedMain]
+			o.h.a.c.Version      : HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+KABANI LOG 2018-02-09 11:47:48  INFO NB3111721233 --- [restartedMain]
+			o.h.d.Dialect        : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+KABANI LOG 2018-02-09 11:47:48  WARN NB3111721233 --- [restartedMain]
+			o.h.m.RootClass      : HHH000038: Composite-id class does not override equals(): com.kabani.hr.entity.MyKey
+KABANI LOG 2018-02-09 11:47:48  WARN NB3111721233 --- [restartedMain]
+			o.h.m.RootClass      : HHH000039: Composite-id class does not override hashCode(): com.kabani.hr.entity.MyKey
+KABANI LOG 2018-02-09 11:47:49  INFO NB3111721233 --- [restartedMain]
+			o.h.t.PojoInstantiator : HHH000182: No default (no-argument) constructor for class: com.kabani.hr.entity.SalaryStatus (class must be instantiated by Interceptor)
+KABANI LOG 2018-02-09 11:47:49  INFO NB3111721233 --- [restartedMain]
+			o.h.t.h.SchemaUpdate : HHH000228: Running hbm2ddl schema update
+KABANI LOG 2018-02-09 11:49:29  INFO NB3111721233 --- [restartedMain]
+			j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+KABANI LOG 2018-02-09 11:49:29  INFO NB3111721233 --- [restartedMain]
+			o.h.h.i.QueryTranslatorFactoryInitiator : HHH000397: Using ASTQueryTranslatorFactory
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@10ed9d0: startup date [Fri Feb 09 11:47:22 GST 2018]; root of context hierarchy
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/employeeupload/bulk],methods=[POST]}" onto public java.lang.Iterable<com.kabani.hr.entity.EmployeeDetailsMaster> com.kabani.hr.controller.EmployeeBulkUploadController.handleFileUpload(org.springframework.web.multipart.MultipartFile) throws java.lang.Exception
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/employee/addorupdate],methods=[POST]}" onto public boolean com.kabani.hr.controller.EmployeeDetailsController.updateOrAddEmployee(com.kabani.hr.entity.EmployeeDetailsMaster)
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/employee/all],methods=[GET]}" onto public java.util.List<com.kabani.hr.entity.EmployeeDetailsMaster> com.kabani.hr.controller.EmployeeDetailsController.getAllEmployees()
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/holiday/addorupdate],methods=[POST]}" onto public boolean com.kabani.hr.controller.HolidayDetailsController.updateOrAddEmployee(com.kabani.hr.entity.HolidayDetailsMaster)
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/holiday/all/{month}/{year}],methods=[GET]}" onto public int com.kabani.hr.controller.HolidayDetailsController.getAllHolidayInYearMonth()
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/holiday/delete],methods=[POST]}" onto public boolean com.kabani.hr.controller.HolidayDetailsController.deleteEmployee(com.kabani.hr.entity.HolidayDetailsMaster)
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/holiday/all],methods=[POST]}" onto public java.util.List<com.kabani.hr.entity.HolidayDetailsMaster> com.kabani.hr.controller.HolidayDetailsController.getAllEmployees()
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/getAllAttandance],methods=[POST]}" onto public java.lang.Iterable<com.kabani.hr.entity.UserAttendanceDetails> com.kabani.hr.controller.MainController.getAttendanceDetails()
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/getDistinctEmployees],methods=[POST]}" onto public java.util.List<com.kabani.hr.entity.UserAttendanceDetails> com.kabani.hr.controller.MainController.getDistinctEmployees()
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/getDistinctEmployeesO],methods=[POST]}" onto public java.util.List com.kabani.hr.controller.MainController.getDistinctEmployeesO()
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/updateUserAttandance],methods=[POST]}" onto public boolean com.kabani.hr.controller.MainController.updateUserAttandance(com.kabani.hr.entity.UserAttendanceDetails)
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/upload/{name}],methods=[POST]}" onto public java.lang.Iterable<com.kabani.hr.entity.UserAttendanceDetails> com.kabani.hr.controller.MainController.handleFileUpload(org.springframework.web.multipart.MultipartFile,java.lang.String) throws java.lang.Exception
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login],methods=[GET]}" onto public boolean com.kabani.hr.controller.MainController.doLogin(java.lang.String,java.lang.String)
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/add],methods=[GET]}" onto public java.lang.String com.kabani.hr.controller.MainController.addNewUser(java.lang.String,java.lang.String,java.lang.String)
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/all],methods=[GET]}" onto public java.lang.Iterable<com.kabani.hr.entity.User> com.kabani.hr.controller.MainController.getAllUsers()
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/salary/download],methods=[GET]}" onto public org.springframework.web.servlet.ModelAndView com.kabani.hr.controller.SalaryController.downloadExcelOutputExl(javax.servlet.http.HttpServletResponse) throws java.lang.Exception
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/salary/salaryGenerated],methods=[GET],produces=[application/json]}" onto public int com.kabani.hr.controller.SalaryController.getSalaryStatus(java.lang.String,java.lang.String) throws java.lang.Exception
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/salary/generateSalary/{year}/{month}],methods=[POST]}" onto public java.util.List com.kabani.hr.controller.SalaryController.generateSalary(java.lang.String,java.lang.String) throws java.lang.Exception
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/salary/getSalary],methods=[GET],produces=[application/json]}" onto public java.util.List com.kabani.hr.controller.SalaryController.getSalary(java.lang.String,java.lang.String) throws java.lang.Exception
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/salary/getSalaryExcel],methods=[GET]}" onto public org.springframework.web.servlet.ModelAndView com.kabani.hr.controller.SalaryController.getSalaryExel(java.lang.String,java.lang.String,javax.servlet.http.HttpServletResponse) throws java.lang.Exception
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			o.s.w.s.h.SimpleUrlHandlerMapping : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			o.s.w.s.h.SimpleUrlHandlerMapping : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+KABANI LOG 2018-02-09 11:49:30  INFO NB3111721233 --- [restartedMain]
+			o.s.w.s.h.SimpleUrlHandlerMapping : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+KABANI LOG 2018-02-09 11:49:31  INFO NB3111721233 --- [restartedMain]
+			o.s.b.d.a.OptionalLiveReloadServer : LiveReload server is running on port 35729
+KABANI LOG 2018-02-09 11:49:31  INFO NB3111721233 --- [restartedMain]
+			o.s.j.e.a.AnnotationMBeanExporter : Registering beans for JMX exposure on startup
+KABANI LOG 2018-02-09 11:49:31  INFO NB3111721233 --- [restartedMain]
+			o.a.c.h.Http11NioProtocol : Initializing ProtocolHandler ["http-nio-8888"]
+KABANI LOG 2018-02-09 11:49:31  INFO NB3111721233 --- [restartedMain]
+			o.a.c.h.Http11NioProtocol : Starting ProtocolHandler ["http-nio-8888"]
+KABANI LOG 2018-02-09 11:49:31  INFO NB3111721233 --- [restartedMain]
+			o.a.t.u.n.NioSelectorPool : Using a shared selector for servlet write/read
+KABANI LOG 2018-02-09 11:49:31  INFO NB3111721233 --- [restartedMain]
+			s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 8888 (http)
+KABANI LOG 2018-02-09 11:49:31  INFO NB3111721233 --- [restartedMain]
+			c.k.h.KabaniApplication : Started KabaniApplication in 129.686 seconds (JVM running for 132.231)
+KABANI LOG 2018-02-09 11:51:00  INFO NB3111721233 --- [nio-8888-exec-2]
+			o.a.c.c.C.[.[.[/]    : Initializing Spring FrameworkServlet 'dispatcherServlet'
+KABANI LOG 2018-02-09 11:51:00  INFO NB3111721233 --- [nio-8888-exec-2]
+			o.s.w.s.DispatcherServlet : FrameworkServlet 'dispatcherServlet': initialization started
+KABANI LOG 2018-02-09 11:51:00  INFO NB3111721233 --- [nio-8888-exec-2]
+			o.s.w.s.DispatcherServlet : FrameworkServlet 'dispatcherServlet': initialization completed in 29 ms
+KABANI LOG 2018-02-09 11:51:01  INFO NB3111721233 --- [nio-8888-exec-1]
+			c.k.h.h.SalaryCalculator : ----------------calculateSalaryOfEmployees2017--Dec-----START-------------------
+KABANI LOG 2018-02-09 11:52:07  INFO NB3111721233 --- [nio-8888-exec-1]
+			c.k.h.h.SalaryCalculator : ----------------calculateSalaryOfEmployees2017--Dec-----END-------------------
+KABANI LOG 2018-02-09 11:55:56  INFO NB3111721233 --- [nio-8888-exec-8]
+			c.k.h.h.SalaryCalculator : ----------------calculateSalaryOfEmployees2017--Dec-----START-------------------
+KABANI LOG 2018-02-09 11:56:04  INFO NB3111721233 --- [nio-8888-exec-8]
+			c.k.h.h.SalaryCalculator : ----------------calculateSalaryOfEmployees2017--Dec-----END-------------------
+KABANI LOG 2018-02-09 12:00:23  INFO NB3111721233 --- [  Thread-7]
+			ationConfigEmbeddedWebApplicationContext : Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@10ed9d0: startup date [Fri Feb 09 11:47:22 GST 2018]; root of context hierarchy
+KABANI LOG 2018-02-09 12:00:23  INFO NB3111721233 --- [  Thread-7]
+			o.s.j.e.a.AnnotationMBeanExporter : Unregistering JMX-exposed beans on shutdown
+KABANI LOG 2018-02-09 12:00:23  INFO NB3111721233 --- [  Thread-7]
+			j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+KABANI LOG 2018-02-09 12:00:24  INFO NB3111721233 --- [restartedMain]
+			c.k.h.KabaniApplication : --***---KABANI APP STARTING UP--***---
+KABANI LOG 2018-02-09 12:00:24  INFO NB3111721233 --- [restartedMain]
+			c.k.h.KabaniApplication : Starting KabaniApplication on NB3111721233 with PID 13280 (C:\PERSONAL\Projects\fr\kabani-branches\irshad_working_dev\kabani-services\target\classes started by S799975 in C:\PERSONAL\Projects\fr\kabani-branches\irshad_working_dev\kabani-services)
+KABANI LOG 2018-02-09 12:00:24  INFO NB3111721233 --- [restartedMain]
+			c.k.h.KabaniApplication : No active profile set, falling back to default profiles: default
+KABANI LOG 2018-02-09 12:00:24  INFO NB3111721233 --- [restartedMain]
+			ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@1f780ec: startup date [Fri Feb 09 12:00:24 GST 2018]; root of context hierarchy
+KABANI LOG 2018-02-09 12:00:25  INFO NB3111721233 --- [restartedMain]
+			s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8888 (http)
+KABANI LOG 2018-02-09 12:00:25  INFO NB3111721233 --- [restartedMain]
+			o.a.c.c.StandardService : Starting service [Tomcat]
+KABANI LOG 2018-02-09 12:00:25  INFO NB3111721233 --- [restartedMain]
+			o.a.c.c.StandardEngine : Starting Servlet Engine: Apache Tomcat/8.5.23
+KABANI LOG 2018-02-09 12:00:25  INFO NB3111721233 --- [ost-startStop-1]
+			o.a.c.c.C.[.[.[/]    : Initializing Spring embedded WebApplicationContext
+KABANI LOG 2018-02-09 12:00:25  INFO NB3111721233 --- [ost-startStop-1]
+			o.s.w.c.ContextLoader : Root WebApplicationContext: initialization completed in 1012 ms
+KABANI LOG 2018-02-09 12:00:25  INFO NB3111721233 --- [ost-startStop-1]
+			o.s.b.w.s.ServletRegistrationBean : Mapping servlet: 'dispatcherServlet' to [/]
+KABANI LOG 2018-02-09 12:00:25  INFO NB3111721233 --- [ost-startStop-1]
+			o.s.b.w.s.FilterRegistrationBean : Mapping filter: 'characterEncodingFilter' to: [/*]
+KABANI LOG 2018-02-09 12:00:25  INFO NB3111721233 --- [ost-startStop-1]
+			o.s.b.w.s.FilterRegistrationBean : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+KABANI LOG 2018-02-09 12:00:25  INFO NB3111721233 --- [ost-startStop-1]
+			o.s.b.w.s.FilterRegistrationBean : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+KABANI LOG 2018-02-09 12:00:25  INFO NB3111721233 --- [ost-startStop-1]
+			o.s.b.w.s.FilterRegistrationBean : Mapping filter: 'requestContextFilter' to: [/*]
+KABANI LOG 2018-02-09 12:00:44  INFO NB3111721233 --- [restartedMain]
+			j.LocalContainerEntityManagerFactoryBean : Building JPA container EntityManagerFactory for persistence unit 'default'
+KABANI LOG 2018-02-09 12:00:44  INFO NB3111721233 --- [restartedMain]
+			o.h.j.i.u.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+KABANI LOG 2018-02-09 12:00:45  INFO NB3111721233 --- [restartedMain]
+			o.h.d.Dialect        : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+KABANI LOG 2018-02-09 12:00:45  WARN NB3111721233 --- [restartedMain]
+			o.h.m.RootClass      : HHH000038: Composite-id class does not override equals(): com.kabani.hr.entity.MyKey
+KABANI LOG 2018-02-09 12:00:45  WARN NB3111721233 --- [restartedMain]
+			o.h.m.RootClass      : HHH000039: Composite-id class does not override hashCode(): com.kabani.hr.entity.MyKey
+KABANI LOG 2018-02-09 12:00:45  INFO NB3111721233 --- [restartedMain]
+			o.h.t.PojoInstantiator : HHH000182: No default (no-argument) constructor for class: com.kabani.hr.entity.SalaryStatus (class must be instantiated by Interceptor)
+KABANI LOG 2018-02-09 12:00:45  INFO NB3111721233 --- [restartedMain]
+			o.h.t.h.SchemaUpdate : HHH000228: Running hbm2ddl schema update
+KABANI LOG 2018-02-09 23:09:58  INFO NB3111721233 --- [      main]
+			c.k.h.KabaniApplication : --***---KABANI APP STARTING UP--***---
+KABANI LOG 2018-02-09 23:09:59  INFO NB3111721233 --- [restartedMain]
+			c.k.h.KabaniApplication : --***---KABANI APP STARTING UP--***---
+KABANI LOG 2018-02-09 23:09:59  INFO NB3111721233 --- [restartedMain]
+			c.k.h.KabaniApplication : Starting KabaniApplication on NB3111721233 with PID 12208 (C:\PERSONAL\Projects\fr\kabani-branches\irshad_working_dev\kabani-services\target\classes started by S799975 in C:\PERSONAL\Projects\fr\kabani-branches\irshad_working_dev\kabani-services)
+KABANI LOG 2018-02-09 23:09:59  INFO NB3111721233 --- [restartedMain]
+			c.k.h.KabaniApplication : No active profile set, falling back to default profiles: default
+KABANI LOG 2018-02-09 23:09:59  INFO NB3111721233 --- [restartedMain]
+			ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@1ff5c3f: startup date [Fri Feb 09 23:09:59 GST 2018]; root of context hierarchy
+KABANI LOG 2018-02-09 23:09:59  INFO NB3111721233 --- [kground-preinit]
+			o.h.v.i.u.Version    : HV000001: Hibernate Validator 5.3.6.Final
+KABANI LOG 2018-02-09 23:10:02  INFO NB3111721233 --- [restartedMain]
+			s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8888 (http)
+KABANI LOG 2018-02-09 23:10:02  INFO NB3111721233 --- [restartedMain]
+			o.a.c.c.StandardService : Starting service [Tomcat]
+KABANI LOG 2018-02-09 23:10:02  INFO NB3111721233 --- [restartedMain]
+			o.a.c.c.StandardEngine : Starting Servlet Engine: Apache Tomcat/8.5.23
+KABANI LOG 2018-02-09 23:10:02  INFO NB3111721233 --- [ost-startStop-1]
+			o.a.c.c.C.[.[.[/]    : Initializing Spring embedded WebApplicationContext
+KABANI LOG 2018-02-09 23:10:02  INFO NB3111721233 --- [ost-startStop-1]
+			o.s.w.c.ContextLoader : Root WebApplicationContext: initialization completed in 2690 ms
+KABANI LOG 2018-02-09 23:10:02  INFO NB3111721233 --- [ost-startStop-1]
+			o.s.b.w.s.ServletRegistrationBean : Mapping servlet: 'dispatcherServlet' to [/]
+KABANI LOG 2018-02-09 23:10:02  INFO NB3111721233 --- [ost-startStop-1]
+			o.s.b.w.s.FilterRegistrationBean : Mapping filter: 'characterEncodingFilter' to: [/*]
+KABANI LOG 2018-02-09 23:10:02  INFO NB3111721233 --- [ost-startStop-1]
+			o.s.b.w.s.FilterRegistrationBean : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+KABANI LOG 2018-02-09 23:10:02  INFO NB3111721233 --- [ost-startStop-1]
+			o.s.b.w.s.FilterRegistrationBean : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+KABANI LOG 2018-02-09 23:10:02  INFO NB3111721233 --- [ost-startStop-1]
+			o.s.b.w.s.FilterRegistrationBean : Mapping filter: 'requestContextFilter' to: [/*]
+KABANI LOG 2018-02-09 23:10:20  INFO NB3111721233 --- [restartedMain]
+			j.LocalContainerEntityManagerFactoryBean : Building JPA container EntityManagerFactory for persistence unit 'default'
+KABANI LOG 2018-02-09 23:10:20  INFO NB3111721233 --- [restartedMain]
+			o.h.j.i.u.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+KABANI LOG 2018-02-09 23:10:20  INFO NB3111721233 --- [restartedMain]
+			o.h.Version          : HHH000412: Hibernate Core {5.0.12.Final}
+KABANI LOG 2018-02-09 23:10:20  INFO NB3111721233 --- [restartedMain]
+			o.h.c.Environment    : HHH000206: hibernate.properties not found
+KABANI LOG 2018-02-09 23:10:20  INFO NB3111721233 --- [restartedMain]
+			o.h.c.Environment    : HHH000021: Bytecode provider name : javassist
+KABANI LOG 2018-02-09 23:10:20  INFO NB3111721233 --- [restartedMain]
+			o.h.a.c.Version      : HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+KABANI LOG 2018-02-09 23:10:20  INFO NB3111721233 --- [restartedMain]
+			o.h.d.Dialect        : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+KABANI LOG 2018-02-09 23:10:20  WARN NB3111721233 --- [restartedMain]
+			o.h.m.RootClass      : HHH000038: Composite-id class does not override equals(): com.kabani.hr.entity.MyKey
+KABANI LOG 2018-02-09 23:10:20  WARN NB3111721233 --- [restartedMain]
+			o.h.m.RootClass      : HHH000039: Composite-id class does not override hashCode(): com.kabani.hr.entity.MyKey
+KABANI LOG 2018-02-09 23:10:20  INFO NB3111721233 --- [restartedMain]
+			o.h.t.PojoInstantiator : HHH000182: No default (no-argument) constructor for class: com.kabani.hr.entity.SalaryStatus (class must be instantiated by Interceptor)
+KABANI LOG 2018-02-09 23:10:21  INFO NB3111721233 --- [restartedMain]
+			o.h.t.h.SchemaUpdate : HHH000228: Running hbm2ddl schema update
+KABANI LOG 2018-02-09 23:11:57  INFO NB3111721233 --- [restartedMain]
+			j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+KABANI LOG 2018-02-09 23:11:57  INFO NB3111721233 --- [restartedMain]
+			o.h.h.i.QueryTranslatorFactoryInitiator : HHH000397: Using ASTQueryTranslatorFactory
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@1ff5c3f: startup date [Fri Feb 09 23:09:59 GST 2018]; root of context hierarchy
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/employeeupload/bulk],methods=[POST]}" onto public java.lang.Iterable<com.kabani.hr.entity.EmployeeDetailsMaster> com.kabani.hr.controller.EmployeeBulkUploadController.handleFileUpload(org.springframework.web.multipart.MultipartFile) throws java.lang.Exception
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/employee/addorupdate],methods=[POST]}" onto public boolean com.kabani.hr.controller.EmployeeDetailsController.updateOrAddEmployee(com.kabani.hr.entity.EmployeeDetailsMaster)
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/employee/all],methods=[GET]}" onto public java.util.List<com.kabani.hr.entity.EmployeeDetailsMaster> com.kabani.hr.controller.EmployeeDetailsController.getAllEmployees()
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/holiday/all/{month}/{year}],methods=[GET]}" onto public int com.kabani.hr.controller.HolidayDetailsController.getAllHolidayInYearMonth()
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/holiday/addorupdate],methods=[POST]}" onto public boolean com.kabani.hr.controller.HolidayDetailsController.updateOrAddEmployee(com.kabani.hr.entity.HolidayDetailsMaster)
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/holiday/all],methods=[POST]}" onto public java.util.List<com.kabani.hr.entity.HolidayDetailsMaster> com.kabani.hr.controller.HolidayDetailsController.getAllEmployees()
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/holiday/delete],methods=[POST]}" onto public boolean com.kabani.hr.controller.HolidayDetailsController.deleteEmployee(com.kabani.hr.entity.HolidayDetailsMaster)
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/getDistinctEmployees],methods=[POST]}" onto public java.util.List<com.kabani.hr.entity.UserAttendanceDetails> com.kabani.hr.controller.MainController.getDistinctEmployees()
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/getDistinctEmployeesO],methods=[POST]}" onto public java.util.List com.kabani.hr.controller.MainController.getDistinctEmployeesO()
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/updateUserAttandance],methods=[POST]}" onto public boolean com.kabani.hr.controller.MainController.updateUserAttandance(com.kabani.hr.entity.UserAttendanceDetails)
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/getAllAttandance],methods=[POST]}" onto public java.lang.Iterable<com.kabani.hr.entity.UserAttendanceDetails> com.kabani.hr.controller.MainController.getAttendanceDetails()
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/upload/{name}],methods=[POST]}" onto public java.lang.Iterable<com.kabani.hr.entity.UserAttendanceDetails> com.kabani.hr.controller.MainController.handleFileUpload(org.springframework.web.multipart.MultipartFile,java.lang.String) throws java.lang.Exception
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/all],methods=[GET]}" onto public java.lang.Iterable<com.kabani.hr.entity.User> com.kabani.hr.controller.MainController.getAllUsers()
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/add],methods=[GET]}" onto public java.lang.String com.kabani.hr.controller.MainController.addNewUser(java.lang.String,java.lang.String,java.lang.String)
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/login],methods=[GET]}" onto public boolean com.kabani.hr.controller.MainController.doLogin(java.lang.String,java.lang.String)
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/salary/download],methods=[GET]}" onto public org.springframework.web.servlet.ModelAndView com.kabani.hr.controller.SalaryController.downloadExcelOutputExl(javax.servlet.http.HttpServletResponse) throws java.lang.Exception
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/salary/getSalaryExcel],methods=[GET]}" onto public org.springframework.web.servlet.ModelAndView com.kabani.hr.controller.SalaryController.getSalaryExel(java.lang.String,java.lang.String,javax.servlet.http.HttpServletResponse) throws java.lang.Exception
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/salary/salaryGenerated],methods=[GET],produces=[application/json]}" onto public int com.kabani.hr.controller.SalaryController.getSalaryStatus(java.lang.String,java.lang.String) throws java.lang.Exception
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/salary/generateSalary/{year}/{month}],methods=[POST]}" onto public java.util.List com.kabani.hr.controller.SalaryController.generateSalary(java.lang.String,java.lang.String) throws java.lang.Exception
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/salary/getSalary],methods=[GET],produces=[application/json]}" onto public java.util.List com.kabani.hr.controller.SalaryController.getSalary(java.lang.String,java.lang.String) throws java.lang.Exception
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			o.s.w.s.h.SimpleUrlHandlerMapping : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			o.s.w.s.h.SimpleUrlHandlerMapping : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+KABANI LOG 2018-02-09 23:11:58  INFO NB3111721233 --- [restartedMain]
+			o.s.w.s.h.SimpleUrlHandlerMapping : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+KABANI LOG 2018-02-09 23:11:59  INFO NB3111721233 --- [restartedMain]
+			o.s.b.d.a.OptionalLiveReloadServer : LiveReload server is running on port 35729
+KABANI LOG 2018-02-09 23:11:59  INFO NB3111721233 --- [restartedMain]
+			o.s.j.e.a.AnnotationMBeanExporter : Registering beans for JMX exposure on startup
+KABANI LOG 2018-02-09 23:11:59  INFO NB3111721233 --- [restartedMain]
+			o.a.c.h.Http11NioProtocol : Initializing ProtocolHandler ["http-nio-8888"]
+KABANI LOG 2018-02-09 23:11:59  INFO NB3111721233 --- [restartedMain]
+			o.a.c.h.Http11NioProtocol : Starting ProtocolHandler ["http-nio-8888"]
+KABANI LOG 2018-02-09 23:11:59  INFO NB3111721233 --- [restartedMain]
+			o.a.t.u.n.NioSelectorPool : Using a shared selector for servlet write/read
+KABANI LOG 2018-02-09 23:11:59  INFO NB3111721233 --- [restartedMain]
+			s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 8888 (http)
+KABANI LOG 2018-02-09 23:11:59  INFO NB3111721233 --- [restartedMain]
+			c.k.h.KabaniApplication : Started KabaniApplication in 119.873 seconds (JVM running for 121.875)
+KABANI LOG 2018-02-09 23:12:06  INFO NB3111721233 --- [nio-8888-exec-1]
+			o.a.c.c.C.[.[.[/]    : Initializing Spring FrameworkServlet 'dispatcherServlet'
+KABANI LOG 2018-02-09 23:12:06  INFO NB3111721233 --- [nio-8888-exec-1]
+			o.s.w.s.DispatcherServlet : FrameworkServlet 'dispatcherServlet': initialization started
+KABANI LOG 2018-02-09 23:12:06  INFO NB3111721233 --- [nio-8888-exec-1]
+			o.s.w.s.DispatcherServlet : FrameworkServlet 'dispatcherServlet': initialization completed in 23 ms

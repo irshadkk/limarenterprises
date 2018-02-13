@@ -1,8 +1,11 @@
-import { Component, TemplateRef, OnInit } from '@angular/core';
+import { Component, TemplateRef, OnInit ,ViewContainerRef } from '@angular/core';
 import { DataService } from '../../data.service';
 import { DatePipe } from '@angular/common';
 import { BlockUI, NgBlockUI } from 'ng-block-ui'; 
 import { NotificationsService } from 'angular4-notify';
+
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import {ToastOptions} from 'ng2-toastr';
 
 
 @Component({
@@ -17,8 +20,9 @@ export class ViewEmployeesComponent implements OnInit {
   public statusArr = ["Absent", "Present", "1/2Present"];
   @BlockUI() blockUI: NgBlockUI;
  
-  constructor(private dataService: DataService, private datePipe: DatePipe,protected notificationsService: NotificationsService) {
-
+  constructor(private dataService: DataService, private datePipe: DatePipe,protected notificationsService: NotificationsService,public toastr: ToastsManager, vcr: ViewContainerRef) {
+ this.toastr.setRootViewContainerRef(vcr);
+   
 
   }
   ngOnInit() {
@@ -40,8 +44,7 @@ export class ViewEmployeesComponent implements OnInit {
   }
 
   saveChanges() {
-    this.blockUI.start("Saving..");
-    console.log(JSON.stringify(this.currentItem))
+    this.blockUI.start("Saving.."); 
     this.dataService.getPostData(this.dataService.serviceurl + 'employee/addorupdate', this.currentItem).subscribe(data => {
       if (data === true) {
         this.loadEmployees()
@@ -56,12 +59,10 @@ export class ViewEmployeesComponent implements OnInit {
   onEditClick(infoModal, item) {
     this.blockUI.start("Loading..");
     this.infoModal = infoModal;
-    if (item) {
-      console.log(JSON.stringify(item))
+    if (item) { 
 
       item.dateOfBirth = this.datePipe.transform(item.dateOfBirth, 'yyyy-MM-dd');
-      item.dateOfJoining = this.datePipe.transform(item.dateOfJoining, 'yyyy-MM-dd');
-      console.log(JSON.stringify(item.dateOfBirth))
+      item.dateOfJoining = this.datePipe.transform(item.dateOfJoining, 'yyyy-MM-dd'); 
       this.currentItem = item;
     }
     else {
@@ -117,9 +118,10 @@ export class ViewEmployeesComponent implements OnInit {
   }
 
   private handleError(error: any, method: any) {
-    console.error('An error occurred in ViewEmployeesComponent at method ' + method, +" " + error);
+     
+    this.toastr.error('An error occurred in ViewEmployeesComponent at method ' + method, +" " + error, { showCloseButton: true,dismiss: 'click'});
     this.blockUI.stop();
-    this.notificationsService.addError('An error occurred in ViewEmployeesComponent at method ' + method + " " + error);
+    
    }
 
 

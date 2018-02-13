@@ -1,5 +1,19 @@
 <div class="animated fadeIn">
+   <select [(ngModel)]="year">
+            <!-- (change)="objChanged()" -->
+            <option *ngFor="let year of yearSelectArr" [value]="year">{{year}}
+            </option>
+          </select>
+
+          <select [(ngModel)]="month" (change)="objChanged()">
+            <option *ngFor="let month of monthSelectArr" [value]="month">{{month}}
+            </option>
+          </select>
+
+          <button (click)="loadHolidaysByYearMonth()">Submit</button>
   <div class="row">
+
+    
     <div class="col-sm-4 col-lg-2" *ngFor="let item of holidayArr">
       <div class="card text-white bg-primary" >
         <div class="card-body pb-0">

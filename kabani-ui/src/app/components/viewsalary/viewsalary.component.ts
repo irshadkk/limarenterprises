@@ -11,6 +11,7 @@ import { NotificationsService } from 'angular4-notify';
 export class ViewSalaryComponent implements OnInit {
   loading: boolean = false;
   public employeeSalArr;
+  public employeeSalStatusArr;
   public currentItem = [];
   public monthSelectArr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -32,6 +33,7 @@ export class ViewSalaryComponent implements OnInit {
   }
   ngOnInit() {
     if (this.dataService.appDefined()) {
+      this.loadAllStatus();
 
     }
   }
@@ -39,9 +41,37 @@ export class ViewSalaryComponent implements OnInit {
     this.employeeSalArr = [];
     this.loadSalary(this.year, this.month);
   }
-  generateExcel() {
-    this.salaryService.generateSalaryExcel(this.year, this.monthSelectArr.indexOf(this.month.toString()))
+  generateExcel(year,month) {
+    this.salaryService.generateSalaryExcel(year, this.monthSelectArr.indexOf(month))
   }
+  loadAllStatus(){
+    
+    this.blockUI.start("loading.."); 
+    this.dataService.getData(this.dataService.serviceurl + 'salary/salaryStatusAll').subscribe(data => {
+     this.employeeSalStatusArr=data; 
+     this.blockUI.stop()
+    },
+    (error => { this.handleError(error,"saveChanges()");}));
+  
+  } 
+  resetAll(){
+    
+    this.blockUI.start("loading.."); 
+    this.dataService.getData(this.dataService.serviceurl + 'salary/salaryStatusResetAll').subscribe(data => {
+      this.loadAllStatus()
+     this.blockUI.stop()
+    },
+    (error => { this.handleError(error,"saveChanges()");}));
+  
+  }
+  deletItem(item) {
+    this.blockUI.start("Saving.."); 
+    this.dataService.getPostData(this.dataService.serviceurl + 'salary/salaryStatusRemove', item).subscribe(data => {
+     
+    },
+    (error => { this.handleError(error,"saveChanges()");}));
+  }
+  
 
   salaryAlreadyGenerated: boolean = false;
   loadSalary(year, month: string) {

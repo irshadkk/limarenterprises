@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
  
-import { UploadCsvComponent } from './uploadcsv/uploadcsv.component';
-import { DetailsUploadComponent } from './upload/details-upload/details-upload.component';
-import { FormUploadComponent } from './upload/form-upload/form-upload.component';
+import { UploadCsvComponent } from './uploadcsv/uploadcsv.component'; 
 import { ListUploadComponent } from './upload/list-upload/list-upload.component';
 import { EmployeeUploadComponent } from './upload/employee-upload/employee-upload.component';
 
@@ -15,6 +13,8 @@ import { ViewSalaryComponent } from './viewsalary/viewsalary.component';
 import { ViewEmployeesComponent } from './viewemployees/viewemployees.component';
 import { ViewleavesummaryComponent } from './viewleavesummary/viewleavesummary.component'; 
 import { AddholidaysComponent } from './addholidays/addholidays.component'; 
+import { AddPresentComponent } from './addpresent/addpresent.component'; 
+
 
 
  
@@ -33,21 +33,7 @@ const routes: Routes = [
         data: {
           title: 'Upload CSV '
         }
-      },
-      {
-        path: 'details-upload',
-        component: DetailsUploadComponent,
-        data: {
-          title: 'Details Upload Component '
-        }
-      },
-      {
-        path: 'form-upload',
-        component: FormUploadComponent,
-        data: {
-          title: 'Form Upload Component '
-        }
-      },
+      },  
       {
         path: 'list-upload',
         component: ListUploadComponent,
@@ -102,6 +88,13 @@ const routes: Routes = [
         component: AddholidaysComponent,
         data: {
           title: 'Add Holidays'
+        }
+      },
+      {
+        path: 'addpresent',
+        component: AddPresentComponent,
+        data: {
+          title: 'Add Present'
         }
       }
        

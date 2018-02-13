@@ -20,7 +20,8 @@ import { BreadcrumbsComponent } from './shared/breadcrumb.component';
 import { AppRoutingModule } from './app.routing';
 
 // Services
-import { DataService } from './data.service';
+import { DataService } from './data.service'; 
+
 import {UploadFileService} from './components/upload/upload-file.service';
 // Layouts
 import { FullLayoutComponent } from './layouts/full-layout.component';
@@ -29,9 +30,12 @@ import { LoginComponent } from './pages/login.component';
 import { BlockUIModule } from 'ng-block-ui'; 
 import {NotificationsModule, NotificationsService} from 'angular4-notify';
 
+import {ToastModule} from 'ng2-toastr/ng2-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 @NgModule({
   imports: [
-    BrowserModule,FormsModule,
+    BrowserModule,FormsModule, BrowserAnimationsModule, ToastModule.forRoot(),
     AppRoutingModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(), 
