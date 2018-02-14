@@ -53,7 +53,7 @@ export class SalaryService {
     //     return response;
     //   })
     //   .catch(this.handleError);
-    window.open(this.dataService.serviceurl + `salary/getSalaryExcel?year=${year}&month=${month + 1}`, "_target")
+    window.open(this.dataService.serviceurl + `salary/getSalaryExcel?year=${year}&month=${month}`, "_target")
   }
 
 

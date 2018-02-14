@@ -20,9 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kabani.hr.entity.SalaryStatus;
+import com.kabani.hr.entity.UserAttendanceDetails;
+import com.kabani.hr.entity.Wps;
 import com.kabani.hr.helper.ExcelOutputServiceImpl;
 import com.kabani.hr.helper.SalaryCalculator;
 import com.kabani.hr.repository.SalaryStatusRepository;
+import com.kabani.hr.repository.UserAttendanceDetailsRepository;
 import com.kabani.hr.repository.WpsRepository;
 
 @CrossOrigin
@@ -41,6 +44,9 @@ public class SalaryController {
 	private WpsRepository wpsRepository;
 	@Autowired
 	private ExcelOutputServiceImpl excelOutputServiceImpl;
+	
+	@Autowired
+	private UserAttendanceDetailsRepository userAttendanceDetailsRepository;
 
 	@RequestMapping(value = "/salaryGenerated", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody int getSalaryStatus(@RequestParam String year, @RequestParam String month) throws Exception {
@@ -113,7 +119,7 @@ public class SalaryController {
 		return result;
 	}
 	@RequestMapping(value = "/salaryStatusRemove", method = RequestMethod.POST)
-	public boolean salaryStatusRemove(@RequestBody SalaryStatus salaryStatus) throws Exception {
+	public @ResponseBody boolean salaryStatusRemove(@RequestBody SalaryStatus salaryStatus) throws Exception {
 		try {
 			salaryStatusRepository.delete(salaryStatus);
 		} catch (Exception e) {
@@ -123,11 +129,26 @@ public class SalaryController {
 		return true;
 	}
 	@RequestMapping(value = "/salaryStatusResetAll", method = RequestMethod.GET)
-	public String salaryStatusRemove() throws Exception {
-		String result="";
-		try {
-			salaryStatusRepository.resetAll();
-			wpsRepository.resetAll();
+	public @ResponseBody String salaryStatusRemove() throws Exception {
+		String result="true";
+		List<SalaryStatus> salSt=salaryStatusRepository.findAll();
+		List<Wps> wpsA=wpsRepository.findAll(); 
+		try { 
+			for (SalaryStatus salaryStatus : salSt) {
+				salaryStatusRepository.delete(salaryStatus);
+				
+			} 
+			for (Wps wps : wpsA) {
+				wpsRepository.delete(wps);
+				
+			}
+			for (UserAttendanceDetails wps : userAttendanceDetailsRepository.findAll()) {
+				userAttendanceDetailsRepository.delete(wps);
+				
+			}
+			
+			
+			
 		} catch (Exception e) {
 			logger.error("****Exception in getSalaryStatusAll() " + e.getMessage());
 			throw e;

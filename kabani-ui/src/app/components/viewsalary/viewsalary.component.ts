@@ -42,7 +42,7 @@ export class ViewSalaryComponent implements OnInit {
     this.loadSalary(this.year, this.month);
   }
   generateExcel(year,month) {
-    this.salaryService.generateSalaryExcel(year, this.monthSelectArr.indexOf(month))
+    this.salaryService.generateSalaryExcel(year, month)
   }
   loadAllStatus(){
     
@@ -90,9 +90,11 @@ export class ViewSalaryComponent implements OnInit {
               setTimeout(() => {
                 this.blockUI.stop();
               }, 1500);
+              this.loadAllStatus();
             },
             error => this.handleError(error, "loadSalary()")
             );
+          
         } else {
           this.salaryAlreadyGenerated = true;
           this.salaryService.getSalary(year, this.monthSelectArr.indexOf(month.toString()))
@@ -103,10 +105,12 @@ export class ViewSalaryComponent implements OnInit {
               setTimeout(() => {
                 this.blockUI.stop();
               }, 1500);
+              this.loadAllStatus();
             }
             , err => this.handleError(err, "loadSalary()")
             );
         }
+          
       },
       error => {
         this.handleError(error, "loadSalary()");
@@ -131,6 +135,7 @@ export class ViewSalaryComponent implements OnInit {
   
     }*/
   private handleError(error: any, method: any) {
+    this.loadAllStatus();
     this.notificationsService.notifications.closed;
     this.loading = false;
     console.error('An error occurred in SalaryComponent at method ' + method, +" " + error);

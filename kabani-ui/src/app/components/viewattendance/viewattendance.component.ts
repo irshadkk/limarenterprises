@@ -2,6 +2,7 @@ import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui'; 
 import { NotificationsService } from 'angular4-notify';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class ViewAttendanceComponent implements OnInit {
     pauseOnHover: true,
     clickToClose: true,
   }
-  constructor(private dataService: DataService, protected notificationsService: NotificationsService) { }
+  constructor(private dataService: DataService, private datePipe: DatePipe,  protected notificationsService: NotificationsService) { }
 
   ngOnInit() {
     if (this.dataService.appDefined()) {

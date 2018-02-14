@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
     let link = ['/dashboard'];
     this.dataService.getPostData(this.dataService.serviceurl + 'getDistinctEmployeesO', null).subscribe(data => {
       this.employeeAttendanceArr = data;
-      if (data && data.lenth > 0) {
+      if (data ) {
         this.employeeAttendanceArr.forEach((item, index) => {
           let obj = { name: "" };
           obj.name = item[1];

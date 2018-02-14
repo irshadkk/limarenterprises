@@ -18,10 +18,10 @@ public interface EmployeeLeaveRepository extends CrudRepository<EmployeeLeave, L
 	@Query(value = "select count(*),employeeCode, name,status from UserAttendanceDetails where status='Present' and YEAR(date) = :year AND MONTH(date) = :month group by employeeCode,name,status")
     public List<Object[]> findDistinctPresentInMonthYear(@Param("month") int month,@Param("year") int year);
     
-    @Query(value = "select count(*),employeeCode, name,status from UserAttendanceDetails where status='1/2Present' and  YEAR(dateOfHoliday) = :year AND MONTH(dateOfHoliday) = :month group by employeeCode,name,status")
+    @Query(value = "select count(*),employeeCode, name,status from UserAttendanceDetails where status='1/2Present' and  YEAR(date) = :year AND MONTH(date) = :month group by employeeCode,name,status")
     public List<Object[]> findDistinctHalfPresentInMonthYear(@Param("month") int month,@Param("year") int year);
     
-    @Query(value = "select count(*),employeeCode, name,status from UserAttendanceDetails where status='Present On leave(CL)' and  YEAR(dateOfHoliday) = :year AND MONTH(dateOfHoliday) = :month group by employeeCode,name,status")
+    @Query(value = "select count(*),employeeCode, name,status from UserAttendanceDetails where status='Present On leave(CL)' and  YEAR(date) = :year AND MONTH(date) = :month group by employeeCode,name,status")
     public List<Object[]> findDistinctCasualLeaveInMonthYear(@Param("month") int month,@Param("year") int year);
 	 
  }

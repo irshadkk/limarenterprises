@@ -2,6 +2,7 @@ package com.kabani.hr.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -17,7 +18,6 @@ public interface SalaryStatusRepository extends CrudRepository<SalaryStatus, Lon
 	
 	List<SalaryStatus> findAll();
 	
-	@Query(value = " truncat  table salary_status) p", nativeQuery = true)
-	int resetAll();
+	 
 
 }

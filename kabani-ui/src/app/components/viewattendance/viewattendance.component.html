@@ -45,7 +45,7 @@
 
               <tr *ngFor="let item of employeeAttendanceArr | filter : searchText; let i = index">
                 <td>{{i+1}}</td>
-                <td>{{item.date}}</td>
+                <td>{{item.date |date:'dd/MM/yyyy'}}</td>
                 <td>{{item.employeeName}}</td>
                 <td>{{item.inTime}}---{{item.outTime}}</td>
                 <td>{{item.duration}}</td>
@@ -95,7 +95,7 @@
             </tr>
             <tr>
               <td>Date</td>
-              <td>{{currentItem.date}}</td>
+              <td>{{currentItem.date |date:'dd/MM/yyyy'}}</td>
             </tr>
             <tr>
               <td>Employee Code</td>
