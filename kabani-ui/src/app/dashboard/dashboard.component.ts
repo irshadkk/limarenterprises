@@ -60,6 +60,9 @@ export class DashboardComponent implements OnInit {
           this.blockUI.stop();
         }, 1500);
       }
+      setTimeout(() => {
+            this.blockUI.stop();
+          }, 1500);
     },
       error => { this.handleError(error, "loadAttendance()"); });
   }
