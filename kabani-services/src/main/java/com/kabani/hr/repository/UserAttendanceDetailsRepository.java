@@ -29,7 +29,9 @@ public interface UserAttendanceDetailsRepository extends CrudRepository<UserAtte
 	
 //	@Query(value = " select max(dayscount) from (select distinct count(*)  as dayscount from user_attendance_details  where month = ?1 group by employee_name) p", nativeQuery = true)
 //    public Object findNumberOfDaysInMonth(@Param("month") String month);
-	
+    @Query(value = "select uad  from UserAttendanceDetails  uad where  YEAR(uad.date) = :year AND MONTH(uad.date) = :month ")
+	public List<UserAttendanceDetails> findAllAttendanceForMonth(@Param("month") int month, @Param("year") int year);
+
 	 
 	
 	

@@ -1,0 +1,38 @@
+
+.present{
+  background-color: green;
+}
+.absent{
+  background-color: red;
+  }
+  .half{
+    background-color: orange;
+    }
+    .unmapped{
+      background-color: grey;
+      }
+      .present, .absent, .half,.unmapped :hover{
+        border:1px solid rgb(43, 11, 223);
+      }
+.table {
+  display: table;
+  text-align: center;
+  width: 90%;
+  border-collapse: separate;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
+.header{
+  font-weight: bold;
+  text-align: left;
+}
+.days{
+  float:left;width:24px;border-left:1px solid black;border-top:1px solid black;
+}
+#dataList .header{
+  padding:0px;
+  margin:0px;
+}
+#dataList:evenRow{
+  background-color:grey;
+}
