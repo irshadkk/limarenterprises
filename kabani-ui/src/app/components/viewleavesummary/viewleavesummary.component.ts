@@ -11,10 +11,7 @@ export class ViewleavesummaryComponent implements OnInit {
 
 
   public employeeArr;
-  public currentItem: any = [];
-  public currentSalaryItem = [];
-  public currentLeaveItem = [];
-  public statusArr = ["Absent", "Present", "1/2Present"]
+  public statusArr = ["Present", "1/2Present","Present On leave(CL)"]
   @BlockUI() blockUI: NgBlockUI;
   public monthSelectArr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -63,33 +60,10 @@ export class ViewleavesummaryComponent implements OnInit {
       }, 1500);
 
     },
-      (error => { this.handleError(error, "loadEmployees()"); }));
+      (error => { this.handleError(error, "loadEmployeesAttandance()"); }));
   }
 
-  saveChanges() {
-    this.blockUI.start("Saving..");
-    this.dataService.getPostData(this.dataService.serviceurl + 'employee/addorupdate', this.currentItem).subscribe(data => {
-      if (data == true) {
-        this.notificationsService.addInfo('Changes Saved');
-      } else {
-        this.notificationsService.addWarning('Changes couldnt be saved');
-      }
-      setTimeout(() => {
-        this.blockUI.stop();
-      }, 1500);
-    },
-      (error => { this.handleError(error, "saveChanges()"); }));
-
-  }
-  onEditClick(infoModal, item) {
-    this.blockUI.start("Loading..");
-    this.currentItem = item;
-
-    infoModal.show();
-    setTimeout(() => {
-      this.blockUI.stop();
-    }, 100);
-  }
+  
   changeinLeave() {
     this.currentItem.casualLeavesRemaining = parseInt(this.currentItem.totalCasualAlloted) - parseInt(this.currentItem.casualLeavesTaken)
   }
@@ -99,18 +73,59 @@ export class ViewleavesummaryComponent implements OnInit {
       element.casualLeavesTaken = 0;
       element.totalCasualAlloted = 12;
       element.casualLeavesRemaining = 12;
-
       this.dataService.getPostData(this.dataService.serviceurl + 'leave/addorupdateempleave', element).subscribe(data => {
-
-
-
-
       },
         (error => { this.handleError(error, "onResetClick()"); }));
     });
   }
-  modifyAttandance(emp:any,day:number){
-    alert('Modify Attandance of emp'+JSON.stringify(emp)+" "+day);
+  getTitle(emp:any,day:number){
+    let status="";
+    if(emp.employeeAttndance[day-1]==null||emp.employeeAttndance[day-1]==""||emp.employeeAttndance[day-1]=="U"){
+      status="UnMapped"
+    }
+    else if(emp.employeeAttndance[day-1]=="P"){
+      status="Present"
+    }
+    else if(emp.employeeAttndance[day-1]=="A"){
+      status="Absent"
+    }else if(emp.employeeAttndance[day-1]=="H"){
+      status="1/2 Day"
+    }
+    return "Employee :"+emp.employeeName+"\n"+"Day :"+emp.month+" "+day+" "+emp.year+"\nStatus :"+status;
+  }
+  currentItem:any = [];
+  currentItemStatus:any="";
+  modifyAttandance(emp:any,day:number,infoModal:any){    
+    this.blockUI.start("Loading..");
+    this.dataService.getData(this.dataService.serviceurl + 'getEmployAttandanceForDay?year=' + emp.year + "&month=" + (this.monthSelectArr.indexOf(emp.month)+1)+ "&day=" +(day+1)+ "&employeeCode=" + emp.employeeId).subscribe(data => {
+      this.currentItem = data;
+      alert(data)
+      this.currentItemStatus=this.currentItem.status;
+      infoModal.show();
+      setTimeout(() => {
+        this.blockUI.stop();
+      }, 500);
+
+    },
+      (error => { this.handleError(error, "modifyAttandance()"); }));    
+  }
+
+  saveChanges(infoModal:any) {
+    this.blockUI.start("Saving..");
+    this.dataService.getPostData(this.dataService.serviceurl + 'updateUserAttandance', this.currentItem).subscribe(data => {
+      if (data == true) {
+        this.notificationsService.addInfo('Changes Saved');
+        this.loadEmployeesAttandance(this.monthSelectArr.indexOf(this.month)+1,parseInt(this.year));
+        infoModal.hide();
+      } else {
+        this.notificationsService.addWarning('Changes couldnt be saved');
+      }
+      setTimeout(() => {
+        this.blockUI.stop();
+      }, 1500);
+    },
+      (error => { this.handleError(error, "saveChanges()"); }));
+
   }
 
   private handleError(error: any, method: any) {

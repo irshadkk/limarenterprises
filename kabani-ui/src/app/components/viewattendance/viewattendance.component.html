@@ -1,5 +1,5 @@
 
-<block-ui>
+<!--<block-ui>
   <div class="animated fadeIn">
 
     <div class="row">
@@ -69,7 +69,7 @@
 
 
       </div>
-      <!--/.col-->
+      
     </div>
   </div>
 
@@ -87,7 +87,7 @@
         </div>
         
         <div class="modal-body">
-        <!--  <p>One fine body&hellip;</p>>-->
+       
           <table class="table table-bordered table-striped table-sm">
             <tr>
               <th>Item</th>
@@ -136,7 +136,6 @@
             </tr>
             <tr>
               <td>Status</td>
-              <!-- /<td> <input type="text"[(ngModel)]="currentItem.status" class="form-control"> </td> -->
               <select [(ngModel)]="currentItem.status" required>
                 <option *ngFor="let status of statusArr" [value]="status" [selected]="status == currentItem.status">{{status}}
                 </option>
@@ -162,9 +161,134 @@
           <button type="button" class="btn btn-primary" (click)="saveChanges()">Save changes</button>
         </div>
       </div>
-      <!-- /.modal-content -->
     </div>
-    <!-- /.modal-dialog -->
+   </div>
+ </block-ui>
+-->
+<block-ui>
+  <div class="animated fadeIn">
+
+    <div class="row">
+
+
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <strong>Horizontal</strong> Form
+          </div>
+          <div class="card-body">
+
+            <select [(ngModel)]="year">
+             
+              <option *ngFor="let year of yearSelectArr" [value]="year">{{year}}
+              </option>
+            </select>
+
+            <select [(ngModel)]="month" (change)="objChanged()">
+              <option *ngFor="let month of monthSelectArr" [value]="month">{{month}}
+              </option>
+            </select>
+
+            <button (click)="objChanged()">Submit</button>
+            <div class="container">
+              <div class="row">
+                <div class='col-md-3 header'>Id &nbsp;&nbsp; Name </div>
+                <div class='col-md-9 header'>
+                  <span class="days" *ngFor="let i of Arr(days).fill(1); let count=index">
+                    <ng-container *ngIf="(count+1)<10">0{{count+1}}</ng-container>
+                    <ng-container *ngIf="(count+1)>=10">{{count+1}}</ng-container>
+                  </span>
+
+                </div>
+              </div>
+              <div class='row' id="dataList" *ngFor="let emp of employeeArr;let rowIndex=index">
+                <div class='col-md-3' style="border-top:1px solid grey;" [ngClass]="oddRow(rowIndex)">
+                  {{emp.employeeId}} &nbsp;&nbsp;&nbsp; {{emp.employeeName}}
+
+                </div>
+                <div class='col-md-9'>
+                  <span style="text-align:center;" class="days" [title]="getTitle(emp,count+1)" *ngFor="let i of Arr(days).fill(1); let count=index"
+                    [ngClass]="getColour(emp.employeeAttndance[count])" (click)="modifyAttandance(emp,count,infoModal)">&nbsp;{{emp.employeeAttndance[count]}}
+                  </span>
+                </div>
+              </div>
+              <div class="card-footer">
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <!-- /.modal -->
+
+
+
+
+  <div bsModal #infoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-info" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Modify Attandance</h4>
+          <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+
+        <div class="modal-body">
+         
+          <table class="table table-bordered table-striped table-sm">
+            <tr>
+              <th>Item</th>
+              <th>Value</th>
+              <th>Change Value</th>
+            </tr>
+            <tr>
+              <td>ECode</td>
+              <td>{{currentItem.employeeCode}}</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td>Employee Name</td>
+              <td>{{currentItem.employeeName}}</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td>Date</td>
+              <td>{{currentItem.day}} {{currentItem.month}} {{currentItem.year}}</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td>In/Out Time</td>
+              <td>{{currentItem.inTime}} -- {{currentItem.outTime}}</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td>Duration</td>
+              <td>{{currentItem.duration}}</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td>Current Attandance</td>
+              <td>{{currentItemStatus}}</td>
+              <td><select [(ngModel)]="currentItem.status">
+                <option *ngFor="let status of statusArr" [value]="status">{{status}}
+                </option>
+              </select></td>
+            </tr>
+          </table>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Close</button>
+          <button type="button" class="btn btn-primary" (click)="saveChanges(infoModal)">Save changes</button>
+        </div>
+      </div>
+     
+    </div>
+ 
+  </div>
+
 </block-ui>

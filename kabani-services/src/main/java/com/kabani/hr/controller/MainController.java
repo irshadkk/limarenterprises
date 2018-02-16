@@ -6,7 +6,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kabani.hr.entity.User;
 import com.kabani.hr.entity.UserAttendanceDetails;
+import com.kabani.hr.entity.UserAttendanceGrid;
 import com.kabani.hr.repository.UserAttendanceDetailsRepository;
 import com.kabani.hr.repository.UserRepository;
 
@@ -72,23 +76,24 @@ public class MainController {
 	}
 
 	@PostMapping(path = "/upload/{name}")
-	public @ResponseBody String[] handleFileUpload(@RequestParam("file") MultipartFile file,
-			@PathVariable String name) throws Exception {
-		String[] response= {""};
+	public @ResponseBody String[] handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable String name)
+			throws Exception {
+		String[] response = { "" };
 		InputStream is = null;
 		BufferedReader bfReader = null;
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
-		ArrayList employeeDataList=new ArrayList();
+		ArrayList employeeDataList = new ArrayList();
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
 				is = new ByteArrayInputStream(bytes);
 				bfReader = new BufferedReader(new InputStreamReader(is));
 				bfReader.readLine();// it reads the first line so it removes the heading from the file
-				String  employeeAttendanceString = null;
+				String employeeAttendanceString = null;
 				String[] employeeAttendance = null;
-				//employeeAttendance = bfReader.readLine().split(",")) != null
-				while (((employeeAttendanceString = bfReader.readLine()) != null ) && (( employeeAttendance =employeeAttendanceString.split(",")) != null) )  {
+				// employeeAttendance = bfReader.readLine().split(",")) != null
+				while (((employeeAttendanceString = bfReader.readLine()) != null)
+						&& ((employeeAttendance = employeeAttendanceString.split(",")) != null)) {
 
 					UserAttendanceDetails userAttendanceDetails = new UserAttendanceDetails();
 
@@ -142,15 +147,14 @@ public class MainController {
 
 					userAttendanceDetails.setBranch(name);
 					employeeDataList.add(userAttendanceDetails);
-					
 
 				}
 				userAttendanceDetailsRepository.save(employeeDataList);
-				response[0]="The file "+file.getOriginalFilename()+"is uploaded successfully";
+				response[0] = "The file " + file.getOriginalFilename() + "is uploaded successfully";
 
 			} catch (Exception e) {
 				logger.error("****Exception in handleFileUpload() " + e.getMessage());
-				response[0]="****Exception in handleFileUpload() " + e.getMessage();
+				response[0] = "****Exception in handleFileUpload() " + e.getMessage();
 				throw e;
 			} finally {
 				try {
@@ -160,8 +164,8 @@ public class MainController {
 
 				}
 			}
-		}else {
-			response[0]="The file is empty";
+		} else {
+			response[0] = "The file is empty";
 		}
 		return response;
 	}
@@ -169,6 +173,54 @@ public class MainController {
 	@PostMapping(path = "/getAllAttandance")
 	public @ResponseBody Iterable<UserAttendanceDetails> getAttendanceDetails() {
 		return userAttendanceDetailsRepository.findAll();
+	}
+
+	@GetMapping(path = "/findAllAttendanceForMonth")
+	public @ResponseBody List<UserAttendanceGrid> findAllAttendanceForMonth(@RequestParam("month") int month,
+			@RequestParam("year") int year) {
+		Map<String, UserAttendanceGrid> attandanceGrid = new HashMap<String, UserAttendanceGrid>();
+		List<UserAttendanceDetails> userAttendanceDetails = userAttendanceDetailsRepository
+				.findAllAttendanceForMonth(month, year);
+		for (UserAttendanceDetails user : userAttendanceDetails) {
+			UserAttendanceGrid temp = null;
+			if (attandanceGrid.containsKey(user.getEmployeeCode())) {
+				temp = attandanceGrid.get(user.getEmployeeCode());
+			} else {
+				temp = new UserAttendanceGrid(user.getEmployeeCode(), user.getEmployeeName());
+			}
+			if (user.getStatus().equals("Present")) {
+				temp.getEmployeeAttndance()[user.getDay() - 1] = "P";
+			} else if (user.getStatus().equals("1/2Present")) {
+				temp.getEmployeeAttndance()[user.getDay() - 1] = "H";
+			} else if (user.getStatus().equals("Present On leave(CL)")) {
+				temp.getEmployeeAttndance()[user.getDay() - 1] = "A";
+			} else {
+				temp.getEmployeeAttndance()[user.getDay() - 1] = "U";
+			}
+			temp.setMonth(user.getMonth());
+			temp.setYear(user.getYear());
+			temp.setStatus(user.getStatus());
+			temp.setBranch(user.getBranch());
+			temp.setCompany(user.getCompany());
+			temp.setDepartment(user.getDepartment());
+			temp.setInTime(user.getInTime());
+			temp.setOutTime(user.getOutTime());
+			temp.setDuration(user.getDuration());
+			
+			attandanceGrid.put(user.getEmployeeCode(), temp);
+
+		}
+		
+		
+		 List<UserAttendanceGrid> result=new ArrayList<UserAttendanceGrid>(attandanceGrid.values());
+		Collections.sort(result);
+		return result ;
+	}
+	@GetMapping(path = "/getEmployAttandanceForDay")
+	public @ResponseBody UserAttendanceDetails getEmployAttandanceForDay(@RequestParam("month") int month,
+			@RequestParam("year") int year, @RequestParam("day") int day,
+			@RequestParam("employeeCode") String employeeCode) {
+		return userAttendanceDetailsRepository.getEmployAttandanceForDay(month, year,day,employeeCode);
 	}
 
 	@PostMapping(path = "/updateUserAttandance")

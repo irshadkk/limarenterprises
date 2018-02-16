@@ -31,6 +31,9 @@ public interface UserAttendanceDetailsRepository extends CrudRepository<UserAtte
 //    public Object findNumberOfDaysInMonth(@Param("month") String month);
     @Query(value = "select uad  from UserAttendanceDetails  uad where  YEAR(uad.date) = :year AND MONTH(uad.date) = :month ")
 	public List<UserAttendanceDetails> findAllAttendanceForMonth(@Param("month") int month, @Param("year") int year);
+    
+    @Query(value = "select uad  from UserAttendanceDetails  uad where  YEAR(uad.date) = :year AND MONTH(uad.date) = :month AND DAY(uad.date) = :day AND uad.employeeCode=:employeeCode  ")
+	public UserAttendanceDetails getEmployAttandanceForDay(@Param("month") int month, @Param("year") int year,@Param("day") int day,@Param("employeeCode") String employeeCode);
 
 	 
 	

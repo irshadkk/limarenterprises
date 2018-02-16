@@ -1,4 +1,5 @@
-<block-ui>
+<!--
+  <block-ui>
   <div class="animated fadeIn">
 
     <div class="row">
@@ -12,7 +13,7 @@
           <div class="card-body">
 
             <select [(ngModel)]="year">
-              <!-- (change)="objChanged()" -->
+             
               <option *ngFor="let year of yearSelectArr" [value]="year">{{year}}
               </option>
             </select>
@@ -35,13 +36,13 @@
                 </div>
               </div>
               <div class='row' id="dataList" *ngFor="let emp of employeeArr;let rowIndex=index">
-                <div class='col-md-3' [ngClass]="oddRow(rowIndex)">
+                <div class='col-md-3' style="border-top:1px solid grey;" [ngClass]="oddRow(rowIndex)">
                   {{emp.employeeId}} &nbsp;&nbsp;&nbsp; {{emp.employeeName}}
 
                 </div>
                 <div class='col-md-9'>
-                  <span style="text-align:center;" class="days"  [attr.title]="count+1"
-                    *ngFor="let i of Arr(days).fill(1); let count=index" [ngClass]="getColour(emp.employeeAttndance[count])" (click)="modifyAttandance(emp,count)">&nbsp;{{emp.employeeAttndance[count]}}
+                  <span style="text-align:center;" class="days" [title]="getTitle(emp,count+1)" *ngFor="let i of Arr(days).fill(1); let count=index"
+                    [ngClass]="getColour(emp.employeeAttndance[count])" (click)="modifyAttandance(emp,count,infoModal)">&nbsp;{{emp.employeeAttndance[count]}}
                   </span>
                 </div>
               </div>
@@ -63,7 +64,7 @@
     <div class="modal-dialog modal-info" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Modify Leave</h4>
+          <h4 class="modal-title">Modify Attandance</h4>
           <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -71,7 +72,7 @@
 
 
         <div class="modal-body">
-          <!--<p>One fine body&hellip;</p>-->
+         
           <table class="table table-bordered table-striped table-sm">
             <tr>
               <th>Item</th>
@@ -81,87 +82,48 @@
             <tr>
               <td>ECode</td>
               <td>{{currentItem.employeeCode}}</td>
-              <td>&nbsp</td>
-            </tr>
-            <tr>
-              <td>EBioDevCd</td>
-              <td>{{currentItem.employeeBioDeviceCode}}</td>
-              <td>&nbsp</td>
+              <td>&nbsp;</td>
             </tr>
             <tr>
               <td>Employee Name</td>
               <td>{{currentItem.employeeName}}</td>
-              <td>&nbsp</td>
-            </tr>
-
-            <tr>
-              <td>branch</td>
-              <td>{{currentItem.branch}}</td>
-              <td>&nbsp</td>
+              <td>&nbsp;</td>
             </tr>
             <tr>
-              <td>designation</td>
-              <td>{{currentItem.designation}}</td>
-              <td>&nbsp</td>
+              <td>Date</td>
+              <td>{{currentItem.day}} {{currentItem.month}} {{currentItem.year}}</td>
+              <td>&nbsp;</td>
             </tr>
             <tr>
-              <td>department</td>
-              <td>{{currentItem.department}}</td>
-              <td>&nbsp</td>
+              <td>In/Out Time</td>
+              <td>{{currentItem.inTime}} -- {{currentItem.outTime}}</td>
+              <td>&nbsp;</td>
             </tr>
             <tr>
-              <td>employeeAge</td>
-              <td>{{currentItem.employeeAge}}</td>
-              <td>&nbsp</td>
+              <td>Duration</td>
+              <td>{{currentItem.duration}}</td>
+              <td>&nbsp;</td>
             </tr>
             <tr>
-              <td>employeeSex</td>
-              <td>{{currentItem.employeeSex}}</td>
-              <td>&nbsp</td>
+              <td>Current Attandance</td>
+              <td>{{currentItemStatus}}</td>
+              <td><select [(ngModel)]="currentItem.status">
+                <option *ngFor="let status of statusArr" [value]="status">{{status}}
+                </option>
+              </select></td>
             </tr>
-            <tr>
-              <td>Salary Total</td>
-              <td>{{currentItem.total}}</td>
-              <td>&nbsp</td>
-            </tr>
-            <tr>
-              <td>Total Leave Allotted</td>
-              <td>{{currentItem.totalCasualAlloted}}</td>
-              <td>
-                <input type="number" [(ngModel)]="currentItem.totalCasualAlloted" (change)="changeinLeave()">
-                <span style="color:red">* number</span>
-              </td>
-            </tr>
-            <tr>
-              <td>Total Leave Taken</td>
-              <td>{{currentItem.casualLeavesTaken}}</td>
-              <td>
-                <input type="number" [(ngModel)]="currentItem.casualLeavesTaken" (change)="changeinLeave()">
-                <span style="color:red">* number</span>
-              </td>
-            </tr>
-            <tr>
-              <td>Total Leave Remaining</td>
-              <td>{{currentItem.casualLeavesRemaining}}</td>
-              <td>{{currentItem.casualLeavesRemaining}}</td>
-            </tr>
-            <!-- <tr>
-            <td>Comment</td>
-            <td><input type="textarea" [(ngModel)]="currentItem.comment"></td>
-
-           </tr> -->
-
           </table>
 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Close</button>
-          <button type="button" class="btn btn-primary" (click)="saveChanges()">Save changes</button>
+          <button type="button" class="btn btn-primary" (click)="saveChanges(infoModal)">Save changes</button>
         </div>
       </div>
-      <!-- /.modal-content -->
+     
     </div>
-    <!-- /.modal-dialog -->
+ 
   </div>
-  <!-- /.modal -->
+
 </block-ui>
+-->

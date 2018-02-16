@@ -1,14 +1,15 @@
 <header class="app-header navbar">
-<style>
-  .nav-dropdown-toggle{
-        background-color: #63c2de !important;
-        border-bottom: 1px solid gray;
-  }
-      .icon-star{
-        color: yellow !important;
-         
-  }
-</style>
+  <style>
+    .nav-dropdown-toggle {
+      background-color: #63c2de !important;
+      border-bottom: 1px solid gray;
+    }
+
+    .icon-star {
+      color: yellow !important;
+
+    }
+  </style>
   <button class="navbar-toggler d-lg-none" type="button" appMobileSidebarToggler>&#9776;</button>
   <a class="navbar-brand" href="#"></a>
   <button class="navbar-toggler d-md-down-none" type="button" appSidebarToggler>&#9776;</button>
@@ -40,7 +41,9 @@
       </a>
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
 
-        <div class="dropdown-header text-center"><strong>Profile</strong></div>
+        <div class="dropdown-header text-center">
+          <strong>Profile</strong>
+        </div>
 
         <!-- <a class="dropdown-item" href="#"><i class="fa fa-bell-o"></i> Updates<span class="badge badge-info">42</span></a>
         <a class="dropdown-item" href="#"><i class="fa fa-envelope-o"></i> Messages<span class="badge badge-success">42</span></a>
@@ -55,7 +58,8 @@
         <a class="dropdown-item" href="#"><i class="fa fa-file"></i> Projects<span class="badge badge-primary">42</span></a>
         <div class="divider"></div>
         <a class="dropdown-item" href="#"><i class="fa fa-shield"></i> Lock account</a> -->
-        <a class="dropdown-item" (click)="logout()"><i class="fa fa-lock"></i> Logout</a>
+        <a class="dropdown-item" (click)="logout()">
+          <i class="fa fa-lock"></i> Logout</a>
       </div>
     </li>
     <!-- <button class="navbar-toggler d-md-down-none" type="button" appAsideMenuToggler>&#9776;</button> -->
@@ -69,7 +73,10 @@
     <nav class="sidebar-nav">
       <ul class="nav">
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" [routerLink]="['/dashboard']"><i class="icon-speedometer"></i> Dashboard <span class="badge badge-info">NEW</span></a>
+          <a class="nav-link" routerLinkActive="active" [routerLink]="['/dashboard']">
+            <i class="icon-speedometer"></i> Dashboard
+            <span class="badge badge-info">NEW</span>
+          </a>
         </li>
         <li class="divider"></li>
         <li class="nav-title">
@@ -78,19 +85,22 @@
 
 
         <li class="nav-item nav-dropdown" appNavDropdown>
-          <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-star"></i> Employee Details</a>
+          <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle>
+            <i class="icon-star"></i> Employee Details</a>
           <ul class="nav-dropdown-items">
             <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewemployees']"><i class="icon-star"></i> View Employees</a>
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewemployees']">
+                <i class="icon-star"></i> View Employees</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/employee-upload']"><i class="icon-star"></i> Upload Employees</a>
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/employee-upload']">
+                <i class="icon-star"></i> Upload Employees</a>
             </li>
-             
+
           </ul>
         </li>
 
-        <li class="nav-item nav-dropdown" appNavDropdown>
+        <!--<li class="nav-item nav-dropdown" appNavDropdown>
           <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-star"></i>Manage Leave</a>
           <ul class="nav-dropdown-items">
            
@@ -100,35 +110,39 @@
             </li>
            
           </ul>
-        </li>
+        </li>-->
 
         <li class="nav-item nav-dropdown" appNavDropdown>
-          <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-star"></i> Manage Holidays</a>
+          <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle>
+            <i class="icon-star"></i> Manage Holidays</a>
           <ul class="nav-dropdown-items">
-            
+
             <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/addholidays']"><i class="icon-star"></i> Manage Annual Holidays</a>
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/addholidays']">
+                <i class="icon-star"></i> Manage Annual Holidays</a>
             </li>
           </ul>
         </li>
 
 
         <li class="nav-item nav-dropdown" appNavDropdown>
-          <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-star"></i> Attendance</a>
+          <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle>
+            <i class="icon-star"></i> Manage Attendance/Leave</a>
           <ul class="nav-dropdown-items">
-            
+
             <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/list-upload']"><i class="icon-star"></i> Upload Attendance CSV</a>
-            </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/uploadcsv']"><i class="icon-star"></i> Upload CSV</a>
-            </li> -->
-            <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewattendance']"><i class="icon-star"></i> View Attendance</a>
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/list-upload']">
+                <i class="icon-star"></i> Upload Attendance CSV</a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/addpresent']"><i class="icon-star"></i> Add Attendance</a>
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewattendance']">
+                <i class="icon-star"></i> View Attendance</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/addpresent']">
+                <i class="icon-star"></i> Add Attendance</a>
             </li>
 
           </ul>
@@ -137,13 +151,16 @@
 
 
         <li class="nav-item nav-dropdown" appNavDropdown>
-          <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-star"></i> Payroll</a>
+          <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle>
+            <i class="icon-star"></i> Payroll</a>
           <ul class="nav-dropdown-items">
             <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewsalary']"><i class="icon-star"></i> Salary</a>
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewsalary']">
+                <i class="icon-star"></i> Salary</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewattendance']"><i class="icon-star"></i> View Payslip</a>
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewattendance']">
+                <i class="icon-star"></i> View Payslip</a>
             </li>
 
           </ul>
@@ -168,10 +185,10 @@
         </div>
       </li>
     </ol>
-    
-   
+
+
     <div class="container-fluid">
- <angular4-notify-notifications-container></angular4-notify-notifications-container>
+      <angular4-notify-notifications-container></angular4-notify-notifications-container>
       <router-outlet></router-outlet>
     </div>
   </main>
@@ -179,37 +196,55 @@
   <aside class="aside-menu">
     <tabset>
       <tab>
-        <ng-template tabHeading><i class="icon-list"></i></ng-template>
+        <ng-template tabHeading>
+          <i class="icon-list"></i>
+        </ng-template>
         <div class="callout m-0 py-2 text-muted text-center bg-light text-uppercase">
-          <small><b>Today</b></small>
+          <small>
+            <b>Today</b>
+          </small>
         </div>
         <hr class="transparent mx-3 my-0">
         <div class="callout callout-warning m-0 py-3">
           <div class="avatar float-right">
             <img src="assets/img/avatars/7.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
           </div>
-          <div>Meeting with <strong>Lucas</strong></div>
-          <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; 1 - 3pm</small>
-          <small class="text-muted"><i class="icon-location-pin"></i>&nbsp; Palo Alto, CA </small>
+          <div>Meeting with
+            <strong>Lucas</strong>
+          </div>
+          <small class="text-muted mr-3">
+            <i class="icon-calendar"></i>&nbsp; 1 - 3pm</small>
+          <small class="text-muted">
+            <i class="icon-location-pin"></i>&nbsp; Palo Alto, CA </small>
         </div>
         <hr class="mx-3 my-0">
         <div class="callout callout-info m-0 py-3">
           <div class="avatar float-right">
             <img src="assets/img/avatars/4.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
           </div>
-          <div>Skype with <strong>Megan</strong></div>
-          <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; 4 - 5pm</small>
-          <small class="text-muted"><i class="icon-social-skype"></i>&nbsp; On-line </small>
+          <div>Skype with
+            <strong>Megan</strong>
+          </div>
+          <small class="text-muted mr-3">
+            <i class="icon-calendar"></i>&nbsp; 4 - 5pm</small>
+          <small class="text-muted">
+            <i class="icon-social-skype"></i>&nbsp; On-line </small>
         </div>
         <hr class="transparent mx-3 my-0">
         <div class="callout m-0 py-2 text-muted text-center bg-light text-uppercase">
-          <small><b>Tomorrow</b></small>
+          <small>
+            <b>Tomorrow</b>
+          </small>
         </div>
         <hr class="transparent mx-3 my-0">
         <div class="callout callout-danger m-0 py-3">
-          <div>New UI Project - <strong>deadline</strong></div>
-          <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; 10 - 11pm</small>
-          <small class="text-muted"><i class="icon-home"></i>&nbsp; creativeLabs HQ </small>
+          <div>New UI Project -
+            <strong>deadline</strong>
+          </div>
+          <small class="text-muted mr-3">
+            <i class="icon-calendar"></i>&nbsp; 10 - 11pm</small>
+          <small class="text-muted">
+            <i class="icon-home"></i>&nbsp; creativeLabs HQ </small>
           <div class="avatars-stack mt-2">
             <div class="avatar avatar-xs">
               <img src="assets/img/avatars/2.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
@@ -230,15 +265,22 @@
         </div>
         <hr class="mx-3 my-0">
         <div class="callout callout-success m-0 py-3">
-          <div><strong>#10 Startups.Garden</strong> Meetup</div>
-          <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; 1 - 3pm</small>
-          <small class="text-muted"><i class="icon-location-pin"></i>&nbsp; Palo Alto, CA </small>
+          <div>
+            <strong>#10 Startups.Garden</strong> Meetup</div>
+          <small class="text-muted mr-3">
+            <i class="icon-calendar"></i>&nbsp; 1 - 3pm</small>
+          <small class="text-muted">
+            <i class="icon-location-pin"></i>&nbsp; Palo Alto, CA </small>
         </div>
         <hr class="mx-3 my-0">
         <div class="callout callout-primary m-0 py-3">
-          <div><strong>Team meeting</strong></div>
-          <small class="text-muted mr-3"><i class="icon-calendar"></i>&nbsp; 4 - 6pm</small>
-          <small class="text-muted"><i class="icon-home"></i>&nbsp; creativeLabs HQ </small>
+          <div>
+            <strong>Team meeting</strong>
+          </div>
+          <small class="text-muted mr-3">
+            <i class="icon-calendar"></i>&nbsp; 4 - 6pm</small>
+          <small class="text-muted">
+            <i class="icon-home"></i>&nbsp; creativeLabs HQ </small>
           <div class="avatars-stack mt-2">
             <div class="avatar avatar-xs">
               <img src="assets/img/avatars/2.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
@@ -266,7 +308,9 @@
         <hr class="mx-3 my-0">
       </tab>
       <tab>
-        <ng-template tabHeading><i class="icon-speech"></i></ng-template>
+        <ng-template tabHeading>
+          <i class="icon-speech"></i>
+        </ng-template>
         <div class="p-3">
           <div class="message">
             <div class="py-3 pb-5 mr-3 float-left">
@@ -345,13 +389,17 @@
         </div>
       </tab>
       <tab>
-        <ng-template tabHeading><i class="icon-settings"></i></ng-template>
+        <ng-template tabHeading>
+          <i class="icon-settings"></i>
+        </ng-template>
         <div class="p-3">
           <h6>Settings</h6>
 
           <div class="aside-options">
             <div class="clearfix mt-4">
-              <small><b>Option 1</b></small>
+              <small>
+                <b>Option 1</b>
+              </small>
               <label class="switch switch-text switch-pill switch-success switch-sm float-right">
                 <input type="checkbox" class="switch-input" checked>
                 <span class="switch-label" data-on="On" data-off="Off"></span>
@@ -359,13 +407,16 @@
               </label>
             </div>
             <div>
-              <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
+              <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                magna aliqua.</small>
             </div>
           </div>
 
           <div class="aside-options">
             <div class="clearfix mt-3">
-              <small><b>Option 2</b></small>
+              <small>
+                <b>Option 2</b>
+              </small>
               <label class="switch switch-text switch-pill switch-success switch-sm float-right">
                 <input type="checkbox" class="switch-input">
                 <span class="switch-label" data-on="On" data-off="Off"></span>
@@ -373,13 +424,16 @@
               </label>
             </div>
             <div>
-              <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
+              <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                magna aliqua.</small>
             </div>
           </div>
 
           <div class="aside-options">
             <div class="clearfix mt-3">
-              <small><b>Option 3</b></small>
+              <small>
+                <b>Option 3</b>
+              </small>
               <label class="switch switch-text switch-pill switch-success switch-sm float-right">
                 <input type="checkbox" class="switch-input">
                 <span class="switch-label" data-on="On" data-off="Off"></span>
@@ -390,7 +444,9 @@
 
           <div class="aside-options">
             <div class="clearfix mt-3">
-              <small><b>Option 4</b></small>
+              <small>
+                <b>Option 4</b>
+              </small>
               <label class="switch switch-text switch-pill switch-success switch-sm float-right">
                 <input type="checkbox" class="switch-input" checked>
                 <span class="switch-label" data-on="On" data-off="Off"></span>
@@ -402,25 +458,41 @@
           <hr>
           <h6>System Utilization</h6>
 
-          <div class="text-uppercase mb-1 mt-4"><small><b>CPU Usage</b></small></div>
+          <div class="text-uppercase mb-1 mt-4">
+            <small>
+              <b>CPU Usage</b>
+            </small>
+          </div>
           <div class="progress progress-xs">
             <div class="progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
           <small class="text-muted">348 Processes. 1/4 Cores.</small>
 
-          <div class="text-uppercase mb-1 mt-2"><small><b>Memory Usage</b></small></div>
+          <div class="text-uppercase mb-1 mt-2">
+            <small>
+              <b>Memory Usage</b>
+            </small>
+          </div>
           <div class="progress progress-xs">
             <div class="progress-bar bg-warning" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
           <small class="text-muted">11444GB/16384MB</small>
 
-          <div class="text-uppercase mb-1 mt-2"><small><b>SSD 1 Usage</b></small></div>
+          <div class="text-uppercase mb-1 mt-2">
+            <small>
+              <b>SSD 1 Usage</b>
+            </small>
+          </div>
           <div class="progress progress-xs">
             <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
           <small class="text-muted">243GB/256GB</small>
 
-          <div class="text-uppercase mb-1 mt-2"><small><b>SSD 2 Usage</b></small></div>
+          <div class="text-uppercase mb-1 mt-2">
+            <small>
+              <b>SSD 2 Usage</b>
+            </small>
+          </div>
           <div class="progress progress-xs">
             <div class="progress-bar bg-success" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
@@ -434,5 +506,7 @@
 <footer class="app-footer">
 
   <a href="http://bairuhatechnologies.com">Bairuha Technologies</a> &copy; 2017 bairuha labs.
-  <span class="float-right">Powered by <a href="http://bairuhatechnologies.com">bairuha technologies</a></span>
+  <span class="float-right">Powered by
+    <a href="http://bairuhatechnologies.com">bairuha technologies</a>
+  </span>
 </footer>
