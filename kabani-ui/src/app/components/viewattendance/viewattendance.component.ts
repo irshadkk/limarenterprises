@@ -97,7 +97,6 @@ export class ViewAttendanceComponent implements OnInit {
   currentItem:any = [];
   currentItemStatus:any="";
   modifyAttandance(emp:any,day:number,infoModal:any){ 
-    alert(emp.employeeAttndance[day-1])   
     if(emp.employeeAttndance[day]==""){
       alert('Cannot Modify at the moment');
       return;
