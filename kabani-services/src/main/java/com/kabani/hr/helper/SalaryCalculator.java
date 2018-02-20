@@ -74,35 +74,43 @@ public class SalaryCalculator {
 		String[] monthArry = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 		int indexOfMonth = Arrays.asList(monthArry).indexOf(month);
 		int yr = Integer.parseInt(year);
-		logger.info("----------------calculateSalaryOfEmployees" + year + "--" + month + "-----START-------------------");
+		logger.info(
+				"----------------calculateSalaryOfEmployees" + year + "--" + month + "-----START-------------------");
 		int numberOfWorkingDays = 26;
 
 		ArrayList<Wps> result;
 		try {
-			int numberOfDaysInMonthYear = daysInYearAndMonthCalculator.calculateDaysInMonthAndYear(yr,indexOfMonth + 1);
-			int numberOfHolidaysInMonthYear = holidayDetailsMasterRepository.findCountOfHolidayByYearMonth(yr,indexOfMonth+ 1);
+			int numberOfDaysInMonthYear = daysInYearAndMonthCalculator.calculateDaysInMonthAndYear(yr,
+					indexOfMonth + 1);
+			int numberOfHolidaysInMonthYear = holidayDetailsMasterRepository.findCountOfHolidayByYearMonth(yr,
+					indexOfMonth + 1);
 			int numberOfActualWorkingDays = numberOfDaysInMonthYear - numberOfHolidaysInMonthYear;
-			int numberOfDaysToAddWithPresentDaysOfEmployeeFor26 = (numberOfActualWorkingDays != 26) ? (26 - numberOfActualWorkingDays): 0;
+			int numberOfDaysToAddWithPresentDaysOfEmployeeFor26 = (numberOfActualWorkingDays != 26)
+					? (26 - numberOfActualWorkingDays)
+					: 0;
 
 			result = new ArrayList();
 			// getting all employees details
 			List<EmployeeDetailsMaster> allEmployeeMasterDetailsLst = employeeDetailsMasterRepository.findAll();
 
 			// getting all employees full present for this month and year
-			List<Object[]> userAttDetailsListFullPresent = userAttendanceDetailsRepository.findDistinctPresentInMonthYear(indexOfMonth+ 1,yr);
+			List<Object[]> userAttDetailsListFullPresent = userAttendanceDetailsRepository
+					.findDistinctPresentInMonthYear(indexOfMonth + 1, yr);
 			// getting all employees half present for this month and year
-			List<Object[]> userAttDetailsListHalfPresent = userAttendanceDetailsRepository.findDistinctHalfPresentInMonthYear(indexOfMonth+ 1,yr);
+			List<Object[]> userAttDetailsListHalfPresent = userAttendanceDetailsRepository
+					.findDistinctHalfPresentInMonthYear(indexOfMonth + 1, yr);
 			// getting all employees casual leaves for this month and year
-			List<Object[]> userAttDetailsListCasualLeave = userAttendanceDetailsRepository.findDistinctCasualLeaveInMonthYear(indexOfMonth+ 1,yr);
+			List<Object[]> userAttDetailsListCasualLeave = userAttendanceDetailsRepository
+					.findDistinctCasualLeaveInMonthYear(indexOfMonth + 1, yr);
 			// getting salary incometax slab
 			List<SalaryIncometaxSlab> SalaryIncometaxSlabArr = salaryIncometaxSlabRepository.findAll();
 			// getting salary professionaltax slab
-			List<SalaryProfessionaltaxSlab> SalaryProfessionaltaxSlabArr = salaryProfessionaltaxSlabRepository.findAll();
+			List<SalaryProfessionaltaxSlab> SalaryProfessionaltaxSlabArr = salaryProfessionaltaxSlabRepository
+					.findAll();
 
 			if ((null != userAttDetailsListFullPresent && userAttDetailsListFullPresent.size() > 0)
 					|| (null != userAttDetailsListHalfPresent && userAttDetailsListHalfPresent.size() > 0)
-					|| (null != userAttDetailsListCasualLeave && userAttDetailsListCasualLeave.size() > 0)
-					) {
+					|| (null != userAttDetailsListCasualLeave && userAttDetailsListCasualLeave.size() > 0)) {
 				for (EmployeeDetailsMaster employeeDetailsMasterObj : allEmployeeMasterDetailsLst) {
 					float halfPresentDays = 0f;
 					float fullPresentDays = 0f;
@@ -113,81 +121,84 @@ public class SalaryCalculator {
 					fullPresentDays = getHalfOrFullPresentDays(userAttDetailsListFullPresent, employeeDetailsMasterObj);
 					casualLeavesTaken = getCasualLeaveDays(userAttDetailsListCasualLeave, employeeDetailsMasterObj);
 					// adding % of total days adding to all employees to make it 26
-					
-					// calculating total present days 
+
+					// calculating total present days
 					float percentageOfNumberOfDaysToAddWithPresentDaysOfEmployeeFor26 = numberOfDaysToAddWithPresentDaysOfEmployeeFor26
-							* ((( fullPresentDays) + (halfPresentDays / 2)+(casualLeavesTaken)) / numberOfActualWorkingDays);
-					totalPresentDays = fullPresentDays + (halfPresentDays / 2)+casualLeavesTaken+ percentageOfNumberOfDaysToAddWithPresentDaysOfEmployeeFor26;
-					
-					
-                    if(totalPresentDays>0) {// only generating salary if employee is present atleast once in a month
-                    	float totalPresentDaysPlus26PercentageAddition = 0f;
-                        float totalLeaveDays = 0f;
-    					float casualLeavesRemaining = 0f;
-                        float totalSalaryOffered = 0f;
-    					float taxableIncomePerMonth = 0f;
-    					float totalIncomeTax = 0f;
-    					float totalProffessionalTax = 0f;
-    					float employeeWelfareAmount = 20f;
+							* (((fullPresentDays) + (halfPresentDays / 2) + (casualLeavesTaken))
+									/ numberOfActualWorkingDays);
+					totalPresentDays = fullPresentDays + (halfPresentDays / 2) + casualLeavesTaken
+							+ percentageOfNumberOfDaysToAddWithPresentDaysOfEmployeeFor26;
 
-    					float totalPF = 0f;
-    					float totalESI = 0f;
-                    	Wps wpsOfOneEmployee = new Wps();
-    					copyDataFromMaster(wpsOfOneEmployee, employeeDetailsMasterObj);
-    					wpsOfOneEmployee.setEmployeeCode(employeeDetailsMasterObj.getEmployeeCode());
-    					wpsOfOneEmployee.setEmployeeName(employeeDetailsMasterObj.getEmployeeName());
-    					wpsOfOneEmployee.setHalfPresentDays(halfPresentDays);
-    					wpsOfOneEmployee.setFullPresentDays(fullPresentDays);
-    					wpsOfOneEmployee.setTotalCasualLeavesDays(casualLeavesTaken);
-    					employeeDetailsMasterObj.setCasualLeavesRemaining(employeeDetailsMasterObj.getCasualLeavesRemaining()-casualLeavesTaken);
-    					employeeDetailsMasterRepository.save(employeeDetailsMasterObj);
-    					
-    					wpsOfOneEmployee.setTotalPresentDaysPlus26PercentageAddition(totalPresentDays);
-    					 
-    					wpsOfOneEmployee.setTotalPresentDays(totalPresentDays);
-    					// setting totalPresentDays after all additions
-    					wpsOfOneEmployee.setDaysOfAttandance(totalPresentDays);
-    					wpsOfOneEmployee.setLossOfPayDays(numberOfWorkingDays - totalPresentDays);
+					if (totalPresentDays > 0) {// only generating salary if employee is present atleast once in a month
+						float totalPresentDaysPlus26PercentageAddition = 0f;
+						float totalLeaveDays = 0f;
+						float casualLeavesRemaining = 0f;
+						float totalSalaryOffered = 0f;
+						float taxableIncomePerMonth = 0f;
+						float totalIncomeTax = 0f;
+						float totalProffessionalTax = 0f;
+						float employeeWelfareAmount = 20f;
 
-    					// finding salary offered by the company
-    					totalSalaryOffered = employeeDetailsMasterObj.getSalary();
-    					wpsOfOneEmployee.setGrossMonthlyWages(totalSalaryOffered);
-    					wpsOfOneEmployee.setTotalSalaryOffered(totalSalaryOffered);
+						float totalPF = 0f;
+						float totalESI = 0f;
+						Wps wpsOfOneEmployee = new Wps();
+						copyDataFromMaster(wpsOfOneEmployee, employeeDetailsMasterObj);
+						wpsOfOneEmployee.setNumberOfWeeklyOffGranted(numberOfHolidaysInMonthYear);
+						wpsOfOneEmployee.setEmployeeCode(employeeDetailsMasterObj.getEmployeeCode());
+						wpsOfOneEmployee.setEmployeeName(employeeDetailsMasterObj.getEmployeeName());
+						wpsOfOneEmployee.setHalfPresentDays(halfPresentDays);
+						wpsOfOneEmployee.setFullPresentDays(fullPresentDays);
+						wpsOfOneEmployee.setTotalCasualLeavesDays(casualLeavesTaken);
+						employeeDetailsMasterObj.setCasualLeavesRemaining(
+								employeeDetailsMasterObj.getCasualLeavesRemaining() - casualLeavesTaken);
+						employeeDetailsMasterRepository.save(employeeDetailsMasterObj);
 
-    					// finding income tax
-    					totalIncomeTax = getIncomeTaxOfAnEmployee(SalaryIncometaxSlabArr, totalSalaryOffered);
-    					wpsOfOneEmployee.setTotalIncomeTax(totalIncomeTax);
-    					wpsOfOneEmployee.setTaxDeductedAtSource(totalIncomeTax);
+						wpsOfOneEmployee.setTotalPresentDaysPlus26PercentageAddition(totalPresentDays);
 
-    					// finding professional tax
-    					totalProffessionalTax = getProfessionalTaxOfAnEmployee(SalaryProfessionaltaxSlabArr,
-    							totalSalaryOffered);
-    					wpsOfOneEmployee.setTotalProfessionalTax(totalProffessionalTax);
+						wpsOfOneEmployee.setTotalPresentDays(totalPresentDays);
+						// setting totalPresentDays after all additions
+						wpsOfOneEmployee.setDaysOfAttandance(totalPresentDays);
+						wpsOfOneEmployee.setLossOfPayDays(numberOfWorkingDays - totalPresentDays);
 
-    					// employee welfare fund
-    					wpsOfOneEmployee.setTotalEmployeeWelfareFund(getWelfareFundOfAnEmployee(employeeDetailsMasterObj,
-    							totalSalaryOffered, employeeWelfareAmount));
+						// finding salary offered by the company
+						totalSalaryOffered = employeeDetailsMasterObj.getSalary();
+						wpsOfOneEmployee.setGrossMonthlyWages(totalSalaryOffered);
+						wpsOfOneEmployee.setTotalSalaryOffered(totalSalaryOffered);
 
-    					// pf only for those who have salary less than 15000 12 % of offered salary
-    					totalPF = getPFOfanEmployee(totalSalaryOffered);
-    					wpsOfOneEmployee.setTotalPF(totalPF);
+						// finding income tax
+						totalIncomeTax = getIncomeTaxOfAnEmployee(SalaryIncometaxSlabArr, totalSalaryOffered);
+						wpsOfOneEmployee.setTotalIncomeTax(totalIncomeTax * 12);
+						wpsOfOneEmployee.setTaxDeductedAtSource(totalIncomeTax);
 
-    					// esi is applicable for all and reducing 1% for this year
-    					totalESI = getESIOfanEmployee(totalSalaryOffered);
-    					wpsOfOneEmployee.setTotalESI(totalESI);
+						// finding professional tax
+						totalProffessionalTax = getProfessionalTaxOfAnEmployee(SalaryProfessionaltaxSlabArr,
+								totalSalaryOffered);
+						wpsOfOneEmployee.setTotalProfessionalTax(totalProffessionalTax);
 
-    					// calculating salary
-    					float salary = calculateSalary(wpsOfOneEmployee, totalSalaryOffered, numberOfWorkingDays);
-    					wpsOfOneEmployee.setNetWagesPaid(salary);
-    					wpsOfOneEmployee.setTotalSalaryForThisMonth(salary);
+						// employee welfare fund
+						wpsOfOneEmployee.setTotalEmployeeWelfareFund(getWelfareFundOfAnEmployee(
+								employeeDetailsMasterObj, totalSalaryOffered, employeeWelfareAmount));
 
-    					wpsOfOneEmployee.setDateOfPayment(
-    							Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-    					wpsOfOneEmployee.setYear(Integer.parseInt(year));
-    					wpsOfOneEmployee.setMonth(indexOfMonth + 1);
-    					result.add(wpsOfOneEmployee);
-                    }
-					
+						// pf only for those who have salary less than 15000 12 % of offered salary
+						totalPF = getPFOfanEmployee(totalSalaryOffered);
+						wpsOfOneEmployee.setTotalPF(totalPF);
+
+						// esi is applicable for all and reducing 1% for this year
+						totalESI = getESIOfanEmployee(totalSalaryOffered);
+						wpsOfOneEmployee.setTotalESI(totalESI);
+
+						// calculating salary
+						calculateSalary(wpsOfOneEmployee, totalSalaryOffered, numberOfWorkingDays);
+						
+						
+
+						wpsOfOneEmployee.setDateOfPayment(
+								Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+						wpsOfOneEmployee.setYear(Integer.parseInt(year));
+						wpsOfOneEmployee.setMonth(indexOfMonth + 1);
+						
+						result.add(wpsOfOneEmployee);
+					}
 
 				}
 
@@ -214,7 +225,7 @@ public class SalaryCalculator {
 		wps.setBranch(master.getBranch());
 		wps.setCasualLeavesRemaining(master.getCasualLeavesRemaining());
 		wps.setCasualLeavesTaken(master.getCasualLeavesTaken());
-		wps.setCityCompensationAllowence(master.getCasualLeavesTaken());
+		wps.setCityCompensationAllowence(master.getCityCompensationAllowence());
 		wps.setDa(master.getDa());
 		wps.setDateOfBirth(master.getDateOfBirth());
 		wps.setDateOfJoining(master.getDateOfJoining());
@@ -233,7 +244,6 @@ public class SalaryCalculator {
 		wps.setTotalSalaryOffered(master.getSalary());
 		wps.setTotalCasualAlloted(master.getTotalCasualAlloted());
 
-		wps.setNumberOfWeeklyOffGranted(master.getNumberOfWeeklyOffGranted());
 		wps.setNumberOfLeaveGranted(master.getNumberOfLeaveGranted());
 		wps.setTotalCasualAlloted(master.getTotalCasualAlloted());
 		wps.setOverTimeWages(master.getOverTimeWages());
@@ -245,13 +255,11 @@ public class SalaryCalculator {
 		wps.setOtherAllowances(master.getOtherAllowances());
 		wps.setTotalStaffAdvance(master.getTotalStaffAdvance());
 		wps.setTotalSalaryAdvance(master.getTotalSalaryAdvance());
-		wps.setAdvanceTotalAmount(master.getAdvanceTotalAmount());
+		
 		wps.setDeductionOfFine(master.getDeductionOfFine());
 		wps.setDeductionForLossAndDamages(master.getDeductionForLossAndDamages());
 		wps.setTotalLineShort(master.getTotalLineShort());
 		wps.setOtherDeduction(master.getOtherDeduction());
-		wps.setTotalDeduction(master.getTotalDeduction());
-
 	}
 
 	/**
@@ -379,10 +387,10 @@ public class SalaryCalculator {
 		}
 		return halfPresentDays;
 	}
-	
+
 	/**
 	 * @param userAttDetailsListCasualLeave
-	 * @param employeeDetailsMasterObj 
+	 * @param employeeDetailsMasterObj
 	 * @return
 	 */
 	private float getCasualLeaveDays(List<Object[]> userAttDetailsListCasualLeave,
@@ -419,11 +427,33 @@ public class SalaryCalculator {
 			employeeWelfareAmount = wpsObj.getTotalEmployeeWelfareFund();
 
 			totalEarnedThisMonth = totalSalaryOffered * totalPresentDays / numberOfWorkingDays;
-			totalDeductedThisMonth = totalIncomeTax + totalProfessionalTax + totalPF + totalESI + totalStaffAdvance
-					+ totalLineShort + totalSalaryAdvance + employeeWelfareAmount;
-			wpsObj.setTotalDeduction(totalDeductedThisMonth);
-			salary = totalEarnedThisMonth - totalDeductedThisMonth;
 			
+			totalDeductedThisMonth = totalIncomeTax + totalProfessionalTax + totalPF + totalESI + totalStaffAdvance
+					+ totalLineShort + totalSalaryAdvance + employeeWelfareAmount + wpsObj.getDeductionOfFine()
+					+ wpsObj.getDeductionForLossAndDamages() + wpsObj.getOtherDeduction();
+
+			wpsObj.setTotalDeduction(totalDeductedThisMonth);
+			
+			totalEarnedThisMonth=totalEarnedThisMonth+ wpsObj.getCityCompensationAllowence()+wpsObj.getOverTimeWages()+wpsObj.getOverTimeWages()
+			+wpsObj.getLeaveWages()+wpsObj.getAdvanceTotalAmount();
+			wpsObj.setTotalSalaryForThisMonth(totalEarnedThisMonth);
+			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+			if(wpsObj.getEmployeeName().equals("Christo")) {
+				//totalEarnedThisMonth = totalSalaryOffered * totalPresentDays / numberOfWorkingDays;
+				System.out.println("SALARY==111>>totalSalaryOffered * totalPresentDays / numberOfWorkingDays "+totalSalaryOffered+"*"+ totalPresentDays+"/"+numberOfWorkingDays+"======"+totalEarnedThisMonth);
+				System.out.println("DEDUCTION==>>totalIncomeTax"+totalIncomeTax +" totalProfessionalTax "+totalProfessionalTax+" totalPF "+totalPF+" totalESI "+totalESI+" totalStaffAdvance "+totalStaffAdvance+"" + 
+						" totalLineShort "+totalLineShort+" totalSalaryAdvance "+totalSalaryAdvance+" employeeWelfareAmount "+employeeWelfareAmount+" wpsObj.getDeductionOfFine() "+wpsObj.getDeductionOfFine()+"" + 
+						" wpsObj.getDeductionForLossAndDamages() "+ wpsObj.getDeductionForLossAndDamages()+" wpsObj.getOtherDeduction() " +wpsObj.getOtherDeduction()+"=========="+wpsObj.getTotalDeduction());
+				
+				System.out.println("EARNINGS==>>totalEarnedThisMonth "+totalEarnedThisMonth+"  wpsObj.getCityCompensationAllowence() "+ wpsObj.getCityCompensationAllowence()+" wpsObj.getOverTimeWages() "+wpsObj.getOverTimeWages()+ 
+						" wpsObj.getLeaveWages() "+wpsObj.getLeaveWages()+" wpsObj.getAdvanceTotalAmount() "+wpsObj.getAdvanceTotalAmount()+"========"+wpsObj.getTotalSalaryForThisMonth());
+				
+				System.out.println("SALARY==22>>"+(totalEarnedThisMonth - totalDeductedThisMonth));
+						
+			}
+			salary = wpsObj.getTotalSalaryForThisMonth() - wpsObj.getTotalDeduction();
+			wpsObj.setNetWagesPaid(salary);
+
 		} catch (Exception e) {
 			logger.error("****Exception in calculateSalary() " + e.getMessage());
 			throw e;
@@ -488,11 +518,12 @@ public class SalaryCalculator {
 
 	}
 
-	private void addExcelOutputHeader(WritableSheet sheet, String[] heading,List<Integer> redFontIndex)
+	private void addExcelOutputHeader(WritableSheet sheet, String[] heading, List<Integer> redFontIndex)
 			throws RowsExceededException, WriteException {
 		for (int cell = 0; cell < heading.length; cell++) {
 			sheet.setColumnView(cell, 20);
-			sheet.addCell(new Label(cell, 0, heading[cell],getCellFormat(redFontIndex.contains(cell)?Colour.RED:Colour.BLACK, Pattern.GRAY_25)));
+			sheet.addCell(new Label(cell, 0, heading[cell],
+					getCellFormat(redFontIndex.contains(cell) ? Colour.RED : Colour.BLACK, Pattern.GRAY_25)));
 		}
 
 	}
@@ -545,11 +576,12 @@ public class SalaryCalculator {
 
 				sheet.addCell(new Label(colNo++, rowNo, excelRow.getIfscCode()));
 				// cell.setCellValue(excelRow.getIfscCode());
-				
-				sheet.addCell(new Label(colNo++, rowNo, excelRow.getBankAccountNumber(),getCellFormat(Colour.RED, Pattern.GRAY_25)));
+
+				sheet.addCell(new Label(colNo++, rowNo, excelRow.getBankAccountNumber(),
+						getCellFormat(Colour.RED, Pattern.GRAY_25)));
 				// cell.setCellValue(excelRow.getBankAccountNumber());
-				
-				sheet.addCell(new Label(colNo++, rowNo, excelRow.getDaysOfAttandance()+""));
+
+				sheet.addCell(new Label(colNo++, rowNo, excelRow.getDaysOfAttandance() + ""));
 
 				sheet.addCell(new Label(colNo++, rowNo, excelRow.getLossOfPayDays() + ""));
 				// cell.setCellValue(excelRow.getLossOfPayDays());
@@ -599,13 +631,13 @@ public class SalaryCalculator {
 				sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalStaffAdvance() + ""));
 				// cell.setCellValue(excelRow.getTotalStaffAdvance());
 
-				sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalSalaryForThisMonth()+""));// Total Amount
+				sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalSalaryForThisMonth()+""));
 				// cell.setCellValue("");
 
-				sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalPF()+""));// Provident Fund
+				sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalPF() + ""));// Provident Fund
 				// cell.setCellValue("");// Provident Fund
 
-				sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalESI()+""));/// State INsurance
+				sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalESI() + ""));/// State INsurance
 				// cell.setCellValue("");// State INsurance
 
 				sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalStaffAdvance() + ""));

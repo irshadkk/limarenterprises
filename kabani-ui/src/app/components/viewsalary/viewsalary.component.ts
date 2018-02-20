@@ -101,6 +101,7 @@ export class ViewSalaryComponent implements OnInit {
             .subscribe(data => {
               this.employeeSalArr = data;
               this.loading = false;
+
               this.notificationsService.addInfo('Retrieved Salary Generated for ' + year + " month " + month)
               setTimeout(() => {
                 this.blockUI.stop();
