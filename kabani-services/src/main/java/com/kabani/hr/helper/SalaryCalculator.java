@@ -434,10 +434,10 @@ public class SalaryCalculator {
 
 			wpsObj.setTotalDeduction(totalDeductedThisMonth);
 			
-			totalEarnedThisMonth=totalEarnedThisMonth+ wpsObj.getCityCompensationAllowence()+wpsObj.getOverTimeWages()+wpsObj.getOverTimeWages()
-			+wpsObj.getLeaveWages()+wpsObj.getAdvanceTotalAmount();
+			totalEarnedThisMonth=totalEarnedThisMonth+ wpsObj.getCityCompensationAllowence()+wpsObj.getOverTimeWages()+wpsObj.getNationalAndFestivalHolidayWages()+
+					wpsObj.getArrearPaid()+wpsObj.getBonus()+wpsObj.getMaternityBenefit()+wpsObj.getOtherAllowances()+wpsObj.getAdvanceTotalAmount();
 			wpsObj.setTotalSalaryForThisMonth(totalEarnedThisMonth);
-			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+			
 			if(wpsObj.getEmployeeName().equals("Christo")) {
 				//totalEarnedThisMonth = totalSalaryOffered * totalPresentDays / numberOfWorkingDays;
 				System.out.println("SALARY==111>>totalSalaryOffered * totalPresentDays / numberOfWorkingDays "+totalSalaryOffered+"*"+ totalPresentDays+"/"+numberOfWorkingDays+"======"+totalEarnedThisMonth);
