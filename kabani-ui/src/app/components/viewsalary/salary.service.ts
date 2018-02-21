@@ -38,7 +38,7 @@ export class SalaryService {
       .catch(error => { return this.handleError(error, 'getSalary') })
   }
 
-    deletItem(item) {
+  deletItem(item) {
     this.headers = this.createHeader();
     return this.http.post(this.dataService.serviceurl + `salary/resetAll`, { headers: this.headers })
       .map(response => { return response.json(); })
@@ -56,6 +56,18 @@ export class SalaryService {
     window.open(this.dataService.serviceurl + `salary/getSalaryExcel?year=${year}&month=${month}`, "_target")
   }
 
+  loadActiveLoans(year: number, month: number): Observable<[any]> {
+    this.headers = this.createHeader();
+    return this.http.get(this.dataService.serviceurl + `salary/getActiveLoans?year=${year}&month=${month + 1}`, { headers: this.headers })
+      .map(response => { return response.json(); })
+      .catch(error => { return this.handleError(error, 'loadActiveLoans') })
+  }
+  loadActiveAdvances(year: number, month: number): Observable<[any]> {
+    this.headers = this.createHeader();
+    return this.http.get(this.dataService.serviceurl + `salary/getActiveAdvances?year=${year}&month=${month + 1}`, { headers: this.headers })
+      .map(response => { return response.json(); })
+      .catch(error => { return this.handleError(error, 'loadActiveAdvances') })
+  }
 
 
   private handleError(error: any, method: string): Observable<any> {

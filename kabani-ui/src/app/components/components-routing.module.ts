@@ -15,7 +15,8 @@ import { ViewleavesummaryComponent } from './viewleavesummary/viewleavesummary.c
 import { AddholidaysComponent } from './addholidays/addholidays.component'; 
 import { AddPresentComponent } from './addpresent/addpresent.component'; 
 
-
+import { ManageLoanComponent } from './manage-loan/manage-loan.component';
+import { ManageAdvanceComponent } from './manage-advance/manage-advance.component'; 
 
  
 
@@ -95,6 +96,20 @@ const routes: Routes = [
         component: AddPresentComponent,
         data: {
           title: 'Add Present'
+        }
+      },
+      {
+        path: 'manageLoan',
+        component: ManageLoanComponent,
+        data: {
+          title: 'Manage Loan'
+        }
+      },
+      {
+        path: 'manageAdvance',
+        component: ManageAdvanceComponent,
+        data: {
+          title: 'Manage Salary Advances'
         }
       }
        
