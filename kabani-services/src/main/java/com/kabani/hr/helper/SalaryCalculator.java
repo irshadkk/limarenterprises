@@ -229,12 +229,12 @@ public class SalaryCalculator {
 			/* Updating Advances */
 			for (EmployeeLoanorAdvanceDeduction salaryAdvance : salaryAdvances) {
 				salaryAdvance.setStatus("paid");
-				employeeLoanorAdvanceDeductionRepository.save(salaryAdvance);
+				//employeeLoanorAdvanceDeductionRepository.save(salaryAdvance);
 			}
 			/* Updating Loan */
 			for (EmployeeLoanorAdvanceDeduction staffAdvance : staffAdvances) {
 				staffAdvance.setStatus("paid");
-				employeeLoanorAdvanceDeductionRepository.save(staffAdvance);
+				//employeeLoanorAdvanceDeductionRepository.save(staffAdvance);
 				if (staffAdvance.isLast()) {
 					// Close Loan if last Installment
 					EmployeeLoan temp = employeeLoanRepository.getLoanInfo(staffAdvance.getEmployeeCode(),
