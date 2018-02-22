@@ -21,7 +21,7 @@ export class LoginComponent {
   loadUser() {
     // this.notificationsService.addInfo('Information message');
     this.blockUI.start("Authenticating...");
-    let link = ['/dashboard'];
+    let link = ['components/viewattendance'];
     this.dataService.getUser(this.name, this.password).subscribe(data => {
       if (data) {
           this.toastr.success('You are successfully logged in !', 'Success!');
