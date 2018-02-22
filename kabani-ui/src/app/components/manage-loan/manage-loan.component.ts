@@ -13,12 +13,9 @@ export class ManageLoanComponent implements OnInit {
 
   loading: boolean = false;
   public loanList = [];
-  public monthSelectArr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  public yearSelectArr = ["2017", "2018", "2019", "2020", "2020", "2021",
-    "2022", "2023", "2024", "2025", "2026", "2027"];
-  public month = this.monthSelectArr[0];
-  public year = this.yearSelectArr[0];
+  
+  public month =this.dataService.getSelectedMonth();
+  public year = this.dataService.getSelectedYear();
   @BlockUI() blockUI: NgBlockUI;
 
   public notificationOptions = {
@@ -35,11 +32,12 @@ export class ManageLoanComponent implements OnInit {
   ngOnInit() {
     if (this.dataService.appDefined()) {
       this.loadEmployees();
+      this.objChanged();
     }
   }
   objChanged() {
     this.loanList = [];
-    this.loadActiveLoans(this.year, (this.monthSelectArr.indexOf(this.month) ));
+    this.loadActiveLoans(this.year, (this.dataService.monthSelectArr.indexOf(this.month) ));
   }
   loadActiveLoans(year, month: number) {
     this.notificationsService.notifications.closed;
@@ -65,7 +63,7 @@ export class ManageLoanComponent implements OnInit {
 
   saveChanges() {
     this.dataService.getPostData(this.dataService.serviceurl + 'salary/addNewLoan', this.loan).subscribe(data => {
-      this.loadActiveLoans(this.year, (this.monthSelectArr.indexOf(this.month)));
+      this.loadActiveLoans(this.year, (this.dataService.monthSelectArr.indexOf(this.month)));
     });
 
   }
@@ -96,8 +94,16 @@ export class ManageLoanComponent implements OnInit {
   updateChanges(){
     if(this.loan.status=='closed'){
       this.dataService.getPostData(this.dataService.serviceurl + 'salary/closeLoan', this.loan).subscribe(data => {
-        this.loadActiveLoans(this.year, (this.monthSelectArr.indexOf(this.month)));
+        this.loadActiveLoans(this.year, (this.dataService.monthSelectArr.indexOf(this.month)));
       });
+    }
+  }
+  btnDisabled(){
+    if(this.loan.employeeCode=="" || this.loan.loanAmount=="" || this.loan.loanTenure=="" || this.loan.availDate== ""){
+      return true;
+    }
+    else{
+      return false;
     }
   }
   private handleError(error: any, method: any) {

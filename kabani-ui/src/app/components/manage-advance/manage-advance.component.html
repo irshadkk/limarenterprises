@@ -12,12 +12,12 @@
 
             <select [(ngModel)]="year">
               <!-- (change)="objChanged()" -->
-              <option *ngFor="let year of yearSelectArr" [value]="year">{{year}}
+              <option *ngFor="let year of dataService.yearSelectArr" [value]="year">{{year}}
               </option>
             </select>
 
             <select [(ngModel)]="month" (change)="objChanged()">
-              <option *ngFor="let month of monthSelectArr" [value]="month">{{month}}
+              <option *ngFor="let month of dataService.monthSelectArr" [value]="month">{{month}}
               </option>
             </select>
 
@@ -83,7 +83,7 @@
             <tr>
               <td>Employee</td>
               <td>
-                <input list="employees" [(ngModel)]="loan.employeeName" [ngModelOptions]="{standalone: true}" (change)="onChange($event)"
+                <input list="employees" [readonly]="loan.id!=''" [(ngModel)]="loan.employeeName" [ngModelOptions]="{standalone: true}" (change)="onChange($event)"
                   [disabled]="loan.id!=''">
                 <datalist id="employees">
                   <ng-container *ngFor="let x of employeeArr">
@@ -112,8 +112,8 @@
               <td>Status</td>
               <td>
                 <select [(ngModel)]="loan.status" [ngModelOptions]="{standalone: true}">
-                  <option value="active">Active</option>
-                  <option value="closed">Closed</option>
+                  <option value="unpaid">UnPaid</option>
+                  <option value="paid">Paid</option>
                 </select>
               </td>
             </tr>
@@ -123,8 +123,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Close</button>
-          <button type="button" class="btn btn-primary" (click)="saveChanges(infoModal)" *ngIf="loan.id==''">Save changes</button>
-          <button type="button" class="btn btn-primary" (click)="updateChanges(infoModal)" *ngIf="loan.id!=''">Save changes</button>
+          <button type="button" class="btn btn-primary" (click)="saveChanges(infoModal)"  [disabled]="btnDisabled()">Save changes</button>
         </div>
       </div>
       <!-- /.modal-content -->

@@ -13,12 +13,8 @@ export class ViewSalaryComponent implements OnInit {
   public employeeSalArr;
   public employeeSalStatusArr;
   public currentItem = [];
-  public monthSelectArr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  public yearSelectArr = ["2017", "2018", "2019", "2020", "2020", "2021",
-    "2022", "2023", "2024", "2025", "2026", "2027"];
-  public month = this.monthSelectArr[0];
-  public year = this.yearSelectArr[0];
+  public month =this.dataService.getSelectedMonth();
+  public year = this.dataService.getSelectedYear();
   @BlockUI() blockUI: NgBlockUI;
   public notificationOptions = {
     position: ["bottom", "right"],
@@ -34,6 +30,7 @@ export class ViewSalaryComponent implements OnInit {
   ngOnInit() {
     if (this.dataService.appDefined()) {
       this.loadAllStatus();
+      this.objChanged();
 
     }
   }
@@ -79,7 +76,7 @@ export class ViewSalaryComponent implements OnInit {
     this.blockUI.start("Loading..");
     this.salaryAlreadyGenerated = false;
     this.loading = true;
-    this.salaryService.getSalaryStatus(year, this.monthSelectArr.indexOf(month.toString()))
+    this.salaryService.getSalaryStatus(year, this.dataService.monthSelectArr.indexOf(month.toString()))
       .subscribe(response => {
         if (parseInt(JSON.stringify(response)) == 0) {
           this.salaryService.generateSalary(year, month)
@@ -97,7 +94,7 @@ export class ViewSalaryComponent implements OnInit {
           
         } else {
           this.salaryAlreadyGenerated = true;
-          this.salaryService.getSalary(year, this.monthSelectArr.indexOf(month.toString()))
+          this.salaryService.getSalary(year, this.dataService.monthSelectArr.indexOf(month.toString()))
             .subscribe(data => {
               this.employeeSalArr = data;
               this.loading = false;
