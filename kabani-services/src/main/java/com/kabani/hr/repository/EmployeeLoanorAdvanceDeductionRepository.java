@@ -28,6 +28,10 @@ public interface EmployeeLoanorAdvanceDeductionRepository extends CrudRepository
 	List<EmployeeLoanorAdvanceDeduction> getActiveAdvancesForMonth(@Param("month") Integer month,
 			@Param("year") Integer year);
 	
+	@Query("SELECT ss FROM EmployeeLoanorAdvanceDeduction ss WHERE ss.type='advance' and  YEAR(availDate) = :year AND MONTH(availDate) = :month")
+	List<EmployeeLoanorAdvanceDeduction> getAllActiveAdvancesForMonth(@Param("month") Integer month,
+			@Param("year") Integer year);
+	
 	List<EmployeeLoanorAdvanceDeduction> findAll();
 
 }

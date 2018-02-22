@@ -233,7 +233,7 @@ public class SalaryController {
 		List returnValue = new ArrayList<>();
 		try {
 			return employeeLoanorAdvanceDeductionRepository
-					.getActiveLoanDeductionForMonth(Integer.parseInt(month), Integer.parseInt(year));
+					.getAllActiveAdvancesForMonth(Integer.parseInt(month), Integer.parseInt(year));
 
 			
 		} catch (Exception e) {

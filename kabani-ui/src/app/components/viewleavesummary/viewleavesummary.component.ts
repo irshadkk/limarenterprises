@@ -13,15 +13,12 @@ export class ViewleavesummaryComponent implements OnInit {
   public employeeArr;
   public statusArr = ["Present", "1/2Present","Present On leave(CL)"]
   @BlockUI() blockUI: NgBlockUI;
-  public monthSelectArr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  public yearSelectArr = ["2017", "2018", "2019", "2020", "2020", "2021",
-    "2022", "2023", "2024", "2025", "2026", "2027"];
+  
   public daysArr = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   public days = this.daysArr[0];
   Arr = Array; //Array type captured in a variable
-  public month = this.monthSelectArr[0];
-  public year = this.yearSelectArr[0];
+  public month =this.dataService.getSelectedMonth();
+  public year = this.dataService.getSelectedYear();
   public notificationOptions = {
     position: ["bottom", "right"],
     timeOut: 5000,
@@ -41,8 +38,8 @@ export class ViewleavesummaryComponent implements OnInit {
   }
   objChanged() {
     this.employeeArr = [];
-    this.days=this.daysArr[this.monthSelectArr.indexOf(this.month)];
-    this.loadEmployeesAttandance(this.monthSelectArr.indexOf(this.month)+1,parseInt(this.year));
+    this.days=this.daysArr[this.dataService.monthSelectArr.indexOf(this.month)];
+    this.loadEmployeesAttandance(this.dataService.monthSelectArr.indexOf(this.month)+1,parseInt(""+this.year));
   }
 
   getColour(value: any) {
@@ -97,7 +94,7 @@ export class ViewleavesummaryComponent implements OnInit {
   currentItemStatus:any="";
   modifyAttandance(emp:any,day:number,infoModal:any){    
     this.blockUI.start("Loading..");
-    this.dataService.getData(this.dataService.serviceurl + 'getEmployAttandanceForDay?year=' + emp.year + "&month=" + (this.monthSelectArr.indexOf(emp.month)+1)+ "&day=" +(day+1)+ "&employeeCode=" + emp.employeeId).subscribe(data => {
+    this.dataService.getData(this.dataService.serviceurl + 'getEmployAttandanceForDay?year=' + emp.year + "&month=" + (this.dataService.monthSelectArr.indexOf(emp.month)+1)+ "&day=" +(day+1)+ "&employeeCode=" + emp.employeeId).subscribe(data => {
       this.currentItem = data;
       alert(data)
       this.currentItemStatus=this.currentItem.status;
@@ -115,7 +112,7 @@ export class ViewleavesummaryComponent implements OnInit {
     this.dataService.getPostData(this.dataService.serviceurl + 'updateUserAttandance', this.currentItem).subscribe(data => {
       if (data == true) {
         this.notificationsService.addInfo('Changes Saved');
-        this.loadEmployeesAttandance(this.monthSelectArr.indexOf(this.month)+1,parseInt(this.year));
+        this.loadEmployeesAttandance(this.dataService.monthSelectArr.indexOf(this.month)+1,parseInt(""+this.year));
         infoModal.hide();
       } else {
         this.notificationsService.addWarning('Changes couldnt be saved');

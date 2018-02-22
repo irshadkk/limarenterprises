@@ -13,12 +13,12 @@
 
             <select [(ngModel)]="year">
             <!-- (change)="objChanged()" -->
-            <option *ngFor="let year of yearSelectArr" [value]="year">{{year}}
+            <option *ngFor="let year of dataService.yearSelectArr" [value]="year">{{year}}
             </option>
           </select>
 
             <select [(ngModel)]="month" (change)="objChanged()">
-            <option *ngFor="let month of monthSelectArr" [value]="month">{{month}}
+            <option *ngFor="let month of dataService.monthSelectArr" [value]="month">{{month}}
             </option>
           </select>
 
