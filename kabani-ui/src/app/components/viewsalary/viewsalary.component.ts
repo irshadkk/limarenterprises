@@ -30,9 +30,7 @@ export class ViewSalaryComponent implements OnInit {
   ngOnInit() {
     if (this.dataService.appDefined()) {
       this.loadAllStatus();
-      this.objChanged();
-
-    }
+      }
   }
   objChanged() {
     this.employeeSalArr = [];

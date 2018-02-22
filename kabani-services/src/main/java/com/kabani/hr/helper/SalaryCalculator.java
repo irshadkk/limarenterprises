@@ -159,6 +159,8 @@ public class SalaryCalculator {
 						float totalESI = 0f;
 
 						Wps wpsOfOneEmployee = new Wps();
+						wpsOfOneEmployee.setTotalSalaryAdvance(0);
+						wpsOfOneEmployee.setAdvanceTotalAmount(0);
 						copyDataFromMaster(wpsOfOneEmployee, employeeDetailsMasterObj);
 						identifyAdvances(wpsOfOneEmployee, employeeDetailsMasterObj.getEmployeeBioDeviceCode(),
 								salaryAdvances, staffAdvances);
@@ -209,6 +211,7 @@ public class SalaryCalculator {
 						wpsOfOneEmployee.setTotalESI(totalESI);
 
 						// calculating salary
+						
 						calculateSalary(wpsOfOneEmployee, totalSalaryOffered, numberOfWorkingDays);
 
 						wpsOfOneEmployee.setDateOfPayment(
@@ -258,13 +261,14 @@ public class SalaryCalculator {
 			List<EmployeeLoanorAdvanceDeduction> staffAdvances) {
 		for (EmployeeLoanorAdvanceDeduction salaryAdvance : salaryAdvances) {
 			if (salaryAdvance.getEmployeeCode().equals(biometricCode)) {
-				wps.setTotalSalaryAdvance(salaryAdvance.getAmount());
+				wps.setAdvanceTotalAmount(wps.getAdvanceTotalAmount()+salaryAdvance.getAmount());
 				break;
 			}
 		}
 		for (EmployeeLoanorAdvanceDeduction staffAdvance : staffAdvances) {
 			if (staffAdvance.getEmployeeCode().equals(biometricCode)) {
 				wps.setTotalStaffAdvance(staffAdvance.getAmount());
+				wps.setAdvanceTotalAmount(wps.getAdvanceTotalAmount()+staffAdvance.getAmount());
 				break;
 			}
 		}
@@ -465,8 +469,8 @@ public class SalaryCalculator {
 	}
 
 	public float calculateSalary(Wps wpsObj, float totalSalaryOffered, float numberOfWorkingDays) throws Exception {
-		float salary = 0f, totalPresentDays, totalIncomeTax, totalProfessionalTax, totalPF, totalESI, totalStaffAdvance,
-				totalLineShort, totalSalaryAdvance, employeeWelfareAmount, grossMonthlyWage, totalDeductedThisMonth,
+		float salary = 0f, totalPresentDays, totalIncomeTax, totalProfessionalTax, totalPF, totalESI, 
+				totalLineShort, totalAdvance, employeeWelfareAmount, grossMonthlyWage, totalDeductedThisMonth,
 				totalEarnedThisMonth;
 		try {
 			totalPresentDays = wpsObj.getDaysOfAttandance();
@@ -474,14 +478,15 @@ public class SalaryCalculator {
 			totalProfessionalTax = wpsObj.getTotalProfessionalTax();
 			totalPF = wpsObj.getTotalPF();
 			totalESI = wpsObj.getTotalESI();
-			totalStaffAdvance = wpsObj.getTotalStaffAdvance();
+			//totalStaffAdvance = wpsObj.getTotalStaffAdvance();
 			totalLineShort = wpsObj.getTotalLineShort();
-			totalSalaryAdvance = wpsObj.getTotalSalaryAdvance();
+			//totalSalaryAdvance = wpsObj.getTotalSalaryAdvance();
+			totalAdvance=wpsObj.getAdvanceTotalAmount();
 			employeeWelfareAmount = wpsObj.getTotalEmployeeWelfareFund();
 
 			grossMonthlyWage = totalSalaryOffered * totalPresentDays / numberOfWorkingDays;
 
-			totalDeductedThisMonth = totalPF + totalESI + totalSalaryAdvance + totalStaffAdvance + employeeWelfareAmount
+			totalDeductedThisMonth = totalPF + totalESI + totalAdvance + employeeWelfareAmount
 					+ totalProfessionalTax + totalIncomeTax + wpsObj.getDeductionOfFine()
 					+ wpsObj.getDeductionForLossAndDamages() + wpsObj.getOtherDeduction();
 
@@ -489,7 +494,7 @@ public class SalaryCalculator {
 
 			totalEarnedThisMonth = grossMonthlyWage + wpsObj.getOverTimeWages() + wpsObj.getLeaveWages()
 					+ wpsObj.getNationalAndFestivalHolidayWages() + wpsObj.getArrearPaid() + wpsObj.getBonus()
-					+ wpsObj.getMaternityBenefit() + wpsObj.getOtherAllowances() + totalSalaryAdvance;
+					+ wpsObj.getMaternityBenefit() + wpsObj.getOtherAllowances() ;
 			wpsObj.setTotalSalaryForThisMonth(totalEarnedThisMonth);
 
 			/*
@@ -695,7 +700,7 @@ public class SalaryCalculator {
 				sheet.addCell(new Label(colNo++, rowNo, excelRow.getOtherAllowances() + ""));
 				// cell.setCellValue(excelRow.getOtherAllowances());
 
-				sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalSalaryAdvance() + ""));
+				sheet.addCell(new Label(colNo++, rowNo,  "0"));
 				// cell.setCellValue(excelRow.getTotalStaffAdvance());
 
 				sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalSalaryForThisMonth() + ""));
@@ -708,7 +713,7 @@ public class SalaryCalculator {
 				// cell.setCellValue("");// State INsurance
 
 				sheet.addCell(new Label(colNo++, rowNo,
-						(excelRow.getTotalStaffAdvance() + excelRow.getTotalSalaryAdvance()) + ""));
+						excelRow.getAdvanceTotalAmount() + ""));
 				// cell.setCellValue(excelRow.getTotalStaffAdvance());
 
 				sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalEmployeeWelfareFund() + ""));
