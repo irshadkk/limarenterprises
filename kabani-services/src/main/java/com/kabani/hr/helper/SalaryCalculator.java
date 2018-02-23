@@ -388,31 +388,37 @@ public class SalaryCalculator {
 	/**
 	 * @param SalaryIncometaxSlabArr
 	 * @param wpsOfOneEmployee
-	 * @param totalSalaryOffered
+	 * @param totalMonthlySalaryOffered
 	 */
-	private float getIncomeTaxOfAnEmployee(List<SalaryIncometaxSlab> SalaryIncometaxSlabArr, float totalSalaryOffered)
+	private float getIncomeTaxOfAnEmployee(List<SalaryIncometaxSlab> SalaryIncometaxSlabArr, float totalMonthlySalaryOffered)
 			throws Exception {
 		float taxableIncomePerMonth;
-		float totalIncomeTax = 0f;
+		float incomeTaxPerMonth = 0f;
+		float totalYearlySalary = totalMonthlySalaryOffered * 12;
 		// finding income tax
 		try {
-			for (SalaryIncometaxSlab objSalaryIncometaxSlab : SalaryIncometaxSlabArr) {
-
-				if ((totalSalaryOffered * 12) >= objSalaryIncometaxSlab.getSlabamountstart()
-						&& (totalSalaryOffered * 12) <= objSalaryIncometaxSlab.getSlabamountend()) {
-					taxableIncomePerMonth = ((totalSalaryOffered * 12) - (objSalaryIncometaxSlab.getSlabamountstart()))
-							/ 12;
-					totalIncomeTax = ((taxableIncomePerMonth * objSalaryIncometaxSlab.getSlabpercentage()) / 100)
-							+ (objSalaryIncometaxSlab.getSlabadditionalamount() / 12);
-
-					break;
-				}
-			}
+//			for (SalaryIncometaxSlab objSalaryIncometaxSlab : SalaryIncometaxSlabArr) {
+//
+//				if (totalYearlySalary >= objSalaryIncometaxSlab.getSlabamountstart()
+//						&& totalYearlySalary <= objSalaryIncometaxSlab.getSlabamountend()) {
+//					
+//					taxableIncomePerMonth = (totalYearlySalary - (objSalaryIncometaxSlab.getSlabamountstart()))
+//							/ 12;
+//					incomeTaxPerMonth = ((taxableIncomePerMonth * objSalaryIncometaxSlab.getSlabpercentage()) / 100)
+//							+ (objSalaryIncometaxSlab.getSlabadditionalamount() / 12);
+//
+//					break;
+//				}
+//			}
+			
+		 
+			
+			
 		} catch (Exception e) {
 			logger.error("****Exception in getIncomeTaxOfAnEmployee() " + e.getMessage());
 			throw e;
 		}
-		return totalIncomeTax;
+		return incomeTaxPerMonth;
 	}
 
 	/**
