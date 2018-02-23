@@ -13,11 +13,23 @@ export class DataService {
   cars = [
     'Ford', 'Chevrolet', 'Buick'
   ];
-   //serviceurl = 'http://localhost:8888/'; 
-   serviceurl = 'http://kabani-env.us-east-1.elasticbeanstalk.com/';
+  serviceurl = 'http://localhost:8888/';
+  //serviceurl = 'http://kabani-env.us-east-1.elasticbeanstalk.com/';
 
   branch = "";
 
+  public monthSelectArr = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  public yearSelectArr = ["2017", "2018", "2019", "2020", "2020", "2021",
+    "2022", "2023", "2024", "2025", "2026", "2027"];
+
+  getSelectedMonth() {
+    return this.monthSelectArr[new Date().getMonth()];
+  }
+
+  getSelectedYear() {
+    return new Date().getFullYear();
+  }
 
   getUser(name, password) {
     return this.http.get(this.serviceurl + 'login/?name=' + name + '&password=' + password)
