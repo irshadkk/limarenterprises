@@ -105,9 +105,9 @@ public class TaxDetailsController {
 						employeeIncomeTaxDetailsMaster.setTaxAmount(0);
 					}
 					
+					employeeIncomeTaxDetailsMaster.setTaxForTheMonth(Integer.parseInt(employeeAttendance[4]));
+					employeeIncomeTaxDetailsMaster.setTaxForTheYear(Integer.parseInt(employeeAttendance[5]));
 					
-					employeeIncomeTaxDetailsMaster.setTaxForTheYear(Integer.parseInt(employeeAttendance[4]));
-					employeeIncomeTaxDetailsMaster.setTaxForTheMonth(Integer.parseInt(employeeAttendance[5]));
 					employeeIncomeTaxDetailsMaster.setStatus(employeeAttendance[6]);
 					  
 					employeeDataList.add(employeeIncomeTaxDetailsMaster);

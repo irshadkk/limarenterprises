@@ -155,10 +155,10 @@ public class SalaryController {
 				wpsRepository.delete(wps);
 
 			}
-			for (UserAttendanceDetails wps : userAttendanceDetailsRepository.findAll()) {
-				userAttendanceDetailsRepository.delete(wps);
-
-			}
+//			for (UserAttendanceDetails wps : userAttendanceDetailsRepository.findAll()) {
+//				userAttendanceDetailsRepository.delete(wps);
+//
+//			}
 
 		} catch (Exception e) {
 			logger.error("****Exception in getSalaryStatusAll() " + e.getMessage());
