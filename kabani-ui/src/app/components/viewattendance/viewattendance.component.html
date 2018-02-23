@@ -1,63 +1,45 @@
-
 <block-ui>
   <div class="animated fadeIn">
+ 
 
-    <div class="row">
-
-
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <strong>Horizontal</strong> Form
-          </div>
-          <div class="card-body">
-
-            <select [(ngModel)]="year">
+ 
+          
+            <table  style="width:100%" class="table table-bordered table-striped table-sm">
+              <tr style="width:2%">
+                <th style="width:2%"><select [(ngModel)]="year">
              
               <option *ngFor="let year of dataService.yearSelectArr" [value]="year">{{year}}
               </option>
-            </select>
-
-            <select [(ngModel)]="month" (change)="objChanged()">
+            </select></th>
+                <th style="width:15%"> 
+                  <select [(ngModel)]="month" (change)="objChanged()">
               <option *ngFor="let month of dataService.monthSelectArr" [value]="month">{{month}}
               </option>
             </select>
+                </th>
+                <th><button (click)="objChanged()">Submit</button></th>
+              </tr>
 
-            <button (click)="objChanged()">Submit</button>
-            <div class="container">
-              <div class="row">
-                <div class='col-md-3 header'>Id &nbsp;&nbsp; Name </div>
-                <div class='col-md-9 header'>
-                  <span class="days" *ngFor="let i of Arr(days).fill(1); let count=index">
+              <tr>
+                <td style="width:2%">Id</td>
+                <td style="width:15%;text-align:left">Name</td>
+                <td><span class="days" *ngFor="let i of Arr(days).fill(1); let count=index">
                     <ng-container *ngIf="(count+1)<10">0{{count+1}}</ng-container>
                     <ng-container *ngIf="(count+1)>=10">{{count+1}}</ng-container>
-                  </span>
+                  </span></td>
+              </tr>
 
-                </div>
-              </div>
-              <div class='row' id="dataList" *ngFor="let emp of employeeArr;let rowIndex=index">
-                <div class='col-md-3' style="border-top:1px solid grey;" [ngClass]="oddRow(rowIndex)">
-                  {{emp.employeeId}} &nbsp;&nbsp;&nbsp; {{emp.employeeName}}
-
-                </div>
-                <div class='col-md-9'>
+              <tr *ngFor="let emp of employeeArr;let rowIndex=index">
+                <td>{{emp.employeeId}}</td>
+                <td  style="text-align:left">{{emp.employeeName}}</td>
+                <td>
                   <span style="text-align:center;" class="days" [title]="getTitle(emp,count+1)" *ngFor="let i of Arr(days).fill(1); let count=index"
                     [ngClass]="getColour(emp.employeeAttndance[count])" (click)="modifyAttandance(emp,count,infoModal)">&nbsp;{{emp.employeeAttndance[count]}}
-                  </span>
-                </div>
-              </div>
-              <div class="card-footer">
-              </div>
-            </div>
-          </div>
-          <div class="card-footer">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
+                  </span></td>
+              </tr>
+            </table>
+   
+</div>
 
 
   <div bsModal #infoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -72,7 +54,7 @@
 
 
         <div class="modal-body">
-         
+
           <table class="table table-bordered table-striped table-sm">
             <tr>
               <th>Item</th>
@@ -120,9 +102,9 @@
           <button type="button" class="btn btn-primary" (click)="saveChanges(infoModal)">Save changes</button>
         </div>
       </div>
-     
+
     </div>
- 
+
   </div>
 
 </block-ui>

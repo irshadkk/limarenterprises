@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { UploadCsvComponent } from './uploadcsv/uploadcsv.component'; 
 import { ListUploadComponent } from './upload/list-upload/list-upload.component';
 import { EmployeeUploadComponent } from './upload/employee-upload/employee-upload.component';
+import { IncomeTaxUploadComponent } from './upload/incometax-upload/incometax-upload.component';
 
  
  
@@ -16,6 +17,7 @@ import { AddholidaysComponent } from './addholidays/addholidays.component';
 import { AddPresentComponent } from './addpresent/addpresent.component'; 
 
 import { ManageLoanComponent } from './manage-loan/manage-loan.component';
+import { AddIncomeTaxComponent } from './addincometax/addincometax.component'; 
 import { ManageAdvanceComponent } from './manage-advance/manage-advance.component'; 
 
  
@@ -47,6 +49,13 @@ const routes: Routes = [
         component: EmployeeUploadComponent,
         data: {
           title: 'Employee Upload  '
+        }
+      }, 
+      {
+        path: 'incometax-upload',
+        component: IncomeTaxUploadComponent,
+        data: {
+          title: 'Income Tax Upload  '
         }
       }, 
       {
@@ -110,6 +119,13 @@ const routes: Routes = [
         component: ManageAdvanceComponent,
         data: {
           title: 'Manage Salary Advances'
+        }
+      },
+      {
+        path: 'manageincomeTax',
+        component: AddIncomeTaxComponent,
+        data: {
+          title: 'Manage Income Tax'
         }
       }
        

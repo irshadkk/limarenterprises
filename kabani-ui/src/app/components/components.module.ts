@@ -19,7 +19,7 @@ import { UploadCsvComponent } from './uploadcsv/uploadcsv.component';
 
 import { ListUploadComponent } from './upload/list-upload/list-upload.component';
 import { EmployeeUploadComponent } from './upload/employee-upload/employee-upload.component';
-
+import { IncomeTaxUploadComponent } from './upload/incometax-upload/incometax-upload.component';
 
 
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -31,6 +31,7 @@ import { ViewleavesummaryComponent } from './viewleavesummary/viewleavesummary.c
 import { AddholidaysComponent } from './addholidays/addholidays.component';
 import { AddPresentComponent } from './addpresent/addpresent.component';
 
+import { AddIncomeTaxComponent } from './addincometax/addincometax.component'; 
 
 
 
@@ -58,7 +59,7 @@ import { SalaryService } from './viewsalary/salary.service';
     UploadCsvComponent, ListUploadComponent, EmployeeUploadComponent,
     SwitchesComponent,
     ViewAttendanceComponent, ViewEmployeesComponent, ViewleavesummaryComponent,
-    AddholidaysComponent, AddPresentComponent,
+    AddholidaysComponent, AddPresentComponent,AddIncomeTaxComponent,IncomeTaxUploadComponent,
     FilterPipe,
     ViewSalaryComponent,
     ManageLoanComponent,
