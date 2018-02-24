@@ -149,8 +149,9 @@ public class SalaryCalculator {
 					float percentageOfNumberOfDaysToAddWithPresentDaysOfEmployeeFor26 = numberOfDaysToAddWithPresentDaysOfEmployeeFor26
 							* (((fullPresentDays) + (halfPresentDays / 2) + (casualLeavesTaken))
 									/ numberOfActualWorkingDays);
+					 int per26AddingDays = (int) Math.round(percentageOfNumberOfDaysToAddWithPresentDaysOfEmployeeFor26);
 					totalPresentDays = fullPresentDays + (halfPresentDays / 2) + casualLeavesTaken
-							+ percentageOfNumberOfDaysToAddWithPresentDaysOfEmployeeFor26;
+							+ per26AddingDays;
 
 					if (totalPresentDays > 0) {// only generating salary if employee is present atleast once in a month
 						float totalPresentDaysPlus26PercentageAddition = 0f;
@@ -177,9 +178,9 @@ public class SalaryCalculator {
 						wpsOfOneEmployee.setHalfPresentDays(halfPresentDays);
 						wpsOfOneEmployee.setFullPresentDays(fullPresentDays);
 						wpsOfOneEmployee.setTotalCasualLeavesDays(casualLeavesTaken);
-						employeeDetailsMasterObj.setCasualLeavesRemaining(
+						/*employeeDetailsMasterObj.setCasualLeavesRemaining(
 								employeeDetailsMasterObj.getCasualLeavesRemaining() - casualLeavesTaken);
-						employeeDetailsMasterRepository.save(employeeDetailsMasterObj);
+						employeeDetailsMasterRepository.save(employeeDetailsMasterObj);*/
 
 						wpsOfOneEmployee.setTotalPresentDaysPlus26PercentageAddition(totalPresentDays);
 
@@ -202,8 +203,23 @@ public class SalaryCalculator {
 						wpsOfOneEmployee.setTaxDeductedAtSource(totalIncomeTax);
 
 						// finding professional tax
-						totalProffessionalTax = getProfessionalTaxOfAnEmployee(SalaryProfessionaltaxSlabArr,
-								totalSalaryOffered);
+						if(employeeDetailsMasterObj.getEmployeeCode().equals("LM/HO/042") ||
+								employeeDetailsMasterObj.getEmployeeCode().equals("LM/HO/052")||
+								employeeDetailsMasterObj.getEmployeeCode().equals("LM/HO/057")||
+								employeeDetailsMasterObj.getEmployeeCode().equals("LM/HO/058")||
+								employeeDetailsMasterObj.getEmployeeCode().equals("LM/HO/062")||
+								employeeDetailsMasterObj.getEmployeeCode().equals("LM/HO/063")||
+								employeeDetailsMasterObj.getEmployeeCode().equals("LM/HO/064")||
+								employeeDetailsMasterObj.getEmployeeCode().equals("LM/HO/065")||
+								employeeDetailsMasterObj.getEmployeeCode().equals("LM/HO/068")
+								) {
+							totalProffessionalTax = getProfessionalTaxOfAnEmployee(SalaryProfessionaltaxSlabArr,
+									totalSalaryOffered);
+							
+						}else {
+							totalProffessionalTax = 0;
+						}
+						
 						wpsOfOneEmployee.setTotalProfessionalTax(totalProffessionalTax);
 
 						// employee welfare fund

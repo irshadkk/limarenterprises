@@ -8,13 +8,13 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 @SpringBootApplication(scanBasePackages = { "com.kabani" })
-public class KabaniApplication /*extends SpringBootServletInitializer*/ {
+public class KabaniApplication extends SpringBootServletInitializer {
 	private static final Logger logger = LogManager.getLogger(KabaniApplication.class);
 
-	/*@Override
+	 @Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(KabaniApplication.class);
-	}*/
+	} 
 
 	public static void main(String[] args) {
 		logger.info("--***---KABANI APP STARTING UP--***---");

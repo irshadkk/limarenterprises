@@ -5,14 +5,18 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 
 @Entity
+@IdClass(WpsKey.class)
 public class Wps {
-
 	@Id
-	@GeneratedValue
-	private int id;
+	private int month;
+	@Id
+	private int year;
+	@Id
 	private String employeeCode;
+	
 	private String employeeName;
 	private String nameOfGuardian;
 	private String employeeSex;
@@ -70,8 +74,7 @@ public class Wps {
 	private float netWagesPaid;
 	private float totalSalaryForThisMonth;
 
-	private int month;
-	private int year;
+	
 
 	public float getTotalSalaryOffered() {
 		return totalSalaryOffered;
@@ -83,13 +86,7 @@ public class Wps {
 
 	private Date DateOfPayment;
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+	 
 
 	public String getEmployeeCode() {
 		return employeeCode;
