@@ -1,0 +1,61 @@
+<block-ui>
+    <div class="animated fadeIn">
+  
+      <div class="row">
+  
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <button (click)="resetAll()">resetAll</button>
+              <strong>Horizontal</strong> Form
+            </div>
+            <div class="card-body">
+  
+              <select [(ngModel)]="year">
+                <!-- (change)="objChanged()" -->
+                <option *ngFor="let year of dataService.yearSelectArr" [value]="year">{{year}}
+                </option>
+              </select>
+  
+              <select [(ngModel)]="month" (change)="objChanged()">
+                <option *ngFor="let month of dataService.monthSelectArr" [value]="month">{{month}}
+                </option>
+              </select>
+  
+              <button (click)="objChanged()">Submit</button>
+  
+              <table class="table table-bordered table-striped table-sm">
+                <tr>
+  
+                  <th>Month</th>
+                  <th>Year</th>
+                  <th>Type</th>
+                  <th>Generated On</th>
+                  <th>&nbsp;</th>
+                </tr>
+                <tr *ngFor="let item of employeeSalStatusArr ; let trackBy=index">
+                  <td>{{item.month}}</td>
+                  <td>{{item.year}}</td>
+                  <td>{{item.type}}</td>
+                  <td>{{item.generatedOn| date :'MM/dd/yyyy'}}</td>
+                  <td>
+                    <button (click)="generateExcel(item.year,item.month)">Generate Excel</button>
+                    &nbsp;<button (click)="resetSalary(item.year,item.month,item.type)">Reset Details</button>
+                  </td>
+                  <!-- <td><button (click)="deletItem(item)">Reset</button></td> -->
+                </tr>
+              </table>
+  
+            </div>
+            <div class="card-footer">
+  
+            </div>
+          </div>
+  
+  
+  
+        </div>
+        <!--/.col-->
+      </div>
+    </div>
+  </block-ui>

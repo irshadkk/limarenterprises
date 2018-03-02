@@ -9,6 +9,9 @@
       color: yellow !important;
 
     }
+    .nav-item{
+      padding-left: 5%!important;
+    }
   </style>
   <button class="navbar-toggler d-lg-none" type="button" appMobileSidebarToggler>&#9776;</button>
   <a class="navbar-brand" href="#"></a>
@@ -96,7 +99,7 @@
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/employee-upload']">
                 <i class="icon-star"></i> Upload Employees</a>
             </li>
-              <li class="nav-item">
+            <li class="nav-item">
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/incometax-upload']">
                 <i class="icon-star"></i> Upload Income Tax</a>
             </li>
@@ -158,10 +161,21 @@
           <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle>
             <i class="icon-star"></i> Payroll</a>
           <ul class="nav-dropdown-items">
-            <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewsalary']">
+            <li class="nav-item nav-dropdown" appNavDropdown>
+              <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle>
                 <i class="icon-star"></i> Salary</a>
+              <ul class="nav-dropdown-items">
+                <li class="nav-item">
+                  <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewsalary']">
+                    <i class="icon-star"></i> Full Month</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewHalfMonthSalary']">
+                    <i class="icon-star"></i> Mid Month Advance</a>
+                </li>
+              </ul>
             </li>
+
             <li class="nav-item">
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/manageLoan']">
                 <i class="icon-star"></i> Loan </a>
@@ -170,7 +184,7 @@
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/manageAdvance']">
                 <i class="icon-star"></i> Advance</a>
             </li>
-               <li class="nav-item">
+            <li class="nav-item">
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/manageincomeTax']">
                 <i class="icon-star"></i>Income Tax</a>
             </li>

@@ -1,270 +1,383 @@
+<block-ui>
+  <div class="animated fadeIn">
 
-<block-ui><div class="animated fadeIn">
+    <div class="row">
 
-  <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <strong>Horizontal</strong> Form
+          </div>
+          <div class="card-body">
 
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header">
-          <strong>Horizontal</strong> Form
+
+            <table class="table table-bordered table-striped table-sm">
+              <tr>
+                <td colspan="10">
+                  Search By :
+                  <select [(ngModel)]="searchOption" (change)="changeSearchValue()">
+                    <option value="name" selected>Name</option>
+                    <option value="branch">Branch</option>
+                    <option value="designation">Designation</option>
+                    <option value="department">Department</option>
+                  </select>
+                  <ng-container *ngIf="searchOption=='name'||searchOption=='designation'||searchOption=='department'">
+                    <input [(ngModel)]="searchText" (keyup)="changeSearchText($event)" placeholder="search text goes here" />
+                  </ng-container>
+                  <ng-container *ngIf="searchOption=='branch'">
+                    <select [(ngModel)]="searchText" (change)="changeSearchText($event)">
+                      <option value="Engapuzha-HO" selected>Engapuzha-HO</option>
+                      <option value="Engapuzha" selected>Engapuzha</option>
+                      <option value="Kangagad">Kangagad</option>
+                      <option value="Kaniyambatta">Kaniyambatta</option>
+                      <option value="Perambara">Perambara</option>
+                      <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                      <option value="Idukki">Idukki</option>
+                      <option value="Pathanamthitta">Pathanamthitta</option>
+
+                    </select>
+                  </ng-container>
+
+                  <button style="float:right;" (click)="downloadEmployees()">Download</button>
+                </td>
+
+
+              </tr>
+              <tr>
+                <th>No</th>
+                <th>ECode</th>
+                <th>EBioDevCd</th>
+                <th>EName</th>
+                <th>branch</th>
+                <th>designation</th>
+                <th>department</th>
+                <th>employeeAge</th>
+                <th>employeeSex</th>
+                <th>Action</th>
+              </tr>
+
+              <tr *ngFor="let item of employeeArr | employeeFilter : searchValue; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{item.employeeCode}}</td>
+                <td>{{item.employeeBioDeviceCode}}</td>
+                <td>{{item.employeeName}}</td>
+                <td>{{item.branch}}</td>
+                <td>{{item.designation}}</td>
+                <td>{{item.department}}</td>
+                <td>{{item.employeeAge}}</td>
+                <td>{{item.employeeSex}}</td>
+                <td>
+                  <button type="button" class="btn btn-info" data-toggle="modal" (click)="onEditClick(infoModal,item)">
+                    Edit
+                  </button>
+                </td>
+              </tr>
+            </table>
+            <div class="col-sm-4 col-lg-2" (click)="onEditClick(infoModal,null)">
+
+              <button class="mb-0">
+                Add New Employee
+              </button>
+
+
+            </div>
+
+          </div>
+          <div class="card-footer">
+
+          </div>
         </div>
-        <div class="card-body">
 
 
+
+      </div>
+      <!--/.col-->
+    </div>
+  </div>
+
+
+
+
+  <div bsModal #infoModal="bs-modal" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-info modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Add/Edit Employee Details</h4>
+          <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
           <table class="table table-bordered table-striped table-sm">
             <tr>
-              <td colspan="10">
-                <input [(ngModel)]="searchText" placeholder="search text goes here" />
-              </td>
-
-
+              <th>Item</th>
+              <th>Value</th>
+              <th>Change Value</th>
             </tr>
             <tr>
-              <th>No</th>
-              <th>ECode</th>
-              <th>EBioDevCd</th>
-              <th>EName</th>
-              <th>branch</th>
-              <th>designation</th>
-              <th>department</th>
-              <th>employeeAge</th>
-              <th>employeeSex</th>
-              <th>Action</th>
+              <td>Employee Code</td>
+              <td>{{currentItem.employeeCode}}</td>
+              <td>
+                <input type="text" [(ngModel)]="currentItem.employeeCode">
+              </td>
+            </tr>
+            <tr>
+              <td>Biometric Device Code</td>
+              <td>{{currentItem.employeeBioDeviceCode}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.employeeBioDeviceCode">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Employee Name</td>
+              <td>{{currentItem.employeeName}}</td>
+              <td>
+                <input type="text" [(ngModel)]="currentItem.employeeName">
+              </td>
             </tr>
 
-            <tr *ngFor="let item of employeeArr | filter : searchText; let i = index">
-              <td>{{i+1}}</td>
-              <td>{{item.employeeCode}}</td>
-              <td>{{item.employeeBioDeviceCode}}</td>
-              <td>{{item.employeeName}}</td>
-              <td>{{item.branch}}</td>
-              <td>{{item.designation}}</td>
-              <td>{{item.department}}</td>
-              <td>{{item.employeeAge}}</td>
-              <td>{{item.employeeSex}}</td>
-              <td><button type="button" class="btn btn-info" data-toggle="modal" (click)="onEditClick(infoModal,item)">
-            Edit
-          </button></td>
+            <tr>
+              <td>branch</td>
+              <td>{{currentItem.branch}}</td>
+              <td>
+                <input type="text" [(ngModel)]="currentItem.branch">
+              </td>
             </tr>
-          </table>
-          <div class="col-sm-4 col-lg-2" (click)="onEditClick(infoModal,null)">
+            <tr>
+              <td>designation</td>
+              <td>{{currentItem.designation}}</td>
+              <td>
+                <input type="text" [(ngModel)]="currentItem.designation">
+              </td>
+            </tr>
+            <tr>
+              <td>department</td>
+              <td>{{currentItem.department}}</td>
+              <td>
+                <input type="text" [(ngModel)]="currentItem.department">
+              </td>
+            </tr>
+            <tr>
+              <td>employeeAge</td>
+              <td>{{currentItem.employeeAge}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.employeeAge">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>employeeSex</td>
+              <td>{{currentItem.employeeSex}}</td>
+              <td>
+                <input type="text" [(ngModel)]="currentItem.employeeSex">
+              </td>
+            </tr>
 
-      <button class="mb-0">
-          Add New Employee
-          </button>
-
-
-    </div>
-
-        </div>
-        <div class="card-footer">
-
-        </div>
-      </div>
-
-
-
-    </div>
-    <!--/.col-->
-  </div>
-</div>
-
-
-
-
-<div bsModal #infoModal="bs-modal" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-info modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Add/Edit Employee Details</h4>
-        <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      
-      <div class="modal-body"> 
-        <table class="table table-bordered table-striped table-sm">
-          <tr>
-            <th>Item</th>
-            <th>Value</th>
-            <th>Change Value</th>
-          </tr>
-          <tr>
-            <td>Employee Code</td>
-            <td>{{currentItem.employeeCode}}</td>
-             <td><input type="text" [(ngModel)]="currentItem.employeeCode"></td>
-          </tr>
-          <tr>
-            <td>Biometric Device Code</td>
-            <td>{{currentItem.employeeBioDeviceCode}}</td>
-             <td><input type="number" [(ngModel)]="currentItem.employeeBioDeviceCode"><span style="color:red">* number</span></td>
-          </tr>
-          <tr>
-            <td>Employee Name</td>
-            <td>{{currentItem.employeeName}}</td>
-             <td><input type="text" [(ngModel)]="currentItem.employeeName"></td>
-          </tr>
-
-          <tr>
-            <td>branch</td>
-            <td>{{currentItem.branch}}</td>
-             <td><input type="text" [(ngModel)]="currentItem.branch"></td>
-          </tr>
-          <tr>
-            <td>designation</td>
-            <td>{{currentItem.designation}}</td>
-             <td><input type="text" [(ngModel)]="currentItem.designation"></td>
-          </tr>
-          <tr>
-            <td>department</td>
-            <td>{{currentItem.department}}</td>
-             <td><input type="text" [(ngModel)]="currentItem.department"></td>
-          </tr>
-          <tr>
-            <td>employeeAge</td>
-            <td>{{currentItem.employeeAge}}</td>
-             <td><input type="number" [(ngModel)]="currentItem.employeeAge"><span style="color:red">* number</span></td>
-          </tr>
-          <tr>
-            <td>employeeSex</td>
-            <td>{{currentItem.employeeSex}}</td>
-             <td><input type="text" [(ngModel)]="currentItem.employeeSex"></td>
-          </tr>
-
-          <tr>
-            <td>dateOfBirth</td>
-            <td>{{currentItem.dateOfBirth |date:'dd/MM/yyyy'}}</td>
-             <td><input type="date" [(ngModel)]="currentItem.dateOfBirth"></td>
-          </tr>
-          <tr>
-            <td>nameOfGuardian</td>
-            <td>{{currentItem.nameOfGuardian}}</td>
-             <td><input type="text" [(ngModel)]="currentItem.nameOfGuardian"></td>
-          </tr>
-          <tr>
-            <td>designationCode</td>
-            <td>{{currentItem.designationCode}}</td>
-             <td><input type="number" [(ngModel)]="currentItem.designationCode"><span style="color:red">* number</span></td>
-          </tr> 
-          <tr>
-            <td>mobileNumber</td>
-            <td>{{currentItem.mobileNumber}}</td>
-             <td><input type="number" [(ngModel)]="currentItem.mobileNumber"><span style="color:red">* number</span></td>
-          </tr>
-          <tr>
-            <td>dateOfJoining</td>
-            <td>{{currentItem.dateOfJoining |date:'dd/MM/yyyy'}}</td>
-             <td><input type="date" [(ngModel)]="currentItem.dateOfJoining"></td>
-          </tr>
-          <tr>
-            <td>emailId</td>
-            <td>{{currentItem.emailId}}</td>
-             <td><input type="email" [(ngModel)]="currentItem.emailId"></td>
-          </tr>
-          <tr>
-            <td>bankName</td>
-            <td>{{currentItem.bankName}}</td>
-             <td><input type="text" [(ngModel)]="currentItem.bankName"></td>
-          </tr>
-          <tr>
-            <td>ifscCode</td>
-            <td>{{currentItem.ifscCode}}</td>
-             <td><input type="text" [(ngModel)]="currentItem.ifscCode"></td>
-          </tr>
-          <tr>
-            <td>bankAccountNumber</td>
-            <td>{{currentItem.bankAccountNumber}}</td>
-             <td><input type="number" [(ngModel)]="currentItem.bankAccountNumber"><span style="color:red">* number</span></td>
-          </tr>
-          <tr>
-            <td>hra</td>
-            <td>{{currentItem.hra}}</td>
-             <td><input type="number" [(ngModel)]="currentItem.hra"><span style="color:red">* number</span></td>
-          </tr>
-          <tr>
-            <td>da</td>
-            <td>{{currentItem.da}}</td>
-             <td><input type="number" [(ngModel)]="currentItem.da"><span style="color:red">* number</span></td>
-          </tr>
-          <tr>
-            <td>basic</td>
-            <td>{{currentItem.basic}}</td>
-             <td><input type="number" [(ngModel)]="currentItem.basic"><span style="color:red">* number</span></td>
-          </tr>
+            <tr>
+              <td>dateOfBirth</td>
+              <td>{{currentItem.dateOfBirth |date:'dd/MM/yyyy'}}</td>
+              <td>
+                <input type="date" [(ngModel)]="currentItem.dateOfBirth">
+              </td>
+            </tr>
+            <tr>
+              <td>nameOfGuardian</td>
+              <td>{{currentItem.nameOfGuardian}}</td>
+              <td>
+                <input type="text" [(ngModel)]="currentItem.nameOfGuardian">
+              </td>
+            </tr>
+            <tr>
+              <td>designationCode</td>
+              <td>{{currentItem.designationCode}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.designationCode">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>mobileNumber</td>
+              <td>{{currentItem.mobileNumber}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.mobileNumber">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>dateOfJoining</td>
+              <td>{{currentItem.dateOfJoining |date:'dd/MM/yyyy'}}</td>
+              <td>
+                <input type="date" [(ngModel)]="currentItem.dateOfJoining">
+              </td>
+            </tr>
+            <tr>
+              <td>emailId</td>
+              <td>{{currentItem.emailId}}</td>
+              <td>
+                <input type="email" [(ngModel)]="currentItem.emailId">
+              </td>
+            </tr>
+            <tr>
+              <td>bankName</td>
+              <td>{{currentItem.bankName}}</td>
+              <td>
+                <input type="text" [(ngModel)]="currentItem.bankName">
+              </td>
+            </tr>
+            <tr>
+              <td>ifscCode</td>
+              <td>{{currentItem.ifscCode}}</td>
+              <td>
+                <input type="text" [(ngModel)]="currentItem.ifscCode">
+              </td>
+            </tr>
+            <tr>
+              <td>bankAccountNumber</td>
+              <td>{{currentItem.bankAccountNumber}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.bankAccountNumber">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>hra</td>
+              <td>{{currentItem.hra}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.hra">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>da</td>
+              <td>{{currentItem.da}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.da">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>basic</td>
+              <td>{{currentItem.basic}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.basic">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
 
 
-          <tr>
-            <td>salary</td>
-            <td>{{currentItem.salary}}</td>
-             <td><input type="number" [(ngModel)]="currentItem.salary"><span style="color:red">* number</span></td>
-          </tr>
-          <tr>
-            <td>totalCasualAlloted</td>
-            <td>{{currentItem.totalCasualAlloted}}</td>
-             <td><input type="number" [(ngModel)]="currentItem.totalCasualAlloted"><span style="color:red">* number</span></td>
-          </tr>
-          <tr>
-            <td>casualLeavesTaken</td>
-            <td>{{currentItem.casualLeavesTaken}}</td>
-             <td><input type="number" [(ngModel)]="currentItem.casualLeavesTaken"><span style="color:red">* number</span></td>
-          </tr>
-          <tr>
-            <td>casualLeavesRemaining</td>
-            <td>{{currentItem.casualLeavesRemaining}}</td>
-            <td><input type="number" [(ngModel)]="currentItem.casualLeavesRemaining"><span style="color:red">* number</span></td>
-          </tr>
-          <tr>
-            <td>cityCompensationAllowence</td>
-            <td>{{currentItem.cityCompensationAllowence}}</td>
-            <td><input type="number" [(ngModel)]="currentItem.cityCompensationAllowence"><span style="color:red">* number</span></td>
-          </tr>
+            <tr>
+              <td>salary</td>
+              <td>{{currentItem.salary}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.salary">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>totalCasualAlloted</td>
+              <td>{{currentItem.totalCasualAlloted}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.totalCasualAlloted">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>casualLeavesTaken</td>
+              <td>{{currentItem.casualLeavesTaken}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.casualLeavesTaken">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>casualLeavesRemaining</td>
+              <td>{{currentItem.casualLeavesRemaining}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.casualLeavesRemaining">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>cityCompensationAllowence</td>
+              <td>{{currentItem.cityCompensationAllowence}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.cityCompensationAllowence">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
 
-         <!-- <tr>
+            <!-- <tr>
             <td>numberOfWeeklyOffGranted</td>
             <td>{{currentItem.numberOfWeeklyOffGranted}}</td>
             <td><input type="number" [(ngModel)]="currentItem.numberOfWeeklyOffGranted"><span style="color:red">* number</span></td>
           </tr>-->
-          <tr>
-            <td>numberOfLeaveGranted</td>
-            <td>{{currentItem.numberOfLeaveGranted}}</td>
-            <td><input type="number" [(ngModel)]="currentItem.numberOfLeaveGranted"><span style="color:red">* number</span></td>
-          </tr>
-          <tr>
-            <td>overTimeWages</td>
-            <td>{{currentItem.overTimeWages}}</td>
-            <td><input type="number" [(ngModel)]="currentItem.overTimeWages"><span style="color:red">* number</span></td>
-          </tr>
-          <tr>
-            <td>leaveWages</td>
-            <td>{{currentItem.leaveWages}}</td>
-            <td><input type="number" [(ngModel)]="currentItem.leaveWages"><span style="color:red">* number</span></td>
-          </tr>
-          <tr>
-            <td>nationalAndFestivalHolidayWages</td>
-            <td>{{currentItem.nationalAndFestivalHolidayWages}}</td>
-            <td><input type="number" [(ngModel)]="currentItem.nationalAndFestivalHolidayWages"><span style="color:red">* number</span></td>
-          </tr>
-          <tr>
-            <td>arrearPaid</td>
-            <td>{{currentItem.arrearPaid}}</td>
-            <td><input type="number" [(ngModel)]="currentItem.arrearPaid"><span style="color:red">* number</span></td>
-          </tr>
-          <tr>
-            <td>bonus</td>
-            <td>{{currentItem.bonus}}</td>
-            <td><input type="number" [(ngModel)]="currentItem.bonus"><span style="color:red">* number</span></td>
-          </tr>
-          <tr>
-            <td>maternityBenefit</td>
-            <td>{{currentItem.maternityBenefit}}</td>
-            <td><input type="number" [(ngModel)]="currentItem.maternityBenefit"><span style="color:red">* number</span></td>
-          </tr>
-          <tr>
-            <td>otherAllowances</td>
-            <td>{{currentItem.otherAllowances}}</td>
-            <td><input type="number" [(ngModel)]="currentItem.otherAllowances"><span style="color:red">* number</span></td>
-          </tr>
-        <!--  <tr>
+            <tr>
+              <td>numberOfLeaveGranted</td>
+              <td>{{currentItem.numberOfLeaveGranted}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.numberOfLeaveGranted">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>overTimeWages</td>
+              <td>{{currentItem.overTimeWages}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.overTimeWages">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>leaveWages</td>
+              <td>{{currentItem.leaveWages}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.leaveWages">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>nationalAndFestivalHolidayWages</td>
+              <td>{{currentItem.nationalAndFestivalHolidayWages}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.nationalAndFestivalHolidayWages">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>arrearPaid</td>
+              <td>{{currentItem.arrearPaid}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.arrearPaid">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>bonus</td>
+              <td>{{currentItem.bonus}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.bonus">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>maternityBenefit</td>
+              <td>{{currentItem.maternityBenefit}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.maternityBenefit">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>otherAllowances</td>
+              <td>{{currentItem.otherAllowances}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.otherAllowances">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <!--  <tr>
             <td>totalStaffAdvance</td>
             <td>{{currentItem.totalStaffAdvance}}</td>
             <td><input type="number" [(ngModel)]="currentItem.totalStaffAdvance"><span style="color:red">* number</span></td>
@@ -279,49 +392,74 @@
             <td>{{currentItem.advanceTotalAmount}}</td>
             <td><input type="number" [(ngModel)]="currentItem.advanceTotalAmount"><span style="color:red">* number</span></td>
           </tr>-->
-          <tr>
-            <td>deductionOfFine</td>
-            <td>{{currentItem.deductionOfFine}}</td>
-            <td><input type="number" [(ngModel)]="currentItem.deductionOfFine"><span style="color:red">* number</span></td>
-          </tr>
-          <tr>
-            <td>deductionForLossAndDamages</td>
-            <td>{{currentItem.deductionForLossAndDamages}}</td>
-            <td><input type="number" [(ngModel)]="currentItem.deductionForLossAndDamages"><span style="color:red">* number</span></td>
-          </tr>
-          <tr>
-            <td>totalLineShort</td>
-            <td>{{currentItem.totalLineShort}}</td>
-            <td><input type="number" [(ngModel)]="currentItem.totalLineShort"><span style="color:red">* number</span></td>
-          </tr>
-          <tr>
-            <td>otherDeduction</td>
-            <td>{{currentItem.otherDeduction}}</td>
-            <td><input type="number" [(ngModel)]="currentItem.otherDeduction"><span style="color:red">* number</span></td>
-          </tr>
-         <!-- <tr>
+            <tr>
+              <td>deductionOfFine</td>
+              <td>{{currentItem.deductionOfFine}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.deductionOfFine">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>deductionForLossAndDamages</td>
+              <td>{{currentItem.deductionForLossAndDamages}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.deductionForLossAndDamages">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>totalLineShort</td>
+              <td>{{currentItem.totalLineShort}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.totalLineShort">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>otherDeduction</td>
+              <td>{{currentItem.otherDeduction}}</td>
+              <td>
+                <input type="number" [(ngModel)]="currentItem.otherDeduction">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Welfare Fund Member</td>
+              <td><ng-container *ngIf="currentItem.notElibibleForWelfareFund">No</ng-container>
+                <ng-container *ngIf="!currentItem.notElibibleForWelfareFund">Yes</ng-container>
+              </td>
+              <td>
+
+                <select [(ngModel)]="currentItem.notElibibleForWelfareFund" (change)="changeSearchValue()">
+                  <option value="true">No</option>
+                  <option value="false">Yes</option>
+                </select>
+              </td>
+            </tr>
+            <!-- <tr>
             <td>totalDeduction</td>
             <td>{{currentItem.totalDeduction}}</td>
             <td><input type="number" [(ngModel)]="currentItem.totalDeduction"><span style="color:red">* number</span></td>
           </tr>-->
-          
-          <!-- <tr>
+
+            <!-- <tr>
             <td>Comment</td>
             <td><input type="textarea" [(ngModel)]="currentItem.comment"></td>
 
            </tr> -->
 
-        </table>
+          </table>
 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Close</button>
+          <button type="button" class="btn btn-primary" (click)="saveChanges()">Save changes</button>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Close</button>
-        <button type="button" class="btn btn-primary" (click)="saveChanges()">Save changes</button>
-      </div>
+      <!-- /.modal-content -->
     </div>
-    <!-- /.modal-content -->
+    <!-- /.modal-dialog -->
   </div>
-  <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
+  <!-- /.modal -->
 </block-ui>

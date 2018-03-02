@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FilterPipe } from '../filters/filter.pipe';
+import { EmployeeFilter } from './viewemployees/employees.filter';
 import { DatePipe } from '@angular/common';
 
 
@@ -47,6 +48,7 @@ import { BlockUIModule } from 'ng-block-ui';
 import { ManageLoanComponent } from './manage-loan/manage-loan.component';
 import { ManageAdvanceComponent } from './manage-advance/manage-advance.component';
 import { SalaryService } from './viewsalary/salary.service';
+import { HalfMonthComponent } from './viewsalary/half-month/half-month.component';
 
 @NgModule({
   imports: [
@@ -60,10 +62,11 @@ import { SalaryService } from './viewsalary/salary.service';
     SwitchesComponent,
     ViewAttendanceComponent, ViewEmployeesComponent, ViewleavesummaryComponent,
     AddholidaysComponent, AddPresentComponent,AddIncomeTaxComponent,IncomeTaxUploadComponent,
-    FilterPipe,
+    FilterPipe,EmployeeFilter,
     ViewSalaryComponent,
     ManageLoanComponent,
-    ManageAdvanceComponent
+    ManageAdvanceComponent,
+    HalfMonthComponent
   ],
   providers: [UploadFileService, DatePipe, SalaryService]
 })

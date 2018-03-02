@@ -13,10 +13,16 @@ import com.kabani.hr.entity.SalaryStatus;
 // CRUD refers Create, Read, Update, Delete
 
 public interface SalaryStatusRepository extends CrudRepository<SalaryStatus, Long> {
-	@Query("SELECT count(*) FROM SalaryStatus ss WHERE ss.year=:year and ss.month=:month")
-	int isSalaryGenerated(@Param("year") Integer year, @Param("month") Integer month);
+	@Query("SELECT count(*) FROM SalaryStatus ss WHERE ss.year=:year and ss.month=:month and ss.type=:type")
+	int isSalaryGenerated(@Param("year") Integer year, @Param("month") Integer month, @Param("type") String type);
 	
 	List<SalaryStatus> findAll();
+	
+	@Query("SELECT ss FROM SalaryStatus ss WHERE ss.year=:year and ss.month=:month and ss.type=:type")
+	List<SalaryStatus> salaryGeneratedForMonth(@Param("year") Integer year, @Param("month") Integer month, @Param("type") String type);
+	
+	@Query("SELECT ss FROM SalaryStatus ss WHERE  ss.type=:type ORDER BY year,month desc")
+	List<SalaryStatus> getAllByType(@Param("type") String type);
 	
 	 
 

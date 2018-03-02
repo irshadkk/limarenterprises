@@ -1,14 +1,15 @@
 import { Component, TemplateRef, OnInit } from '@angular/core';
-import { DataService } from '../../data.service';
-import { SalaryService } from './salary.service';
+import { DataService } from '../../../data.service';
+import { SalaryService } from '../salary.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { NotificationsService } from 'angular4-notify';
 
 @Component({
-  templateUrl: 'viewsalary.component.html',
-  providers: [SalaryService]
+  selector: 'app-half-month',
+  templateUrl: './half-month.component.html',
+  styleUrls: ['./half-month.component.scss']
 })
-export class ViewSalaryComponent implements OnInit {
+export class HalfMonthComponent implements OnInit {
   loading: boolean = false;
   public employeeSalArr;
   public employeeSalStatusArr;
@@ -37,11 +38,19 @@ export class ViewSalaryComponent implements OnInit {
     this.loadSalary(this.year, this.month);
   }
   generateExcel(year, month) {
-    this.salaryService.generateSalaryExcel(year, month, "Full Month")
+    this.salaryService.generateSalaryExcel(year, month, "Half Month")
+  }
+  resetSalary(year, month, type) {
+    this.salaryService.resetSalary(year, month, type)
+      .subscribe(data => {
+        this.loadAllStatus();
+      }
+        , err => this.handleError(err, "resetSalary()")
+      );
   }
   loadAllStatus() {
-    this.blockUI.start("Loading..");
-    this.dataService.getData(this.dataService.serviceurl + 'salary/salaryStatusAll?type=Full Month').subscribe(data => {
+    this.blockUI.start("loading..");
+    this.dataService.getData(this.dataService.serviceurl + 'salary/salaryStatusAll?type=Half Month').subscribe(data => {
       this.employeeSalStatusArr = data;
       this.blockUI.stop()
     },
@@ -65,14 +74,6 @@ export class ViewSalaryComponent implements OnInit {
     },
       (error => { this.handleError(error, "saveChanges()"); }));
   }
-  resetSalary(year, month, type) {
-    this.salaryService.resetSalary(year, month, type)
-      .subscribe(data => {
-        this.loadAllStatus();
-      }
-        , err => this.handleError(err, "resetSalary()")
-      );
-  }
 
 
   salaryAlreadyGenerated: boolean = false;
@@ -81,10 +82,10 @@ export class ViewSalaryComponent implements OnInit {
     this.blockUI.start("Loading..");
     this.salaryAlreadyGenerated = false;
     this.loading = true;
-    this.salaryService.getSalaryStatus(year, this.dataService.monthSelectArr.indexOf(month.toString()), "Full Month")
+    this.salaryService.getSalaryStatus(year, this.dataService.monthSelectArr.indexOf(month.toString()), "Half Month")
       .subscribe(response => {
         if (parseInt(JSON.stringify(response)) == 0) {
-          this.salaryService.generateSalary(year, month)
+          this.salaryService.generateMidMonthSalary(year, month)
             .subscribe(data => {
               this.employeeSalArr = data;
               this.loading = false;
@@ -99,7 +100,7 @@ export class ViewSalaryComponent implements OnInit {
 
         } else {
           this.salaryAlreadyGenerated = true;
-          this.salaryService.getSalary(year, this.dataService.monthSelectArr.indexOf(month.toString()), "Full Month")
+          this.salaryService.getSalary(year, this.dataService.monthSelectArr.indexOf(month.toString()), "Half Month")
             .subscribe(data => {
               this.employeeSalArr = data;
               this.loading = false;
@@ -148,3 +149,4 @@ export class ViewSalaryComponent implements OnInit {
 
 
 }
+

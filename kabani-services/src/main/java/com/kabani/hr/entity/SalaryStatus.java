@@ -3,21 +3,20 @@ package com.kabani.hr.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 
 @Entity // This tells Hibernate to make a table out of this class
+@IdClass(SalaryStatusKey.class)
 public class SalaryStatus {
 	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
-	
-    private int month;
+	private int month;
+	@Id
+	private int year;
+	@Id
+	private String type;
 
-    private int year;
-    
-    private Date generatedOn;
+	private Date generatedOn;
 
 	public int getMonth() {
 		return month;
@@ -35,12 +34,12 @@ public class SalaryStatus {
 		this.year = year;
 	}
 
-	public Integer getId() {
-		return id;
+	public String getType() {
+		return type;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public Date getGeneratedOn() {
@@ -50,13 +49,16 @@ public class SalaryStatus {
 	public void setGeneratedOn(Date generatedOn) {
 		this.generatedOn = generatedOn;
 	}
-	public SalaryStatus(){
-		
+
+	public SalaryStatus() {
+
 	}
-	public SalaryStatus(int month,int year, Date generatedOn){
-		this.month=month;
-		this.year=year;
+
+	public SalaryStatus(int month, int year, Date generatedOn, String type) {
+		this.month = month;
+		this.year = year;
 		this.generatedOn = generatedOn;
+		this.type = type;
 	}
-	
+
 }

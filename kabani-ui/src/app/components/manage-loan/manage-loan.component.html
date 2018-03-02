@@ -10,7 +10,7 @@
           </div>
           <div class="card-body">
 
-            <select [(ngModel)]="year" >
+            <select [(ngModel)]="year">
               <!-- (change)="objChanged()" -->
               <option *ngFor="let year of dataService.yearSelectArr" [value]="year">{{year}}
               </option>
@@ -33,19 +33,21 @@
                 <th>Avail Date</th>
                 <th>Amount</th>
                 <th>Tenure</th>
-                <th>Status</th>
+                <th>EMI Paid</th>
+                <th>EMI Due</th>
                 <th>Action</th>
               </tr>
               <tr *ngFor="let item of loanList ; let trackBy=index">
                 <td>{{trackBy+1}}</td>
-                <td>{{item.employeeCode}}</td>
-                <td>{{item.employeeName}}</td>
-                <td>{{item.availDate| date :'MM/dd/yyyy'}}</td>
-                <td>{{item.loanAmount}}</td>
-                <td>{{item.loanTenure}}</td>
-                <td>{{item.status}}</td>
+                <td>{{item[0].employeeCode}}</td>
+                <td>{{item[0].employeeName}}</td>
+                <td>{{item[0].availDate| date :'MM/dd/yyyy'}}</td>
+                <td>{{item[0].loanAmount}}</td>
+                <td>{{item[0].loanTenure}} Months</td>
+                <td>{{item[1]}}</td>
+                <td>{{item[2]}}</td>
                 <td>
-                  <button type="button" class="btn btn-info" data-toggle="modal" (click)="onEditClick(infoModal,item)">Edit</button>
+                  <button type="button" class="btn btn-info" data-toggle="modal" (click)="onEditClick(infoModal,item[0])">Edit</button>
                 </td>
               </tr>
             </table>
@@ -105,7 +107,7 @@
             <tr>
               <td>Tenure</td>
               <td>
-                <select [(ngModel)]="loan.loanTenure" [ngModelOptions]="{standalone: true}"  [disabled]="loan.id!=''">
+                <select [(ngModel)]="loan.loanTenure" [ngModelOptions]="{standalone: true}" [disabled]="loan.id!=''">
                   <ng-container *ngFor="let x of loanTenure">
                     <option *ngIf="x.value==loan.loanTenure" selected [value]="x.value">{{x.value}} Months</option>
                     <option *ngIf="x.value!=loan.loanTenure" [value]="x.value">{{x.value}} Months</option>

@@ -60,10 +60,11 @@ public class SalaryController {
 	private EmployeeLoanorAdvanceDeductionRepository employeeLoanorAdvanceDeductionRepository;
 
 	@RequestMapping(value = "/salaryGenerated", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody int getSalaryStatus(@RequestParam String year, @RequestParam String month) throws Exception {
+	public @ResponseBody int getSalaryStatus(@RequestParam String year, @RequestParam String month,
+			@RequestParam String type) throws Exception {
 		int response = 0;
 		try {
-			response = salaryCalculator.hasSalaryGenerated(year, month);
+			response = salaryCalculator.hasSalaryGenerated(year, month, type);
 		} catch (Exception e) {
 			logger.error("****Exception in getSalaryStatus() " + e.getMessage());
 			throw e;
@@ -84,10 +85,11 @@ public class SalaryController {
 	}
 
 	@RequestMapping(value = "/getSalary", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List getSalary(@RequestParam String year, @RequestParam String month) throws Exception {
+	public @ResponseBody List getSalary(@RequestParam String year, @RequestParam String month,
+			@RequestParam String type) throws Exception {
 		List returnValue = new ArrayList<>();
 		try {
-			returnValue = salaryCalculator.getSalary(Integer.parseInt(year), Integer.parseInt(month));
+			returnValue = salaryCalculator.getSalary(Integer.parseInt(year), Integer.parseInt(month), type);
 		} catch (Exception e) {
 			logger.error("****Exception in getSalary() " + e.getMessage());
 			throw e;
@@ -96,10 +98,10 @@ public class SalaryController {
 	}
 
 	@RequestMapping(value = "/getSalaryExcel", method = RequestMethod.GET)
-	public ModelAndView getSalaryExel(@RequestParam String year, @RequestParam String month,
+	public ModelAndView getSalaryExel(@RequestParam String year, @RequestParam String month, @RequestParam String type,
 			HttpServletResponse response) throws Exception {
 		try {
-			salaryCalculator.genereteExcel(Integer.parseInt(year), Integer.parseInt(month), response);
+			salaryCalculator.genereteExcel(Integer.parseInt(year), Integer.parseInt(month), type, response);
 		} catch (Exception e) {
 			logger.error("****Exception in getSalaryExel() " + e.getMessage());
 			throw e;
@@ -107,22 +109,11 @@ public class SalaryController {
 		return null;
 	}
 
-	@RequestMapping(value = "/download", method = RequestMethod.GET)
-	public ModelAndView downloadExcelOutputExl(HttpServletResponse response) throws Exception {
-		try {
-			excelOutputServiceImpl.createExcelOutputExcel(response);
-		} catch (Exception e) {
-			logger.error("****Exception in downloadExcelOutputExl() " + e.getMessage());
-			throw e;
-		}
-		return null;
-	}
-
 	@RequestMapping(value = "/salaryStatusAll", method = RequestMethod.GET)
-	public @ResponseBody List getSalaryStatusAll() throws Exception {
+	public @ResponseBody List getSalaryStatusAll(@RequestParam String type) throws Exception {
 		List<SalaryStatus> result;
 		try {
-			result = salaryStatusRepository.findAll();
+			result = salaryStatusRepository.getAllByType(type);
 		} catch (Exception e) {
 			logger.error("****Exception in getSalaryStatusAll() " + e.getMessage());
 			throw e;
@@ -155,10 +146,10 @@ public class SalaryController {
 				wpsRepository.delete(wps);
 
 			}
-//			for (UserAttendanceDetails wps : userAttendanceDetailsRepository.findAll()) {
-//				userAttendanceDetailsRepository.delete(wps);
-//
-//			}
+			// for (UserAttendanceDetails wps : userAttendanceDetailsRepository.findAll()) {
+			// userAttendanceDetailsRepository.delete(wps);
+			//
+			// }
 
 		} catch (Exception e) {
 			logger.error("****Exception in getSalaryStatusAll() " + e.getMessage());
@@ -179,6 +170,7 @@ public class SalaryController {
 				for (EmployeeLoanorAdvanceDeduction temp : activeEmi) {
 					loanIdList.add(temp.getLoanId());
 				}
+				System.out.println("xxxxxxxxx-->>"+loanIdList);
 				returnValue = employeeLoanRepository.getActiveLoanForMonth(loanIdList);
 			}
 		} catch (Exception e) {
@@ -232,15 +224,14 @@ public class SalaryController {
 			throws Exception {
 		List returnValue = new ArrayList<>();
 		try {
-			return employeeLoanorAdvanceDeductionRepository
-					.getAllActiveAdvancesForMonth(Integer.parseInt(month), Integer.parseInt(year));
+			return employeeLoanorAdvanceDeductionRepository.getAllActiveAdvancesForMonth(Integer.parseInt(month),
+					Integer.parseInt(year));
 
-			
 		} catch (Exception e) {
 			logger.error("****Exception in getActiveAdvancesv() " + e.getMessage());
 			throw e;
 		}
-	
+
 	}
 
 	@RequestMapping(value = "/addNewAdvance", method = RequestMethod.POST, produces = "application/json")
@@ -255,7 +246,7 @@ public class SalaryController {
 		}
 		return returnValue;
 	}
-	
+
 	@RequestMapping(value = "/addNewLoanEmi", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody EmployeeLoanorAdvanceDeduction addNewLoanEmi(@RequestBody EmployeeLoanorAdvanceDeduction loan)
 			throws Exception {
@@ -267,6 +258,31 @@ public class SalaryController {
 			throw e;
 		}
 		return returnValue;
+	}
+
+	@PostMapping(path = "/generateMidMonthSalary/{year}/{month}")
+	public @ResponseBody List generateMidMonthSalary(@PathVariable String year, @PathVariable String month)
+			throws Exception {
+		List returnValue = new ArrayList<>();
+		try {
+			returnValue = salaryCalculator.generateMidMonthSalary(year, month);
+		} catch (Exception e) {
+			logger.error("****Exception in generateMidMonthSalary() " + e.getMessage());
+			throw e;
+		}
+		return returnValue;
+	}
+
+	@RequestMapping(value = "/resetSalaryForMonth", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody String resetSalaryForMonth(@RequestParam Integer year, @RequestParam Integer month,
+			@RequestParam String type) throws Exception {
+		try {
+			salaryCalculator.resetForCurrentMonth(year, month, type);
+		} catch (Exception e) {
+			logger.error("****Exception in resetSalaryForMonth() " + e.getMessage());
+			throw e;
+		}
+		return "success";
 	}
 
 }

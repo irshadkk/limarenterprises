@@ -16,6 +16,8 @@ public class Wps {
 	private int year;
 	@Id
 	private String employeeCode;
+	@Id
+	private String type;
 	
 	private String employeeName;
 	private String nameOfGuardian;
@@ -559,5 +561,14 @@ public class Wps {
 	public void setTotalCasualLeavesDays(float totalCasualLeavesDays) {
 		this.totalCasualLeavesDays = totalCasualLeavesDays;
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
 	
 }

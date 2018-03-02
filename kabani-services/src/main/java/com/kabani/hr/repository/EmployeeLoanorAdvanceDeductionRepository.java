@@ -16,9 +16,9 @@ public interface EmployeeLoanorAdvanceDeductionRepository extends CrudRepository
 	List<EmployeeLoanorAdvanceDeduction> getActiveLoanDeductionForMonth(@Param("month") Integer month,
 			@Param("year") Integer year);
 
-	@Query("SELECT ss FROM EmployeeLoanorAdvanceDeduction ss WHERE ss.type='advance' and ss.status='unpaid' and  YEAR(availDate) = :year AND MONTH(availDate) = :month")
-	List<EmployeeLoanorAdvanceDeduction> getActiveAdvanceDeductionForMonth(@Param("month") Integer month,
-			@Param("year") Integer year);
+	@Query("SELECT ss FROM EmployeeLoanorAdvanceDeduction ss WHERE ss.type=:type and ss.status=:status and  YEAR(availDate) = :year AND MONTH(availDate) = :month")
+	List<EmployeeLoanorAdvanceDeduction> getDeductionForMonth(@Param("month") Integer month,
+			@Param("year") Integer year,@Param("status") String status,@Param("type") String type);
 
 	
 	@Query("SELECT ss FROM EmployeeLoanorAdvanceDeduction ss  WHERE ss.loanId=:loanId" )

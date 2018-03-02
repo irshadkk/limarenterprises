@@ -17,9 +17,9 @@ export class SalaryService {
     header.append(key, value);
     return header
   }
-  getSalaryStatus(year: number, month: number): Observable<number> {
+  getSalaryStatus(year: number, month: number, type: string): Observable<number> {
     this.headers = this.createHeader();
-    return this.http.get(this.dataService.serviceurl + `salary/salaryGenerated?year=${year}&month=${month + 1}`, { headers: this.headers })
+    return this.http.get(this.dataService.serviceurl + `salary/salaryGenerated?year=${year}&month=${month + 1}&type=${type}`, { headers: this.headers })
       .map(response => { return response.json(); })
       .catch(error => { return this.handleError(error, 'getSalaryStatus') })
   }
@@ -30,10 +30,16 @@ export class SalaryService {
       .map(response => { return response.json(); })
       .catch(error => { return this.handleError(error, 'generateSalary') })
   }
-
-  getSalary(year: any, month: any) {
+  generateMidMonthSalary(year: any, month: any) {
     this.headers = this.createHeader();
-    return this.http.get(this.dataService.serviceurl + `salary/getSalary?year=${year}&month=${month + 1}`, { headers: this.headers })
+    return this.http.post(this.dataService.serviceurl + `salary/generateMidMonthSalary/${year}/${month}`, { headers: this.headers })
+      .map(response => { return response.json(); })
+      .catch(error => { return this.handleError(error, 'generateMidMonthSalary') })
+  }
+
+  getSalary(year: any, month: any, type: string) {
+    this.headers = this.createHeader();
+    return this.http.get(this.dataService.serviceurl + `salary/getSalary?year=${year}&month=${month + 1}&type=${type}`, { headers: this.headers })
       .map(response => { return response.json(); })
       .catch(error => { return this.handleError(error, 'getSalary') })
   }
@@ -45,15 +51,8 @@ export class SalaryService {
       .catch(error => { return this.handleError(error, 'resetAll') })
   }
 
-  generateSalaryExcel(year: any, month: any) {
-    // this.headers = this.createHeader();
-    // return this.http.get(this.dataService.serviceurl + `salary/getSalaryExcel?year=${year}&month=${month + 1}`, { headers: this.headers })
-    //   .toPromise()
-    //   .then(response => {
-    //     return response;
-    //   })
-    //   .catch(this.handleError);
-    window.open(this.dataService.serviceurl + `salary/getSalaryExcel?year=${year}&month=${month}`, "_target")
+  generateSalaryExcel(year: any, month: any, type: any) {
+    window.open(this.dataService.serviceurl + `salary/getSalaryExcel?year=${year}&month=${month}&type=${type}`, "_target")
   }
 
   loadActiveLoans(year: number, month: number): Observable<[any]> {
@@ -68,7 +67,12 @@ export class SalaryService {
       .map(response => { return response.json(); })
       .catch(error => { return this.handleError(error, 'loadActiveAdvances') })
   }
-
+  resetSalary(year: any, month: any, type: any) {
+    this.headers = this.createHeader();
+    return this.http.get(this.dataService.serviceurl + `salary/resetSalaryForMonth?year=${year}&month=${month}&type=${type}`, { headers: this.headers })
+      .map(response => { return response; })
+      .catch(error => { return this.handleError(error, 'resetSalary') })
+  }
 
   private handleError(error: any, method: string): Observable<any> {
     console.error('An error occurred in Salary Service @ method' + method, error);

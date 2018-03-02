@@ -15,8 +15,8 @@ public interface WpsRepository extends  CrudRepository <Wps, Long>{
 	 
 	List<Wps> findAll();
 	
-	@Query("SELECT ss FROM Wps ss WHERE ss.year=:year and ss.month=:month")
-	List<Wps> findForCurrentMonth(@Param("year") Integer year, @Param("month") Integer month);
+	@Query("SELECT ss FROM Wps ss WHERE ss.year=:year and ss.month=:month and ss.type=:type")
+	List<Wps> findForCurrentMonth(@Param("year") Integer year, @Param("month") Integer month, @Param("type")  String type);
 	
 	 
 	

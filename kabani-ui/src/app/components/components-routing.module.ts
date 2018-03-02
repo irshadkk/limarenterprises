@@ -1,26 +1,28 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
- 
-import { UploadCsvComponent } from './uploadcsv/uploadcsv.component'; 
+
+import { UploadCsvComponent } from './uploadcsv/uploadcsv.component';
 import { ListUploadComponent } from './upload/list-upload/list-upload.component';
 import { EmployeeUploadComponent } from './upload/employee-upload/employee-upload.component';
 import { IncomeTaxUploadComponent } from './upload/incometax-upload/incometax-upload.component';
 
- 
- 
+
+
 import { SwitchesComponent } from './switches.component';
 import { ViewAttendanceComponent } from './viewattendance/viewattendance.component';
 import { ViewSalaryComponent } from './viewsalary/viewsalary.component';
+import { HalfMonthComponent } from './viewsalary/half-month/half-month.component';
+
 import { ViewEmployeesComponent } from './viewemployees/viewemployees.component';
-import { ViewleavesummaryComponent } from './viewleavesummary/viewleavesummary.component'; 
-import { AddholidaysComponent } from './addholidays/addholidays.component'; 
-import { AddPresentComponent } from './addpresent/addpresent.component'; 
+import { ViewleavesummaryComponent } from './viewleavesummary/viewleavesummary.component';
+import { AddholidaysComponent } from './addholidays/addholidays.component';
+import { AddPresentComponent } from './addpresent/addpresent.component';
 
 import { ManageLoanComponent } from './manage-loan/manage-loan.component';
-import { AddIncomeTaxComponent } from './addincometax/addincometax.component'; 
-import { ManageAdvanceComponent } from './manage-advance/manage-advance.component'; 
+import { AddIncomeTaxComponent } from './addincometax/addincometax.component';
+import { ManageAdvanceComponent } from './manage-advance/manage-advance.component';
 
- 
+
 
 const routes: Routes = [
   {
@@ -29,35 +31,35 @@ const routes: Routes = [
       title: 'Components'
     },
     children: [
-      
+
       {
         path: 'uploadcsv',
         component: UploadCsvComponent,
         data: {
           title: 'Upload CSV '
         }
-      },  
+      },
       {
         path: 'list-upload',
         component: ListUploadComponent,
         data: {
           title: 'List Upload Component '
         }
-      }, 
+      },
       {
         path: 'employee-upload',
         component: EmployeeUploadComponent,
         data: {
           title: 'Employee Upload  '
         }
-      }, 
+      },
       {
         path: 'incometax-upload',
         component: IncomeTaxUploadComponent,
         data: {
           title: 'Income Tax Upload  '
         }
-      }, 
+      },
       {
         path: 'switches',
         component: SwitchesComponent,
@@ -91,6 +93,12 @@ const routes: Routes = [
         component: ViewSalaryComponent,
         data: {
           title: 'View Salary'
+        }
+      }, {
+        path: 'viewHalfMonthSalary',
+        component: HalfMonthComponent,
+        data: {
+          title: 'View Mid Month Salary'
         }
       },
       {
@@ -128,7 +136,7 @@ const routes: Routes = [
           title: 'Manage Income Tax'
         }
       }
-       
+
     ]
   }
 ];
@@ -137,4 +145,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ComponentsRoutingModule {}
+export class ComponentsRoutingModule { }
