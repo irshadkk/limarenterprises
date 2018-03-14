@@ -19,7 +19,7 @@ public interface EmployeeDetailsMasterRepository extends CrudRepository<Employee
     
     @Transactional
     @Modifying
-    @Query("UPDATE EmployeeDetailsMaster  SET notElibibleForWelfareFund=1 WHERE DATEDIFF(SYSDATE(), dateOfBirth)/365>=45")
+    @Query("UPDATE EmployeeDetailsMaster  SET notElibibleForWelfareFund=1 WHERE DATEDIFF(SYSDATE(), dateOfBirth)/365>=55")
     void updateWelfareFundEligiblity();
     
 }

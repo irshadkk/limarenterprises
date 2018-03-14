@@ -2,6 +2,7 @@ package com.kabani.hr.helper;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -568,10 +569,22 @@ public class SalaryCalculator {
 					+ wpsObj.getOtherDeduction();
 
 			wpsObj.setTotalDeduction(totalDeductedThisMonth);
-
+/*
+ * System.out.println("xxxxxxxxxxxxxxx--grossMonthlyWage>>"+grossMonthlyWage+"----");
+System.out.println("xxxxxxxxxxxxxxx--totalSalaryOffered>>"+totalSalaryOffered+"----");
+System.out.println("xxxxxxxxxxxxxxx--totalPresentDays>>"+totalPresentDays+"----");
+System.out.println("xxxxxxxxxxxxxxx--numberOfWorkingDays>>"+numberOfWorkingDays+"----");
+System.out.println("xxxxxxxxxxxxxxx--wpsObj.getOverTimeWages() >>"+wpsObj.getOverTimeWages() +"----");
+System.out.println("xxxxxxxxxxxxxxx--wpsObj.getLeaveWages()>>"+wpsObj.getLeaveWages()+"----");
+System.out.println("xxxxxxxxxxxxxxx--wpsObj.getNationalAndFestivalHolidayWages()>>"+wpsObj.getNationalAndFestivalHolidayWages()+"----");
+System.out.println("xxxxxxxxxxxxxxx-- wpsObj.getBonus()>>"+ wpsObj.getBonus()+"----");
+System.out.println("xxxxxxxxxxxxxxx-- wpsObj.getBonus()>>"+ wpsObj.getBonus()+"----");
+System.out.println("xxxxxxxxxxxxxxx-- wpsObj.getBonus()>>"+ wpsObj.getBonus()+"----");
+*/
 			totalEarnedThisMonth = grossMonthlyWage + wpsObj.getOverTimeWages() + wpsObj.getLeaveWages()
 					+ wpsObj.getNationalAndFestivalHolidayWages() + wpsObj.getArrearPaid() + wpsObj.getBonus()
 					+ wpsObj.getMaternityBenefit() + wpsObj.getOtherAllowances();
+			
 			wpsObj.setTotalSalaryForThisMonth(totalEarnedThisMonth);
 
 			/*
@@ -686,6 +699,13 @@ public class SalaryCalculator {
 		WritableCellFormat cellFormat = new WritableCellFormat(cellFont);
 		return cellFormat;
 	}
+	
+	private String formatDate(Date date) {
+		if( date==null) return "";
+		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy");
+		System.out.println("xxxxxxxxxx-->>"+DATE_FORMAT.format(date));
+        return DATE_FORMAT.format(date);
+	}
 
 	private void writeExcelOutputData(WritableSheet sheet, List<Wps> returnValue, String[] heading, String type)
 			throws Exception {
@@ -705,7 +725,7 @@ public class SalaryCalculator {
 				sheet.addCell(new Label(colNo++, rowNo, excelRow.getEmployeeSex()));
 				// cell.setCellValue(excelRow.getEmployeeSex());
 
-				sheet.addCell(new Label(colNo++, rowNo, excelRow.getDateOfBirth().toString()));
+				sheet.addCell(new Label(colNo++, rowNo, formatDate(excelRow.getDateOfBirth())));
 				// cell.setCellValue(excelRow.getDateOfBirth());
 
 				sheet.addCell(new Label(colNo++, rowNo, excelRow.getDesignation()));
@@ -714,7 +734,7 @@ public class SalaryCalculator {
 				sheet.addCell(new Label(colNo++, rowNo, excelRow.getDesignationCode()));
 				// cell.setCellValue(excelRow.getDesignationCode());
 
-				sheet.addCell(new Label(colNo++, rowNo, excelRow.getDateOfJoining().toString()));
+				sheet.addCell(new Label(colNo++, rowNo, formatDate(excelRow.getDateOfJoining())));
 				// cell.setCellValue(excelRow.getDateOfJoining());
 
 				sheet.addCell(new Label(colNo++, rowNo, excelRow.getMobileNumber()));
@@ -822,8 +842,7 @@ public class SalaryCalculator {
 				sheet.addCell(new Label(colNo++, rowNo, excelRow.getNetWagesPaid() + ""));
 				// cell.setCellValue(excelRow.getNetWagesPaid());
 
-				sheet.addCell(new Label(colNo++, rowNo, excelRow.getDateOfPayment() + ""));
-				// cell.setCellValue(excelRow.getDateOfPayment());
+				sheet.addCell(new Label(colNo++, rowNo, formatDate(excelRow.getDateOfPayment())));
 
 				sheet.addCell(new Label(colNo++, rowNo, ""));// Remarks
 				// cell.setCellValue("");// REMARKSss
