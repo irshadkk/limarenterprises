@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kabani.hr.entity.EmployeeDetailsMaster;
+import com.kabani.hr.entity.EmployeeIncentive;
 import com.kabani.hr.entity.EmployeeIncomeTaxDetailsMaster;
 import com.kabani.hr.entity.EmployeeLoan;
 import com.kabani.hr.entity.EmployeeLoanorAdvanceDeduction;
@@ -27,6 +28,7 @@ import com.kabani.hr.entity.SalaryProfessionaltaxSlab;
 import com.kabani.hr.entity.SalaryStatus;
 import com.kabani.hr.entity.Wps;
 import com.kabani.hr.repository.EmployeeDetailsMasterRepository;
+import com.kabani.hr.repository.EmployeeIncentiveRepository;
 import com.kabani.hr.repository.EmployeeIncomeTaxDetailsMasterRepository;
 import com.kabani.hr.repository.EmployeeLoanRepository;
 import com.kabani.hr.repository.EmployeeLoanorAdvanceDeductionRepository;
@@ -82,6 +84,9 @@ public class SalaryCalculator {
 
 	@Autowired
 	private EmployeeIncomeTaxDetailsMasterRepository employeeIncomeTaxDetailsMasterRepository;
+	
+	@Autowired
+	private EmployeeIncentiveRepository employeeIncentiveRepository;
 
 	public List<Wps> getSalary(int year, int month, String type) {
 		return wpsRepository.findForCurrentMonth(year, month, type);
@@ -98,12 +103,14 @@ public class SalaryCalculator {
 		List<EmployeeLoanorAdvanceDeduction> salaryAdvances = new ArrayList<EmployeeLoanorAdvanceDeduction>();
 		List<EmployeeLoanorAdvanceDeduction> staffAdvances = new ArrayList<EmployeeLoanorAdvanceDeduction>();
 		List<EmployeeIncomeTaxDetailsMaster> incomeTaxArr = new ArrayList<EmployeeIncomeTaxDetailsMaster>();
+		List<EmployeeIncentive> incentiveArr = new ArrayList<EmployeeIncentive>();
 
 		ArrayList<Wps> result;
 		try {
 			salaryAdvances = employeeLoanorAdvanceDeductionRepository.getActiveAdvancesForMonth(indexOfMonth + 1, yr);
 			staffAdvances = employeeLoanorAdvanceDeductionRepository.getActiveLoanDeductionForMonth(indexOfMonth + 1,
 					yr);
+			incentiveArr=employeeIncentiveRepository.getIncentiveForMonth(indexOfMonth + 1, yr);
 			incomeTaxArr = employeeIncomeTaxDetailsMasterRepository.getTaxForMonthYearForEmployee(indexOfMonth + 1, yr);
 			int numberOfDaysInMonthYear = daysInYearAndMonthCalculator.calculateDaysInMonthAndYear(yr,
 					indexOfMonth + 1);
@@ -175,7 +182,7 @@ public class SalaryCalculator {
 						wpsOfOneEmployee.setAdvanceTotalAmount(0);
 						copyDataFromMaster(wpsOfOneEmployee, employeeDetailsMasterObj);
 						identifyAdvances(wpsOfOneEmployee, employeeDetailsMasterObj.getEmployeeBioDeviceCode(),
-								salaryAdvances, staffAdvances);
+								salaryAdvances, staffAdvances,incentiveArr);
 						wpsOfOneEmployee.setNumberOfWeeklyOffGranted(numberOfHolidaysInMonthYear);
 						wpsOfOneEmployee.setEmployeeCode(employeeDetailsMasterObj.getEmployeeCode());
 						wpsOfOneEmployee.setEmployeeName(employeeDetailsMasterObj.getEmployeeName());
@@ -290,7 +297,7 @@ public class SalaryCalculator {
 	}
 
 	private void identifyAdvances(Wps wps, String biometricCode, List<EmployeeLoanorAdvanceDeduction> salaryAdvances,
-			List<EmployeeLoanorAdvanceDeduction> staffAdvances) {
+			List<EmployeeLoanorAdvanceDeduction> staffAdvances,List<EmployeeIncentive> incentives) {
 		for (EmployeeLoanorAdvanceDeduction salaryAdvance : salaryAdvances) {
 			if (salaryAdvance.getEmployeeCode().equals(biometricCode)) {
 				wps.setAdvanceTotalAmount(wps.getAdvanceTotalAmount() + salaryAdvance.getAmount());
@@ -301,6 +308,13 @@ public class SalaryCalculator {
 			if (staffAdvance.getEmployeeCode().equals(biometricCode)) {
 				wps.setTotalStaffAdvance(staffAdvance.getAmount());
 				wps.setAdvanceTotalAmount(wps.getAdvanceTotalAmount() + staffAdvance.getAmount());
+				break;
+			}
+		}
+		for (EmployeeIncentive advance : incentives) {
+			if (advance.getEmployeeCode().equals(wps.getEmployeeCode())) {
+				wps.setTotalSalaryAdvance(advance.getAmount());
+				wps.setAdvanceTotalAmount(wps.getAdvanceTotalAmount() + advance.getAmount());
 				break;
 			}
 		}
@@ -689,6 +703,11 @@ System.out.println("xxxxxxxxxxxxxxx-- wpsObj.getBonus()>>"+ wpsObj.getBonus()+"-
 			sheet.addCell(new Label(cell, 0, heading[cell],
 					getCellFormat(redFontIndex.contains(cell) ? Colour.RED : Colour.BLACK, Pattern.GRAY_25)));
 		}
+		for (int cell = 0; cell < heading.length; cell++) {
+			sheet.setColumnView(cell, 20);
+			sheet.addCell(new Label(cell, 1, (cell+1)+"",
+					getCellFormat(Colour.BLACK, Pattern.GRAY_25)));
+		}
 
 	}
 
@@ -703,13 +722,13 @@ System.out.println("xxxxxxxxxxxxxxx-- wpsObj.getBonus()>>"+ wpsObj.getBonus()+"-
 	private String formatDate(Date date) {
 		if( date==null) return "";
 		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy");
-		System.out.println("xxxxxxxxxx-->>"+DATE_FORMAT.format(date));
+		/*System.out.println("xxxxxxxxxx-->>"+DATE_FORMAT.format(date));*/
         return DATE_FORMAT.format(date);
 	}
 
 	private void writeExcelOutputData(WritableSheet sheet, List<Wps> returnValue, String[] heading, String type)
 			throws Exception {
-		int rowNo = 0, colNo = 0;
+		int rowNo = 1, colNo = 0;
 		try {
 			for (Wps excelRow : returnValue) {
 				++rowNo;
@@ -801,7 +820,7 @@ System.out.println("xxxxxxxxxxxxxxx-- wpsObj.getBonus()>>"+ wpsObj.getBonus()+"-
 				// cell.setCellValue(excelRow.getOtherAllowances());
 
 				if (type.equals("Full Month")) {
-					sheet.addCell(new Label(colNo++, rowNo, "0"));
+					sheet.addCell(new Label(colNo++,  rowNo, excelRow.getTotalSalaryAdvance() + ""));
 				} else if (type.equals("Half Month")) {
 					sheet.addCell(new Label(colNo++, rowNo, excelRow.getTotalSalaryAdvance() + ""));
 				}

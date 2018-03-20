@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kabani.hr.entity.EmployeeIncentive;
 import com.kabani.hr.entity.EmployeeLoan;
 import com.kabani.hr.entity.EmployeeLoanorAdvanceDeduction;
 import com.kabani.hr.entity.SalaryStatus;
@@ -30,6 +31,7 @@ import com.kabani.hr.entity.UserAttendanceDetails;
 import com.kabani.hr.entity.Wps;
 import com.kabani.hr.helper.ExcelOutputServiceImpl;
 import com.kabani.hr.helper.SalaryCalculator;
+import com.kabani.hr.repository.EmployeeIncentiveRepository;
 import com.kabani.hr.repository.EmployeeLoanRepository;
 import com.kabani.hr.repository.EmployeeLoanorAdvanceDeductionRepository;
 import com.kabani.hr.repository.SalaryStatusRepository;
@@ -58,6 +60,8 @@ public class SalaryController {
 	private EmployeeLoanRepository employeeLoanRepository;
 	@Autowired
 	private EmployeeLoanorAdvanceDeductionRepository employeeLoanorAdvanceDeductionRepository;
+	@Autowired
+	private EmployeeIncentiveRepository employeeIncentiveRepository;
 
 	@RequestMapping(value = "/salaryGenerated", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody int getSalaryStatus(@RequestParam String year, @RequestParam String month,
@@ -232,6 +236,33 @@ public class SalaryController {
 			throw e;
 		}
 
+	}
+	@RequestMapping(value = "/getIncentives", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List getIncentives(@RequestParam String year, @RequestParam String month)
+			throws Exception {
+		List returnValue = new ArrayList<>();
+		try {
+			return employeeIncentiveRepository.getIncentiveForMonth(Integer.parseInt(month),
+					Integer.parseInt(year));
+
+		} catch (Exception e) {
+			logger.error("****Exception in getIncentives() " + e.getMessage());
+			throw e;
+		}
+
+	}
+	
+	@RequestMapping(value = "/addNewIncentive", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody EmployeeIncentive addNewIncentive(@RequestBody EmployeeIncentive incentive) throws Exception {
+		EmployeeIncentive returnValue = null;
+		try {
+			returnValue = employeeIncentiveRepository.save(incentive);
+			
+		} catch (Exception e) {
+			logger.error("****Exception in addNewLoan() " + e.getMessage());
+			throw e;
+		}
+		return returnValue;
 	}
 
 	@RequestMapping(value = "/addNewAdvance", method = RequestMethod.POST, produces = "application/json")

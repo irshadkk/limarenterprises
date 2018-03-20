@@ -1,0 +1,118 @@
+<block-ui>
+  <div class="animated fadeIn">
+
+    <div class="row">
+
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <strong>Horizontal</strong> Form
+          </div>
+          <div class="card-body">
+
+            <select [(ngModel)]="year">
+              <!-- (change)="objChanged()" -->
+              <option *ngFor="let year of dataService.yearSelectArr" [value]="year">{{year}}
+              </option>
+            </select>
+
+            <select [(ngModel)]="month" (change)="objChanged()">
+              <option *ngFor="let month of dataService.monthSelectArr" [value]="month">{{month}}
+              </option>
+            </select>
+
+            <button (click)="objChanged()">Submit</button>
+
+            <button style="float:right;" (click)="addNewIncentive(infoModal)">Add Individual Incentive</button>
+          <!--  <button style="float:right;" (click)="uploadIncentive(infoModal)">Upload Incentive  Excel</button>-->
+
+            <table class="table table-bordered table-striped table-sm">
+              <tr>
+                <th>No</th>
+                <th>ECode</th>
+                <th>EName</th>
+                <th>Date</th>
+                <th>Amount</th>                
+              </tr>
+              <tr *ngFor="let item of incentiveList ; let trackBy=index">
+                <td>{{trackBy+1}}</td>
+                <td>{{item.employeeCode}}</td>
+                <td>{{item.employeeName}}</td>
+                <td>{{item.date| date :'MM/dd/yyyy'}}</td>
+                <td>{{item.amount}}</td>                
+              </tr>
+            </table>
+
+          </div>
+          <div class="card-footer">
+          </div>
+        </div>
+
+
+
+      </div>
+      <!--/.col-->
+    </div>
+  </div>
+
+  <div bsModal #infoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-info" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Add Incentive</h4>
+          <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+
+        <div class="modal-body">
+          <!--<p>One fine body&hellip;</p>-->
+          <table class="table table-bordered table-striped table-sm">
+            <tr>
+              <th>Item</th>
+              <th>Value</th>
+            </tr>
+            <tr>
+              <td>Employee</td>
+              <td>
+                <input list="employees" [readonly]="incentive.id!=''" [(ngModel)]="incentive.employeeName" [ngModelOptions]="{standalone: true}" (change)="onChange($event)"
+                  [disabled]="incentive.id!=''">
+                <datalist id="employees">
+                  <ng-container *ngFor="let x of employeeArr">
+                    <option *ngIf="x.employeeCode==incentive.employeeCode" selected [value]="x.employeeCode ">{{x.employeeName}}</option>
+                    <option *ngIf="x.employeeCode!=incentive.employeeCode" [value]="x.employeeCode">{{x.employeeName}}</option>
+                  </ng-container>
+                </datalist>
+              </td>
+            </tr>
+
+            <tr>
+              <td>Amount</td>
+              <td>
+                <input type="number" [(ngModel)]="incentive.amount" [readonly]="incentive.id!=''">
+                <span style="color:red">* number</span>
+              </td>
+            </tr>
+           
+            <tr>
+              <td>Date</td>
+              <td>
+                <input type='date' [(ngModel)]="incentive.date" *ngIf="incentive.id==''">
+                <input type='text' readonly [value]="incentive.date|date:'MM/dd/yyyy'" *ngIf="incentive.id!=''">
+              </td>
+            </tr>
+             </table>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Close</button>
+          <button type="button" class="btn btn-primary" (click)="saveChanges()" *ngIf="incentive.id==''" [disabled]="btnDisabled()">Save changes</button>
+         
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+</block-ui>

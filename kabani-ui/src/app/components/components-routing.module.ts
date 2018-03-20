@@ -21,7 +21,7 @@ import { AddPresentComponent } from './addpresent/addpresent.component';
 import { ManageLoanComponent } from './manage-loan/manage-loan.component';
 import { AddIncomeTaxComponent } from './addincometax/addincometax.component';
 import { ManageAdvanceComponent } from './manage-advance/manage-advance.component';
-
+import { IncentiveComponent } from './incentive/incentive.component';
 
 
 const routes: Routes = [
@@ -125,6 +125,13 @@ const routes: Routes = [
       {
         path: 'manageAdvance',
         component: ManageAdvanceComponent,
+        data: {
+          title: 'Manage Salary Advances'
+        }
+      },
+      {
+        path: 'manageIncentives',
+        component: IncentiveComponent,
         data: {
           title: 'Manage Salary Advances'
         }
