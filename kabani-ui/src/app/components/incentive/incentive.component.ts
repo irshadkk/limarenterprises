@@ -1,4 +1,6 @@
 import { Component, TemplateRef, OnInit } from '@angular/core';
+import { HttpClient, HttpResponse, HttpEventType } from '@angular/common/http';
+import { UploadFileService } from '../upload/upload-file.service';
 import { DataService } from '../../data.service';
 import { SalaryService } from '../viewsalary/salary.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
@@ -26,7 +28,7 @@ export class IncentiveComponent implements OnInit {
     pauseOnHover: true,
     clickToClose: true,
   }
-  constructor(private dataService: DataService, private salaryService: SalaryService, protected notificationsService: NotificationsService) {
+  constructor(private uploadService: UploadFileService,private dataService: DataService, private salaryService: SalaryService, protected notificationsService: NotificationsService) {
 
   }
   ngOnInit() {
@@ -90,13 +92,30 @@ export class IncentiveComponent implements OnInit {
         this.incentive.employeeCode = emp.employeeCode;      }
     }
   }
-  /*updateChanges(){
-    this.dataService.getPostData(this.dataService.serviceurl + 'salary/closeLoan', this.loan).subscribe(data => {
-        this.loadActiveLoans(this.year, (this.dataService.monthSelectArr.indexOf(this.month)));
-      });
-    }
-  }*/
-  btnDisabled(){
+  selectedFiles: FileList
+  currentFileUpload: File
+  progress: { percentage: number } = { percentage: 0 }
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
+  } 
+xxx:any;
+  upload() {
+    this.progress.percentage = 0;
+    let url = this.dataService.serviceurl + '/salary/addNewIncentiveBulk';
+    this.currentFileUpload = this.selectedFiles.item(0)
+    this.uploadService.pushFileToStorage(this.currentFileUpload, url).subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress) {
+        this.progress.percentage = Math.round(100 * event.loaded / event.total);
+      } else if (event instanceof HttpResponse) {
+        this.xxx="";
+        this.selectedFiles = null;
+        this.currentFileUpload=null;
+       this.loadIncentives(new Date().getFullYear(),new Date().getMonth())
+      }
+    })
+
+   
+  }   btnDisabled(){
     if(this.incentive.employeeCode=="" || this.incentive.amount==""  || this.incentive.date== ""){
       return true;
     }

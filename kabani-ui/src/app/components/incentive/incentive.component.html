@@ -23,9 +23,12 @@
 
             <button (click)="objChanged()">Submit</button>
 
-            <button style="float:right;" (click)="addNewIncentive(infoModal)">Add Individual Incentive</button>
-          <!--  <button style="float:right;" (click)="uploadIncentive(infoModal)">Upload Incentive  Excel</button>-->
-
+           
+          <span style="float:right;margin:3px"> 
+            <input type="file" (change)="selectFile($event)"  [(ngModel)]="xxx"><button  [disabled]="!selectedFiles"
+            (click)="upload()">Upload</button><!--class="btn btn-success"-->
+            <button  (click)="addNewIncentive(infoModal)">Add Individual Incentive</button>
+          </span>
             <table class="table table-bordered table-striped table-sm">
               <tr>
                 <th>No</th>

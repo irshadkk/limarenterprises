@@ -1,5 +1,10 @@
 package com.kabani.hr.controller;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -21,8 +26,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kabani.hr.entity.EmployeeDetailsMaster;
 import com.kabani.hr.entity.EmployeeIncentive;
 import com.kabani.hr.entity.EmployeeLoan;
 import com.kabani.hr.entity.EmployeeLoanorAdvanceDeduction;
@@ -276,6 +283,67 @@ public class SalaryController {
 			throw e;
 		}
 		return returnValue;
+	}
+	@PostMapping(path = "/addNewIncentiveBulk")
+	public @ResponseBody void handleFileUploadIncentives(@RequestParam("file") MultipartFile file) throws Exception {
+		InputStream is = null;
+		BufferedReader bfReader = null;
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		if (!file.isEmpty()) {
+			try {
+				byte[] bytes = file.getBytes();
+				is = new ByteArrayInputStream(bytes);
+				bfReader = new BufferedReader(new InputStreamReader(is));
+				bfReader.readLine();// it reads the first line so it removes the heading from the file
+				String[] employeeDetailsArrFromFile = null;
+				String employeeIncentiveDetailsStringFromFile = null;
+				ArrayList<EmployeeIncentive> employeeIncentiveArrList = new ArrayList();
+				while (((employeeIncentiveDetailsStringFromFile = bfReader.readLine()) != null)
+						&& (employeeDetailsArrFromFile = employeeIncentiveDetailsStringFromFile.split(",")) != null) {
+					EmployeeIncentive  employeeIncentive= new EmployeeIncentive();
+					if ((null != employeeDetailsArrFromFile[1]) && ("" != employeeDetailsArrFromFile[1])) {
+						employeeIncentive.setEmployeeName(employeeDetailsArrFromFile[1]);
+						
+					} else {
+						employeeIncentive.setEmployeeName("");
+					}
+					
+					
+					if ((null != employeeDetailsArrFromFile[0]) && ("" != employeeDetailsArrFromFile[0])) {
+						employeeIncentive.setEmployeeCode(employeeDetailsArrFromFile[0]);
+					} else {
+						employeeIncentive.setEmployeeCode("");
+					}
+					
+					if ((null != employeeDetailsArrFromFile[2]) && ("" != employeeDetailsArrFromFile[2])) {
+						employeeIncentive.setAmount(Float.parseFloat((parseInput(employeeDetailsArrFromFile[2]))));
+
+					} else {
+						break;
+					}	
+					employeeIncentive.setDate(new Date());						
+					employeeIncentiveArrList.add(employeeIncentive);
+
+				}
+				employeeIncentiveRepository.save(employeeIncentiveArrList);
+
+			} catch (Exception e) {
+				logger.error("****Exception in handleFileUploadIncentives()  "+e.getMessage());
+				throw e;
+			} finally {
+				try {
+					if (is != null)
+						is.close();
+				} catch (Exception ex) {
+
+				}
+			}
+		}
+	}
+	
+	public String parseInput(String inputString) {
+		String in = inputString.replaceAll("\"", "");
+		return in.replaceAll(",", "");
 	}
 
 	@RequestMapping(value = "/addNewLoanEmi", method = RequestMethod.POST, produces = "application/json")
