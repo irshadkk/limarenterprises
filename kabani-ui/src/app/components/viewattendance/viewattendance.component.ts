@@ -2,7 +2,7 @@
 import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { NotificationsService } from 'angular4-notify';
+// import { NotificationsService } from 'angular4-notify';
 
 @Component({
   templateUrl: 'viewattendance.component.html',
@@ -16,6 +16,10 @@ export class ViewAttendanceComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
  
   public daysArr = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  public monthSelectArrv = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  public yearSelectArrv = ["2017", "2018", "2019", "2020", "2020", "2021",
+    "2022", "2023", "2024", "2025", "2026", "2027"];
   public days = this.daysArr[0];
   Arr = Array; //Array type captured in a variable
   public month =this.dataService.getSelectedMonth();
@@ -28,7 +32,8 @@ export class ViewAttendanceComponent implements OnInit {
     pauseOnHover: true,
     clickToClose: true,
   }
-  constructor(private dataService: DataService, protected notificationsService: NotificationsService) { }
+  constructor(private dataService: DataService
+  ) { }
   ngOnInit() {
     if (this.dataService.appDefined()) {
      this.objChanged();
@@ -115,11 +120,11 @@ export class ViewAttendanceComponent implements OnInit {
     this.blockUI.start("Saving..");
     this.dataService.getPostData(this.dataService.serviceurl + 'updateUserAttandance', this.currentItem).subscribe(data => {
       if (data == true) {
-        this.notificationsService.addInfo('Changes Saved');
+        // this.notificationsService.addInfo('Changes Saved');
         this.loadEmployeesAttandance(this.dataService.monthSelectArr.indexOf(this.month)+1,parseInt(""+this.year));
         infoModal.hide();
       } else {
-        this.notificationsService.addWarning('Changes couldnt be saved');
+        // this.notificationsService.addWarning('Changes couldnt be saved');
       }
       setTimeout(() => {
         this.blockUI.stop();
@@ -132,7 +137,7 @@ export class ViewAttendanceComponent implements OnInit {
   private handleError(error: any, method: any) {
     console.error('An error occurred in ViewleavesummaryComponent at method ' + method, +" " + error);
     this.blockUI.stop();
-    this.notificationsService.addError('An error occurred in ViewleavesummaryComponent at method ' + method + " " + error);
+    // this.notificationsService.addError('An error occurred in ViewleavesummaryComponent at method ' + method + " " + error);
   }
 
 

@@ -14,7 +14,8 @@ export class DataService {
     'Ford', 'Chevrolet', 'Buick'
   ];
   // serviceurl = 'http://localhost:8888/';
-  serviceurl = 'http://kabani-env.us-east-1.elasticbeanstalk.com/';
+  // serviceurl = 'http://kabani-env.us-east-1.elasticbeanstalk.com/';
+  serviceurl = 'http://103.227.177.38:8888/';
 
   branch = "";
 

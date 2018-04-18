@@ -4,7 +4,7 @@ import { UploadFileService } from '../upload/upload-file.service';
 import { DataService } from '../../data.service';
 import { SalaryService } from '../viewsalary/salary.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { NotificationsService } from 'angular4-notify';
+// import { NotificationsService } from 'angular4-notify';
 
 @Component({
   selector: 'app-incentive',
@@ -15,7 +15,10 @@ export class IncentiveComponent implements OnInit {
 
   loading: boolean = false;
   public incentiveList = [];
-  
+  public monthSelectArrmi = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  public yearSelectArrmi= ["2017", "2018", "2019", "2020", "2020", "2021",
+    "2022", "2023", "2024", "2025", "2026", "2027"];
   public month =this.dataService.getSelectedMonth();
   public year = this.dataService.getSelectedYear();
   @BlockUI() blockUI: NgBlockUI;
@@ -28,7 +31,7 @@ export class IncentiveComponent implements OnInit {
     pauseOnHover: true,
     clickToClose: true,
   }
-  constructor(private uploadService: UploadFileService,private dataService: DataService, private salaryService: SalaryService, protected notificationsService: NotificationsService) {
+  constructor(private uploadService: UploadFileService,private dataService: DataService, private salaryService: SalaryService ) {
 
   }
   ngOnInit() {
@@ -42,7 +45,7 @@ export class IncentiveComponent implements OnInit {
     this.loadIncentives(this.year, (this.dataService.monthSelectArr.indexOf(this.month) ));
   }
   loadIncentives(year, month: number) {
-    this.notificationsService.notifications.closed;
+    // this.notificationsService.notifications.closed;
     this.blockUI.start("Loading..");
     this.loading = true;
     this.salaryService.loadIncentivesForMonth(year, month)
@@ -124,11 +127,11 @@ xxx:any;
     }
   }
   private handleError(error: any, method: any) {
-    this.notificationsService.notifications.closed;
+    // this.notificationsService.notifications.closed;
     this.loading = false;
     console.error('An error occurred in IncentiveComponent at method ' + method, +" " + error);
     this.blockUI.stop();
-    this.notificationsService.addError('An error occurred in IncentiveComponent at method ' + method + " " + error);
+    // this.notificationsService.addError('An error occurred in IncentiveComponent at method ' + method + " " + error);
   }
 
 }

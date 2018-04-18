@@ -1,7 +1,7 @@
 import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { NotificationsService } from 'angular4-notify';
+// import { NotificationsService } from 'angular4-notify';
 
 @Component({
   templateUrl: 'viewleavesummary.component.html',
@@ -27,7 +27,7 @@ export class ViewleavesummaryComponent implements OnInit {
     pauseOnHover: true,
     clickToClose: true,
   }
-  constructor(private dataService: DataService, protected notificationsService: NotificationsService) { }
+  constructor(private dataService: DataService ) { }
   ngOnInit() {
     if (this.dataService.appDefined()) {
      this.objChanged();
@@ -111,11 +111,11 @@ export class ViewleavesummaryComponent implements OnInit {
     this.blockUI.start("Saving..");
     this.dataService.getPostData(this.dataService.serviceurl + 'updateUserAttandance', this.currentItem).subscribe(data => {
       if (data == true) {
-        this.notificationsService.addInfo('Changes Saved');
+        // this.notificationsService.addInfo('Changes Saved');
         this.loadEmployeesAttandance(this.dataService.monthSelectArr.indexOf(this.month)+1,parseInt(""+this.year));
         infoModal.hide();
       } else {
-        this.notificationsService.addWarning('Changes couldnt be saved');
+        // this.notificationsService.addWarning('Changes couldnt be saved');
       }
       setTimeout(() => {
         this.blockUI.stop();
@@ -128,7 +128,7 @@ export class ViewleavesummaryComponent implements OnInit {
   private handleError(error: any, method: any) {
     console.error('An error occurred in ViewleavesummaryComponent at method ' + method, +" " + error);
     this.blockUI.stop();
-    this.notificationsService.addError('An error occurred in ViewleavesummaryComponent at method ' + method + " " + error);
+    // this.notificationsService.addError('An error occurred in ViewleavesummaryComponent at method ' + method + " " + error);
   }
 
 

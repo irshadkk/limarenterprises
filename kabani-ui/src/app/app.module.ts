@@ -28,7 +28,7 @@ import { FullLayoutComponent } from './layouts/full-layout.component';
 import { SimpleLayoutComponent } from './layouts/simple-layout.component';
 import { LoginComponent } from './pages/login.component';
 import { BlockUIModule } from 'ng-block-ui'; 
-import {NotificationsModule, NotificationsService} from 'angular4-notify';
+// import {NotificationsModule, NotificationsService} from 'angular4-notify';
 
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -39,7 +39,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AppRoutingModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(), 
-    ChartsModule, HttpModule,HttpClientModule,BlockUIModule,NotificationsModule
+    ChartsModule, HttpModule,HttpClientModule,BlockUIModule
+    // ,NotificationsModule
   ],
   declarations: [
   LoginComponent,
@@ -54,7 +55,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
-  },DataService,UploadFileService,NotificationsService],
+  },DataService,UploadFileService
+  // ,NotificationsService
+],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

@@ -2,7 +2,7 @@ import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
 import { SalaryService } from '../viewsalary/salary.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { NotificationsService } from 'angular4-notify';
+// import { NotificationsService } from 'angular4-notify';
 
 @Component({
   selector: 'app-manage-overtime-wages',
@@ -15,6 +15,10 @@ export class ManageOvertimeWagesComponent implements OnInit {
   public wageList = [];
   public month = this.dataService.getSelectedMonth();
   public year = this.dataService.getSelectedYear();
+  public monthSelectArrov = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  public yearSelectArrov= ["2017", "2018", "2019", "2020", "2020", "2021",
+    "2022", "2023", "2024", "2025", "2026", "2027"];
   @BlockUI() blockUI: NgBlockUI;
 
   public notificationOptions = {
@@ -25,7 +29,8 @@ export class ManageOvertimeWagesComponent implements OnInit {
     pauseOnHover: true,
     clickToClose: true,
   }
-  constructor(private dataService: DataService, private salaryService: SalaryService, protected notificationsService: NotificationsService) {
+  constructor(private dataService: DataService, private salaryService: SalaryService
+  ) {
 
   }
   ngOnInit() {
@@ -39,7 +44,7 @@ export class ManageOvertimeWagesComponent implements OnInit {
     this.loadActiveOverTimeWages(this.year, (this.dataService.monthSelectArr.indexOf(this.month)));
   }
   loadActiveOverTimeWages(year, month: number) {
-    this.notificationsService.notifications.closed;
+    // this.notificationsService.notifications.closed;
     this.blockUI.start("Loading..");
     this.loading = true;
     this.salaryService.loadOverTimeWages(year, month)
@@ -119,11 +124,11 @@ export class ManageOvertimeWagesComponent implements OnInit {
     }
   }
   private handleError(error: any, method: any) {
-    this.notificationsService.notifications.closed;
+    // this.notificationsService.notifications.closed;
     this.loading = false;
     console.error('An error occurred in ManageLoan at method ' + method, +" " + error);
     this.blockUI.stop();
-    this.notificationsService.addError('An error occurred in ManageLoan at method ' + method + " " + error);
+    // this.notificationsService.addError('An error occurred in ManageLoan at method ' + method + " " + error);
   }
 
 

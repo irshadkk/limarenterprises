@@ -1,8 +1,7 @@
 import { Component,ViewContainerRef  } from '@angular/core';
 import { DataService } from '../data.service'; 
 import { ActivatedRoute, Router } from '@angular/router';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import {NotificationsService} from 'angular4-notify';
+import { BlockUI, NgBlockUI } from 'ng-block-ui'; 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import {ToastOptions} from 'ng2-toastr';
 
@@ -12,7 +11,7 @@ import {ToastOptions} from 'ng2-toastr';
 export class LoginComponent {
   
   @BlockUI() blockUI: NgBlockUI;
-  constructor(private dataService: DataService, private router: Router,protected notificationsService: NotificationsService,public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor(private dataService: DataService, private router: Router ,public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.name = "limar 1";
     this.password = "limar 1";
     this.toastr.setRootViewContainerRef(vcr);

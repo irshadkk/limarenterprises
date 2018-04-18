@@ -1,8 +1,7 @@
 import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../../data.service';
 import { SalaryService } from '../salary.service';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { NotificationsService } from 'angular4-notify';
+import { BlockUI, NgBlockUI } from 'ng-block-ui'; 
 
 @Component({
   selector: 'app-half-month',
@@ -14,6 +13,10 @@ export class HalfMonthComponent implements OnInit {
   public employeeSalArr;
   public employeeSalStatusArr;
   public currentItem = [];
+  public monthSelectArrh = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  public yearSelectArrh = ["2017", "2018", "2019", "2020", "2020", "2021",
+    "2022", "2023", "2024", "2025", "2026", "2027"];
   public month = this.dataService.getSelectedMonth();
   public year = this.dataService.getSelectedYear();
   @BlockUI() blockUI: NgBlockUI;
@@ -25,7 +28,7 @@ export class HalfMonthComponent implements OnInit {
     pauseOnHover: true,
     clickToClose: true,
   }
-  constructor(private dataService: DataService, private salaryService: SalaryService, protected notificationsService: NotificationsService) {
+  constructor(private dataService: DataService, private salaryService: SalaryService ) {
 
   }
   ngOnInit() {
@@ -78,7 +81,7 @@ export class HalfMonthComponent implements OnInit {
 
   salaryAlreadyGenerated: boolean = false;
   loadSalary(year, month: string) {
-    this.notificationsService.notifications.closed;
+    // this.notificationsService.notifications.closed;
     this.blockUI.start("Loading..");
     this.salaryAlreadyGenerated = false;
     this.loading = true;
@@ -89,7 +92,7 @@ export class HalfMonthComponent implements OnInit {
             .subscribe(data => {
               this.employeeSalArr = data;
               this.loading = false;
-              this.notificationsService.addInfo('Salary Generated for ' + year + " month " + month)
+              // this.notificationsService.addInfo('Salary Generated for ' + year + " month " + month)
               setTimeout(() => {
                 this.blockUI.stop();
               }, 1500);
@@ -105,7 +108,7 @@ export class HalfMonthComponent implements OnInit {
               this.employeeSalArr = data;
               this.loading = false;
 
-              this.notificationsService.addInfo('Retrieved Salary Generated for ' + year + " month " + month)
+              // this.notificationsService.addInfo('Retrieved Salary Generated for ' + year + " month " + month)
               setTimeout(() => {
                 this.blockUI.stop();
               }, 1500);
@@ -140,11 +143,11 @@ export class HalfMonthComponent implements OnInit {
     }*/
   private handleError(error: any, method: any) {
     this.loadAllStatus();
-    this.notificationsService.notifications.closed;
+    // this.notificationsService.notifications.closed;
     this.loading = false;
     console.error('An error occurred in SalaryComponent at method ' + method, +" " + error);
     this.blockUI.stop();
-    this.notificationsService.addError('An error occurred in SalaryComponent at method ' + method + " " + error);
+    // this.notificationsService.addError('An error occurred in SalaryComponent at method ' + method + " " + error);
   }
 
 

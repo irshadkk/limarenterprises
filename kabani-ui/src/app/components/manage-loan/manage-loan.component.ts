@@ -2,7 +2,7 @@ import { Component, TemplateRef, OnInit } from '@angular/core';
 import { DataService } from '../../data.service';
 import { SalaryService } from '../viewsalary/salary.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { NotificationsService } from 'angular4-notify';
+// import { NotificationsService } from 'angular4-notify';
 
 @Component({
   selector: 'app-manage-loan',
@@ -26,7 +26,12 @@ export class ManageLoanComponent implements OnInit {
     pauseOnHover: true,
     clickToClose: true,
   }
-  constructor(private dataService: DataService, private salaryService: SalaryService, protected notificationsService: NotificationsService) {
+  public monthSelectArrml = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  public yearSelectArrml = ["2017", "2018", "2019", "2020", "2020", "2021",
+    "2022", "2023", "2024", "2025", "2026", "2027"];
+  constructor(private dataService: DataService, private salaryService: SalaryService
+  ) {
 
   }
   ngOnInit() {
@@ -40,7 +45,7 @@ export class ManageLoanComponent implements OnInit {
     this.loadActiveLoans(this.year, (this.dataService.monthSelectArr.indexOf(this.month)));
   }
   loadActiveLoans(year, month: number) {
-    this.notificationsService.notifications.closed;
+    // this.notificationsService.notifications.closed;
     this.blockUI.start("Loading..");
     this.loading = true;
     this.salaryService.loadActiveLoans(year, month)
@@ -122,11 +127,11 @@ export class ManageLoanComponent implements OnInit {
     }
   }
   private handleError(error: any, method: any) {
-    this.notificationsService.notifications.closed;
+    // this.notificationsService.notifications.closed;
     this.loading = false;
     console.error('An error occurred in ManageLoan at method ' + method, +" " + error);
     this.blockUI.stop();
-    this.notificationsService.addError('An error occurred in ManageLoan at method ' + method + " " + error);
+    // this.notificationsService.addError('An error occurred in ManageLoan at method ' + method + " " + error);
   }
 
 }

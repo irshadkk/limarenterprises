@@ -1,7 +1,7 @@
 import { Component, TemplateRef, OnInit, ViewContainerRef, ViewChild } from '@angular/core';
 import { DataService } from '../../data.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { NotificationsService } from 'angular4-notify';
+// import { NotificationsService } from 'angular4-notify';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { ToastOptions } from 'ng2-toastr';
 import { DatePipe } from '@angular/common';
@@ -16,6 +16,8 @@ export class AddPresentComponent implements OnInit {
   public employeeAttendanceArr;
   public currentItem: any = [];
   public infoModal;
+   public searchText;
+   public currentItem_employeeCode;
   public statusArr = ["Absent", "Present", "1/2Present"]
   @BlockUI() blockUI: NgBlockUI;
   public notificationOptions = {
@@ -26,7 +28,7 @@ export class AddPresentComponent implements OnInit {
     pauseOnHover: true,
     clickToClose: true,
   }
-  constructor(private dataService: DataService, private datePipe: DatePipe, protected notificationsService: NotificationsService, public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor(private dataService: DataService, private datePipe: DatePipe,  public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
   }
   ngOnInit() {
@@ -66,10 +68,10 @@ export class AddPresentComponent implements OnInit {
     this.blockUI.start("Saving..");
     this.dataService.getPostData(this.dataService.serviceurl + 'manualattendance/addorupdate', this.currentItem).subscribe(data => {
       if (data == true) {
-        this.notificationsService.addInfo('Changes Saved');
+        // this.notificationsService.addInfo('Changes Saved');
         this.toastr.success(' Changes Saved', 'Success!', { duration: 1500, dismiss: 'auto' });
       } else {
-        this.notificationsService.addWarning('Changes couldnt be saved');
+        // this.notificationsService.addWarning('Changes couldnt be saved');
         this.toastr.error(' Changes Saved', 'Error!', { duration: 1500, dismiss: 'click' });
       }
       setTimeout(() => {
@@ -112,7 +114,7 @@ export class AddPresentComponent implements OnInit {
   private handleError(error: any, method: any) {
     console.error('An error occurred in ViewleavesummaryComponent at method ' + method, +" " + error);
     this.blockUI.stop();
-    this.notificationsService.addError('An error occurred in ViewleavesummaryComponent at method ' + method + " " + error);
+    // this.notificationsService.addError('An error occurred in ViewleavesummaryComponent at method ' + method + " " + error);
   }
 
 

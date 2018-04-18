@@ -4,7 +4,7 @@ import { UploadFileService } from '../upload-file.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { DataService } from '../../../data.service';
 
-import { NotificationsService } from 'angular4-notify';
+// import { NotificationsService } from 'angular4-notify';
 
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
@@ -24,7 +24,8 @@ export class ListUploadComponent implements OnInit {
 
   progressArr = [];
 
-  constructor(private uploadService: UploadFileService, private dataService: DataService, protected notificationsService: NotificationsService, public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor(private uploadService: UploadFileService, private dataService: DataService,  public toastr: ToastsManager, vcr: ViewContainerRef) {
+    // constructor(private uploadService: UploadFileService, private dataService: DataService, protected notificationsService: NotificationsService, public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
   }
 
@@ -41,7 +42,7 @@ export class ListUploadComponent implements OnInit {
   upload() {
 
     //let url='http://localhost:9000/demo/upload/'+this.dataService.getBranch();
-    this.notificationsService.notifications.closed;
+    // this.notificationsService.notifications.closed;
     let fileNum = 0;
 
     let url = this.dataService.serviceurl + 'upload/branch1';

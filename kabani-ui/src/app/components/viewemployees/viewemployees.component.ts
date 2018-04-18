@@ -2,7 +2,7 @@ import { Component, TemplateRef, OnInit, ViewContainerRef } from '@angular/core'
 import { DataService } from '../../data.service';
 import { DatePipe } from '@angular/common';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { NotificationsService } from 'angular4-notify';
+// import { NotificationsService } from 'angular4-notify';
 
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { ToastOptions } from 'ng2-toastr';
@@ -14,7 +14,47 @@ import { ToastOptions } from 'ng2-toastr';
 export class ViewEmployeesComponent implements OnInit {
   public employeeArr;
   public infoModal;
-  public currentItem = {};
+  public currentItem = {
+    employeeCode: '',
+    employeeBioDeviceCode: '',
+    employeeName: '',
+    branch: '',
+    designation: '',
+    department: '',
+    employeeAge: '',
+    employeeSex: '',
+    dateOfBirth: '',
+    nameOfGuardian: '',
+    designationCode: '',
+    mobileNumber: '',
+    dateOfJoining: '',
+    emailId: '',
+    bankName: '',
+    ifscCode: '',
+    bankAccountNumber: '',
+    hra: '',
+    da: '',
+    basic: '',
+    salary: '',
+    totalCasualAlloted: '',
+    casualLeavesTaken: '',
+    casualLeavesRemaining: '',
+    numberOfLeaveGranted: '',
+    overTimeWages: '',
+    cityCompensationAllowence :'', 
+    leaveWages: '',
+    nationalAndFestivalHolidayWages: '',
+    arrearPaid: '',
+    bonus: '',
+    maternityBenefit: '',
+    otherAllowances: '',
+    deductionOfFine: '',
+    deductionForLossAndDamages: '',
+    totalLineShort: '',
+    otherDeduction: '',
+    notElibibleForWelfareFund: '',
+    numberOfWeeklyOffGranted:''
+  };
   public currentSalaryItem = [];
   public currentLeaveItem = [];
   public statusArr = ["Absent", "Present", "1/2Present"];
@@ -23,7 +63,8 @@ export class ViewEmployeesComponent implements OnInit {
   searchValue: any = this.searchOption + "::" + this.searchText;
   @BlockUI() blockUI: NgBlockUI;
 
-  constructor(private dataService: DataService, private datePipe: DatePipe, protected notificationsService: NotificationsService, public toastr: ToastsManager, vcr: ViewContainerRef) {
+  // constructor(private dataService: DataService, private datePipe: DatePipe, protected notificationsService: NotificationsService, public toastr: ToastsManager, vcr: ViewContainerRef) {
+    constructor(private dataService: DataService, private datePipe: DatePipe, public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
 
 
@@ -70,50 +111,46 @@ export class ViewEmployeesComponent implements OnInit {
     }
     else {
       this.currentItem = {
-        employeeCode: '',
-        employeeBioDeviceCode: '',
-        employeeName: '',
-        branch: '',
-        designation: '',
-        department: '',
-        employeeAge: '',
-        employeeSex: '',
-        dateOfBirth: '',
-        nameOfGuardian: '',
-        designationCode: '',
-        dateOfJoining: '',
-        mobileNumber: '',
-        emailId: '',
-        bankName: '',
-        ifscCode: '',
-        bankAccountNumber: '',
-        hra: '',
-        da: '',
-        basic: '',
-        salary: '',
-        totalCasualAlloted: '',
-        casualLeavesTaken: '',
-        casualLeavesRemaining: '',
-        cityCompensationAllowence: '',
-        numberOfWeeklyOffGranted: '',
-        numberOfLeaveGranted: '',
-        overTimeWages: '',
-        leaveWages: '',
-        nationalAndFestivalHolidayWages: '',
-        arrearPaid: '',
-        bonus: '',
-        maternityBenefit: '',
-        otherAllowances: '',
-        totalStaffAdvance: '',
-        totalSalaryAdvance: '',
-        advanceTotalAmount: '',
-        deductionOfFine: '',
-        deductionForLossAndDamages: '',
-        totalLineShort: '',
-        otherDeduction: '',
-        totalDeduction: ''
-
-      };
+    employeeCode: '',
+    employeeBioDeviceCode: '',
+    employeeName: '',
+    branch: '',
+    designation: '',
+    department: '',
+    employeeAge: '',
+    employeeSex: '',
+    dateOfBirth: '',
+    nameOfGuardian: '',
+    designationCode: '',
+    mobileNumber: '',
+    dateOfJoining: '',
+    emailId: '',
+    bankName: '',
+    ifscCode: '',
+    bankAccountNumber: '',
+    hra: '',
+    da: '',
+    basic: '',
+    salary: '',
+    totalCasualAlloted: '',
+    casualLeavesTaken: '',
+    casualLeavesRemaining: '',
+    numberOfLeaveGranted: '',
+    overTimeWages: '',
+    cityCompensationAllowence :'', 
+    leaveWages: '',
+    nationalAndFestivalHolidayWages: '',
+    arrearPaid: '',
+    bonus: '',
+    maternityBenefit: '',
+    otherAllowances: '',
+    deductionOfFine: '',
+    deductionForLossAndDamages: '',
+    totalLineShort: '',
+    otherDeduction: '',
+    notElibibleForWelfareFund: '',
+    numberOfWeeklyOffGranted:''
+  };
     }
     infoModal.show(); setTimeout(() => {
       this.blockUI.stop();

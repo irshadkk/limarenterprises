@@ -8,12 +8,12 @@
               <tr style="width:2%">
                 <th style="width:2%"><select [(ngModel)]="year">
              
-              <option *ngFor="let year of dataService.yearSelectArr" [value]="year">{{year}}
+              <option *ngFor="let year of yearSelectArrv" [value]="year">{{year}}
               </option>
             </select></th>
                 <th style="width:15%"> 
                   <select [(ngModel)]="month" (change)="objChanged()">
-              <option *ngFor="let month of dataService.monthSelectArr" [value]="month">{{month}}
+              <option *ngFor="let month of  monthSelectArrv" [value]="month">{{month}}
               </option>
             </select>
                 </th>

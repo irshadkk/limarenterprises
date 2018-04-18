@@ -1,12 +1,12 @@
 <div class="animated fadeIn">
    <select [(ngModel)]="year">
             <!-- (change)="objChanged()" -->
-            <option *ngFor="let year of dataService.yearSelectArr" [value]="year">{{year}}
+            <option *ngFor="let year of  yearSelectArrah" [value]="year">{{year}}
             </option>
           </select>
 
           <select [(ngModel)]="month" (change)="objChanged()">
-            <option *ngFor="let month of dataService.monthSelectArr" [value]="month">{{month}}
+            <option *ngFor="let month of  monthSelectArrah" [value]="month">{{month}}
             </option>
           </select>
 

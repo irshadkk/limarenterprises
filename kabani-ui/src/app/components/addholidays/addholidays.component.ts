@@ -7,8 +7,12 @@ import { DatePipe } from '@angular/common';
   templateUrl: 'addholidays.component.html'
 })
 export class AddholidaysComponent implements OnInit {
-  public date: ''
-  public comment: ''
+  public date: '';
+  public comment: '';
+  public monthSelectArrah = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  public yearSelectArrah = ["2017", "2018", "2019", "2020", "2020", "2021",
+    "2022", "2023", "2024", "2025", "2026", "2027"];
   public holidayCurrentObj = { typeOfHoliday: '', nameOfHoliday: '', descOfHoliday: '', dateOfHoliday: '' }
   public holidayArr = [];
   public month =this.dataService.getSelectedMonth();

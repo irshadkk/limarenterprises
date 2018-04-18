@@ -19,5 +19,6 @@ public class KabaniApplication /*extends SpringBootServletInitializer*/ {
 	public static void main(String[] args) {
 		logger.info("--***---KABANI APP STARTING UP--***---");
 		SpringApplication.run(KabaniApplication.class, args);
+		logger.info("--***---KABANI APP STARTED--***---");
 	}
 }
