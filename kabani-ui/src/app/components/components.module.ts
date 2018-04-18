@@ -50,6 +50,7 @@ import { ManageAdvanceComponent } from './manage-advance/manage-advance.componen
 import { SalaryService } from './viewsalary/salary.service';
 import { HalfMonthComponent } from './viewsalary/half-month/half-month.component';
 import { IncentiveComponent } from './incentive/incentive.component';
+import { ManageOvertimeWagesComponent } from './manage-overtime-wages/manage-overtime-wages.component';
 
 @NgModule({
   imports: [
@@ -68,7 +69,8 @@ import { IncentiveComponent } from './incentive/incentive.component';
     ManageLoanComponent,
     ManageAdvanceComponent,
     HalfMonthComponent,
-    IncentiveComponent
+    IncentiveComponent,
+    ManageOvertimeWagesComponent
   ],
   providers: [UploadFileService, DatePipe, SalaryService]
 })

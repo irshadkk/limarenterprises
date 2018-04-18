@@ -13,8 +13,8 @@ export class ManageLoanComponent implements OnInit {
 
   loading: boolean = false;
   public loanList = [];
-  
-  public month =this.dataService.getSelectedMonth();
+
+  public month = this.dataService.getSelectedMonth();
   public year = this.dataService.getSelectedYear();
   @BlockUI() blockUI: NgBlockUI;
 
@@ -37,7 +37,7 @@ export class ManageLoanComponent implements OnInit {
   }
   objChanged() {
     this.loanList = [];
-    this.loadActiveLoans(this.year, (this.dataService.monthSelectArr.indexOf(this.month) ));
+    this.loadActiveLoans(this.year, (this.dataService.monthSelectArr.indexOf(this.month)));
   }
   loadActiveLoans(year, month: number) {
     this.notificationsService.notifications.closed;
@@ -69,8 +69,22 @@ export class ManageLoanComponent implements OnInit {
   }
   onEditClick(infoModal, item) {
     this.loan = item;
-    infoModal.show(); 
+    infoModal.show();
   }
+
+  onDeleteClick(item) {
+    this.loan = item;
+    this.blockUI.start("Deleting..");
+    this.dataService.getPostData(this.dataService.serviceurl + 'salary/deleteLoan', this.loan).subscribe(data => {
+      if (data) {
+        this.objChanged();
+      }
+      setTimeout(() => {
+        this.blockUI.stop();
+      }, 1500);
+    });
+  }
+
   employeeArr = [];
   loadEmployees() {
     this.blockUI.start("Loading..");
@@ -88,21 +102,22 @@ export class ManageLoanComponent implements OnInit {
     for (let emp of this.employeeArr) {
       if (emp.employeeBioDeviceCode == event.target.value) {
         this.loan.employeeName = emp.employeeName;
-        this.loan.employeeCode = emp.employeeBioDeviceCode;      }
+        this.loan.employeeCode = emp.employeeBioDeviceCode;
+      }
     }
   }
-  updateChanges(){
-    if(this.loan.status=='closed'){
+  updateChanges() {
+    if (this.loan.status == 'closed') {
       this.dataService.getPostData(this.dataService.serviceurl + 'salary/closeLoan', this.loan).subscribe(data => {
         this.loadActiveLoans(this.year, (this.dataService.monthSelectArr.indexOf(this.month)));
       });
     }
   }
-  btnDisabled(){
-    if(this.loan.employeeCode=="" || this.loan.loanAmount=="" || this.loan.loanTenure=="" || this.loan.availDate== ""){
+  btnDisabled() {
+    if (this.loan.employeeCode == "" || this.loan.loanAmount == "" || this.loan.loanTenure == "" || this.loan.availDate == "") {
       return true;
     }
-    else{
+    else {
       return false;
     }
   }
