@@ -12,7 +12,7 @@ import com.kabani.hr.entity.EmployeeLoanorAdvanceDeduction;
 // CRUD refers Create, Read, Update, Delete
 
 public interface EmployeeLoanorAdvanceDeductionRepository extends CrudRepository<EmployeeLoanorAdvanceDeduction, Long> {
-	@Query("SELECT ss FROM EmployeeLoanorAdvanceDeduction ss WHERE ss.type='loan' and ss.status='unpaid' and  YEAR(availDate) = :year AND MONTH(availDate) = :month")
+	@Query("SELECT ss FROM EmployeeLoanorAdvanceDeduction ss WHERE ss.type='loan'  and  YEAR(availDate) = :year AND MONTH(availDate) = :month")
 	List<EmployeeLoanorAdvanceDeduction> getActiveLoanDeductionForMonth(@Param("month") Integer month,
 			@Param("year") Integer year);
 
@@ -24,7 +24,7 @@ public interface EmployeeLoanorAdvanceDeductionRepository extends CrudRepository
 	@Query("SELECT ss FROM EmployeeLoanorAdvanceDeduction ss  WHERE ss.loanId=:loanId" )
 	List<EmployeeLoanorAdvanceDeduction> getAllInstallmentForLoan(@Param("loanId") Integer loanId);
 	
-	@Query("SELECT ss FROM EmployeeLoanorAdvanceDeduction ss WHERE ss.type='advance' and ss.status='unpaid' and  YEAR(availDate) = :year AND MONTH(availDate) = :month")
+	@Query("SELECT ss FROM EmployeeLoanorAdvanceDeduction ss WHERE ss.type='advance' and  YEAR(availDate) = :year AND MONTH(availDate) = :month")
 	List<EmployeeLoanorAdvanceDeduction> getActiveAdvancesForMonth(@Param("month") Integer month,
 			@Param("year") Integer year);
 	

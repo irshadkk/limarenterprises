@@ -22,6 +22,7 @@ import { ManageLoanComponent } from './manage-loan/manage-loan.component';
 import { AddIncomeTaxComponent } from './addincometax/addincometax.component';
 import { ManageAdvanceComponent } from './manage-advance/manage-advance.component';
 import { IncentiveComponent } from './incentive/incentive.component';
+import { ManageOvertimeWagesComponent } from './manage-overtime-wages/manage-overtime-wages.component'
 
 
 const routes: Routes = [
@@ -134,6 +135,13 @@ const routes: Routes = [
         component: IncentiveComponent,
         data: {
           title: 'Manage Salary Advances'
+        }
+      },
+      {
+        path: 'manageOvertimeWages',
+        component: ManageOvertimeWagesComponent,
+        data: {
+          title: 'Manage Overtime Wages'
         }
       },
       {

@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -29,18 +28,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kabani.hr.entity.EmployeeDetailsMaster;
 import com.kabani.hr.entity.EmployeeIncentive;
 import com.kabani.hr.entity.EmployeeLoan;
 import com.kabani.hr.entity.EmployeeLoanorAdvanceDeduction;
+import com.kabani.hr.entity.EmployeeOvertimeWages;
 import com.kabani.hr.entity.SalaryStatus;
-import com.kabani.hr.entity.UserAttendanceDetails;
 import com.kabani.hr.entity.Wps;
 import com.kabani.hr.helper.ExcelOutputServiceImpl;
 import com.kabani.hr.helper.SalaryCalculator;
 import com.kabani.hr.repository.EmployeeIncentiveRepository;
 import com.kabani.hr.repository.EmployeeLoanRepository;
 import com.kabani.hr.repository.EmployeeLoanorAdvanceDeductionRepository;
+import com.kabani.hr.repository.EmployeeOvertimeWagesRepository;
 import com.kabani.hr.repository.SalaryStatusRepository;
 import com.kabani.hr.repository.UserAttendanceDetailsRepository;
 import com.kabani.hr.repository.WpsRepository;
@@ -69,6 +68,9 @@ public class SalaryController {
 	private EmployeeLoanorAdvanceDeductionRepository employeeLoanorAdvanceDeductionRepository;
 	@Autowired
 	private EmployeeIncentiveRepository employeeIncentiveRepository;
+	
+	@Autowired
+	private EmployeeOvertimeWagesRepository employeeOvertimeWagesRepository;
 
 	@RequestMapping(value = "/salaryGenerated", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody int getSalaryStatus(@RequestParam String year, @RequestParam String month,
@@ -181,7 +183,6 @@ public class SalaryController {
 				for (EmployeeLoanorAdvanceDeduction temp : activeEmi) {
 					loanIdList.add(temp.getLoanId());
 				}
-				System.out.println("xxxxxxxxx-->>"+loanIdList);
 				returnValue = employeeLoanRepository.getActiveLoanForMonth(loanIdList);
 			}
 		} catch (Exception e) {
@@ -230,6 +231,23 @@ public class SalaryController {
 		return returnValue;
 	}
 
+	@RequestMapping(value = "/deleteLoan", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody boolean deleteLoan(@RequestBody EmployeeLoan loan) throws Exception {
+		boolean returnValue = false;
+		try {
+			employeeLoanRepository.delete(loan);
+			for (EmployeeLoanorAdvanceDeduction installment : employeeLoanorAdvanceDeductionRepository
+					.getAllInstallmentForLoan(loan.getId())) {
+				employeeLoanorAdvanceDeductionRepository.delete(installment);
+			}
+			returnValue=true; 
+		} catch (Exception e) {
+			logger.error("****Exception in deleteLoan() " + e.getMessage());
+			throw e;
+		}
+		return returnValue;
+	}
+
 	@RequestMapping(value = "/getActiveAdvances", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody List getActiveAdvances(@RequestParam String year, @RequestParam String month)
 			throws Exception {
@@ -244,13 +262,12 @@ public class SalaryController {
 		}
 
 	}
+
 	@RequestMapping(value = "/getIncentives", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List getIncentives(@RequestParam String year, @RequestParam String month)
-			throws Exception {
+	public @ResponseBody List getIncentives(@RequestParam String year, @RequestParam String month) throws Exception {
 		List returnValue = new ArrayList<>();
 		try {
-			return employeeIncentiveRepository.getIncentiveForMonth(Integer.parseInt(month),
-					Integer.parseInt(year));
+			return employeeIncentiveRepository.getIncentiveForMonth(Integer.parseInt(month), Integer.parseInt(year));
 
 		} catch (Exception e) {
 			logger.error("****Exception in getIncentives() " + e.getMessage());
@@ -258,15 +275,54 @@ public class SalaryController {
 		}
 
 	}
-	
+
 	@RequestMapping(value = "/addNewIncentive", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody EmployeeIncentive addNewIncentive(@RequestBody EmployeeIncentive incentive) throws Exception {
 		EmployeeIncentive returnValue = null;
 		try {
 			returnValue = employeeIncentiveRepository.save(incentive);
-			
+
 		} catch (Exception e) {
 			logger.error("****Exception in addNewLoan() " + e.getMessage());
+			throw e;
+		}
+		return returnValue;
+	}
+	
+	@RequestMapping(value = "/getOvertimeWages", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List getOvertimeWages(@RequestParam String year, @RequestParam String month) throws Exception {
+		try {
+			return employeeOvertimeWagesRepository.getOvertimeWagesForMonth(Integer.parseInt(month), Integer.parseInt(year));
+
+		} catch (Exception e) {
+			logger.error("****Exception in getOvertimeWages() " + e.getMessage());
+			throw e;
+		}
+
+	}
+
+	@RequestMapping(value = "/addOvertimeWages", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody EmployeeOvertimeWages addNewOverTimeWage(@RequestBody EmployeeOvertimeWages wages) throws Exception {
+		EmployeeOvertimeWages returnValue = null;
+		try {
+			returnValue = employeeOvertimeWagesRepository.save(wages);
+
+		} catch (Exception e) {
+			logger.error("****Exception in addNewOverTimeWage() " + e.getMessage());
+			throw e;
+		}
+		return returnValue;
+	}
+	
+	@RequestMapping(value = "/deleteOvertimeWages", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody boolean deleteOvertimeWages(@RequestBody EmployeeOvertimeWages wage) throws Exception {
+		boolean returnValue = false;
+		try {
+			employeeOvertimeWagesRepository.delete(wage);
+			
+			returnValue=true; 
+		} catch (Exception e) {
+			logger.error("****Exception in deleteOvertimeWages() " + e.getMessage());
 			throw e;
 		}
 		return returnValue;
@@ -284,6 +340,21 @@ public class SalaryController {
 		}
 		return returnValue;
 	}
+	
+	@RequestMapping(value = "/deleteAdvance", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody boolean deleteAdvance(@RequestBody EmployeeLoanorAdvanceDeduction wage) throws Exception {
+		boolean returnValue = false;
+		try {
+			employeeLoanorAdvanceDeductionRepository.delete(wage);
+			
+			returnValue=true; 
+		} catch (Exception e) {
+			logger.error("****Exception in employeeLoanorAdvanceDeductionRepository() " + e.getMessage());
+			throw e;
+		}
+		return returnValue;
+	}
+
 	@PostMapping(path = "/addNewIncentiveBulk")
 	public @ResponseBody void handleFileUploadIncentives(@RequestParam("file") MultipartFile file) throws Exception {
 		InputStream is = null;
@@ -300,35 +371,34 @@ public class SalaryController {
 				ArrayList<EmployeeIncentive> employeeIncentiveArrList = new ArrayList();
 				while (((employeeIncentiveDetailsStringFromFile = bfReader.readLine()) != null)
 						&& (employeeDetailsArrFromFile = employeeIncentiveDetailsStringFromFile.split(",")) != null) {
-					EmployeeIncentive  employeeIncentive= new EmployeeIncentive();
+					EmployeeIncentive employeeIncentive = new EmployeeIncentive();
 					if ((null != employeeDetailsArrFromFile[1]) && ("" != employeeDetailsArrFromFile[1])) {
 						employeeIncentive.setEmployeeName(employeeDetailsArrFromFile[1]);
-						
+
 					} else {
 						employeeIncentive.setEmployeeName("");
 					}
-					
-					
+
 					if ((null != employeeDetailsArrFromFile[0]) && ("" != employeeDetailsArrFromFile[0])) {
 						employeeIncentive.setEmployeeCode(employeeDetailsArrFromFile[0]);
 					} else {
 						employeeIncentive.setEmployeeCode("");
 					}
-					
+
 					if ((null != employeeDetailsArrFromFile[2]) && ("" != employeeDetailsArrFromFile[2])) {
 						employeeIncentive.setAmount(Float.parseFloat((parseInput(employeeDetailsArrFromFile[2]))));
 
 					} else {
 						break;
-					}	
-					employeeIncentive.setDate(new Date());						
+					}
+					employeeIncentive.setDate(new Date());
 					employeeIncentiveArrList.add(employeeIncentive);
 
 				}
 				employeeIncentiveRepository.save(employeeIncentiveArrList);
 
 			} catch (Exception e) {
-				logger.error("****Exception in handleFileUploadIncentives()  "+e.getMessage());
+				logger.error("****Exception in handleFileUploadIncentives()  " + e.getMessage());
 				throw e;
 			} finally {
 				try {
@@ -340,7 +410,7 @@ public class SalaryController {
 			}
 		}
 	}
-	
+
 	public String parseInput(String inputString) {
 		String in = inputString.replaceAll("\"", "");
 		return in.replaceAll(",", "");

@@ -5,15 +5,15 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { NotificationsService } from 'angular4-notify';
 
 @Component({
-  selector: 'app-manage-advance',
-  templateUrl: './manage-advance.component.html',
-  styleUrls: ['./manage-advance.component.scss']
+  selector: 'app-manage-overtime-wages',
+  templateUrl: './manage-overtime-wages.component.html'
 })
-export class ManageAdvanceComponent implements OnInit {
+
+export class ManageOvertimeWagesComponent implements OnInit {
 
   loading: boolean = false;
-  public advanceList = [];
-  public month =this.dataService.getSelectedMonth();
+  public wageList = [];
+  public month = this.dataService.getSelectedMonth();
   public year = this.dataService.getSelectedYear();
   @BlockUI() blockUI: NgBlockUI;
 
@@ -35,28 +35,45 @@ export class ManageAdvanceComponent implements OnInit {
     }
   }
   objChanged() {
-    this.advanceList = [];
-    this.loadActiveAdvances(this.year, (this.dataService.monthSelectArr.indexOf(this.month)));
+    this.wageList = [];
+    this.loadActiveOverTimeWages(this.year, (this.dataService.monthSelectArr.indexOf(this.month)));
   }
-  loadActiveAdvances(year, month: number) {
+  loadActiveOverTimeWages(year, month: number) {
     this.notificationsService.notifications.closed;
     this.blockUI.start("Loading..");
     this.loading = true;
-    this.salaryService.loadActiveAdvances(year, month)
+    this.salaryService.loadOverTimeWages(year, month)
       .subscribe(data => {
-        this.advanceList = data;
+        this.wageList = data;
         this.loading = false;
         setTimeout(() => {
           this.blockUI.stop();
         }, 1500);
       },
-        error => this.handleError(error, "loadActiveAdvances()")
+        error => this.handleError(error, "loadActiveOverTimeWages()")
       );
   }
+  wage = { "id": "", "employeeCode": "", "employeeName": "", "wage": "", "availDate": "" }
+  addNewWage(infoModal: any, isLoan: boolean) {
+    this.wage = { "id": "", "employeeCode": "", "employeeName": "", "wage": "", "availDate": "" }
+    infoModal.show()
+  }
+
+  saveChanges(infoModal: any) {
+    this.dataService.getPostData(this.dataService.serviceurl + 'salary/addOvertimeWages', this.wage).subscribe(data => {
+      this.loadActiveOverTimeWages(this.year, (this.dataService.monthSelectArr.indexOf(this.month)));
+      infoModal.hide();
+    });
+
+  }
+  onEditClick(infoModal, item) {
+    this.wage = item;
+    infoModal.show()
+  }
   onDeleteClick(item) {
-    this.loan = item;
+    this.wage = item;
     this.blockUI.start("Deleting..");
-    this.dataService.getPostData(this.dataService.serviceurl + 'salary/deleteAdvance', this.loan).subscribe(data => {
+    this.dataService.getPostData(this.dataService.serviceurl + 'salary/deleteOvertimeWages', this.wage).subscribe(data => {
       if (data) {
         this.objChanged();
       }
@@ -64,30 +81,6 @@ export class ManageAdvanceComponent implements OnInit {
         this.blockUI.stop();
       }, 1500);
     });
-  }
-  loan = { "id": "", "employeeCode": "", "employeeName": "", "type": "advance", "amount": "", "availDate": "", "status": "unpaid" }
-  addNewLoan(infoModal: any, isLoan: boolean) {
-    if(isLoan){
-      alert('This is a temp method to add loan intallment to system.')
-    }
-    this.loan = { "id": "", "employeeCode": "", "employeeName": "", "type": "advance", "amount": "", "availDate": "", "status": "unpaid" };
-    if (isLoan) {
-      this.loan.type = "loan";
-    }
-    infoModal.show();
-  }
-
-  saveChanges(infoModal: any) {
-    this.dataService.getPostData(this.dataService.serviceurl + 'salary/addNewAdvance', this.loan).subscribe(data => {
-      this.loadActiveAdvances(this.year, (this.dataService.monthSelectArr.indexOf(this.month)));
-      infoModal.hide();
-    });
-
-  }
-  onEditClick(infoModal, item) {
-    this.loan = item;
-    infoModal.show()
-
   }
   employeeArr = [];
   loadEmployees() {
@@ -105,23 +98,23 @@ export class ManageAdvanceComponent implements OnInit {
   onChange(event) {
     for (let emp of this.employeeArr) {
       if (emp.employeeBioDeviceCode == event.target.value) {
-        this.loan.employeeName = emp.employeeName;
-        this.loan.employeeCode = emp.employeeBioDeviceCode;
+        this.wage.employeeName = emp.employeeName;
+        this.wage.employeeCode = emp.employeeBioDeviceCode;
       }
     }
   }
   updateChanges() {
-    if (this.loan.status == 'closed') {
-      this.dataService.getPostData(this.dataService.serviceurl + 'salary/closeLoan', this.loan).subscribe(data => {
-        this.loadActiveAdvances(this.year, (this.dataService.monthSelectArr.indexOf(this.month)));
-      });
-    }
+    this.dataService.getPostData(this.dataService.serviceurl + 'salary/addOvertimeWages', this.wage).subscribe(data => {
+      this.loadActiveOverTimeWages(this.year, (this.dataService.monthSelectArr.indexOf(this.month)));
+    });
   }
-  btnDisabled(){
-    if(this.loan.employeeCode=="" || this.loan.amount=="" || this.loan.availDate== ""){
+
+
+  btnDisabled() {
+    if (this.wage.employeeCode == "" || this.wage.wage == "" || this.wage.availDate == "") {
       return true;
     }
-    else{
+    else {
       return false;
     }
   }
@@ -136,6 +129,7 @@ export class ManageAdvanceComponent implements OnInit {
 
 
 }
+
 
 
 

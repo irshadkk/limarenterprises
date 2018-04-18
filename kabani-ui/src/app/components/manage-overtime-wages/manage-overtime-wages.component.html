@@ -23,8 +23,7 @@
 
             <button (click)="objChanged()">Submit</button>
 
-            <button style="float:right;" (click)="addNewLoan(infoModal,false)">New Advance</button>
-            <button style="float:right;" (click)="addNewLoan(infoModal,true)">New LoanEMi</button>
+            <button style="float:right;" (click)="addNewWage(infoModal,false)">Add Overtime Wage</button>
 
             <table class="table table-bordered table-striped table-sm">
               <tr>
@@ -33,16 +32,14 @@
                 <th>EName</th>
                 <th>Avail Date</th>
                 <th>Amount</th>
-                <th>Status</th>
                 <th>Action</th>
               </tr>
-              <tr *ngFor="let item of advanceList ; let trackBy=index">
+              <tr *ngFor="let item of wageList ; let trackBy=index">
                 <td>{{trackBy+1}}</td>
                 <td>{{item.employeeCode}}</td>
                 <td>{{item.employeeName}}</td>
                 <td>{{item.availDate| date :'MM/dd/yyyy'}}</td>
-                <td>{{item.amount}}</td>
-                <td>{{item.status}}</td>
+                <td>{{item.wage}}</td>
                 <td>
                   <button type="button" class="btn btn-info" data-toggle="modal" (click)="onEditClick(infoModal,item)">Edit</button>
                   <button type="button" class="btn btn-secondary" data-toggle="modal" (click)="onDeleteClick(item)">Delete</button>
@@ -84,40 +81,32 @@
             <tr>
               <td>Employee</td>
               <td>
-                <input list="employees" [readonly]="loan.id!=''" [(ngModel)]="loan.employeeName" [ngModelOptions]="{standalone: true}" (change)="onChange($event)"
-                  [disabled]="loan.id!=''">
+                <input list="employees" [readonly]="wage.id!=''" [(ngModel)]="wage.employeeName" [ngModelOptions]="{standalone: true}" (change)="onChange($event)"
+                  [disabled]="wage.id!=''">
                 <datalist id="employees">
                   <ng-container *ngFor="let x of employeeArr">
-                    <option *ngIf="x.employeeCode==loan.employeeBioDeviceCode" selected [value]="x.employeeBioDeviceCode ">{{x.employeeName}}</option>
-                    <option *ngIf="x.employeeCode!=loan.employeeBioDeviceCode" [value]="x.employeeBioDeviceCode">{{x.employeeName}}</option>
+                    <option *ngIf="x.employeeCode==wage.employeeBioDeviceCode" selected [value]="x.employeeBioDeviceCode ">{{x.employeeName}}</option>
+                    <option *ngIf="x.employeeCode!=wage.employeeBioDeviceCode" [value]="x.employeeBioDeviceCode">{{x.employeeName}}</option>
                   </ng-container>
                 </datalist>
               </td>
             </tr>
 
             <tr>
-              <td>Advance Amount</td>
+              <td>Overtime Wage</td>
               <td>
-                <input type="number" [(ngModel)]="loan.amount" [readonly]="loan.id!=''">
+                <input type="number" [(ngModel)]="wage.wage">
                 <span style="color:red">* number</span>
               </td>
             </tr>
             <tr>
               <td>Avail Date</td>
               <td>
-                <input type='date' [(ngModel)]="loan.availDate" *ngIf="loan.id==''">
-                <input type='text' readonly [value]="loan.availDate|date:'MM/dd/yyyy'" *ngIf="loan.id!=''">
+                <input type='date' [(ngModel)]="wage.availDate">
+                <input type='text' readonly [value]="wage.availDate|date:'MM/dd/yyyy'" *ngIf="wage.id!=''">
               </td>
             </tr>
-            <tr *ngIf="loan.id!=''">
-              <td>Status</td>
-              <td>
-                <select [(ngModel)]="loan.status" [ngModelOptions]="{standalone: true}">
-                  <option value="unpaid">UnPaid</option>
-                  <option value="paid">Paid</option>
-                </select>
-              </td>
-            </tr>
+           
 
           </table>
 

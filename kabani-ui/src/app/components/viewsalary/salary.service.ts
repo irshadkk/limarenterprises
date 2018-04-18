@@ -67,6 +67,12 @@ export class SalaryService {
       .map(response => { return response.json(); })
       .catch(error => { return this.handleError(error, 'loadActiveAdvances') })
   }
+  loadOverTimeWages(year: number, month: number): Observable<[any]> {
+    this.headers = this.createHeader();
+    return this.http.get(this.dataService.serviceurl + `salary/getOvertimeWages?year=${year}&month=${month + 1}`, { headers: this.headers })
+      .map(response => { return response.json(); })
+      .catch(error => { return this.handleError(error, 'loadOverTimeWages') })
+  }
   loadIncentivesForMonth(year: number, month: number): Observable<[any]> {
     this.headers = this.createHeader();
     return this.http.get(this.dataService.serviceurl + `salary/getIncentives?year=${year}&month=${month + 1}`, { headers: this.headers })
