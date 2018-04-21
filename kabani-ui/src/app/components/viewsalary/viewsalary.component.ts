@@ -56,7 +56,7 @@ export class ViewSalaryComponent implements OnInit {
     this.blockUI.start("loading..");
     this.dataService.getData(this.dataService.serviceurl + 'salary/salaryStatusResetAll').subscribe(data => {
       this.loadAllStatus()
-      this.blockUI.stop()
+      
     },
       (error => { this.handleError(error, "saveChanges()"); }));
 

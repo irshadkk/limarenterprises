@@ -226,16 +226,8 @@ public class SalaryCalculator {
 						wpsOfOneEmployee.setTotalIncomeTax(totalIncomeTax * 12);
 						wpsOfOneEmployee.setTaxDeductedAtSource(totalIncomeTax);
 
-						// finding professional tax
-						if (employeeDetailsMasterObj.getEmployeeCode().equals("LM/HO/042")
-								|| employeeDetailsMasterObj.getEmployeeCode().equals("LM/HO/052")
-								|| employeeDetailsMasterObj.getEmployeeCode().equals("LM/HO/057")
-								|| employeeDetailsMasterObj.getEmployeeCode().equals("LM/HO/058")
-								|| employeeDetailsMasterObj.getEmployeeCode().equals("LM/HO/062")
-								|| employeeDetailsMasterObj.getEmployeeCode().equals("LM/HO/063")
-								|| employeeDetailsMasterObj.getEmployeeCode().equals("LM/HO/064")
-								|| employeeDetailsMasterObj.getEmployeeCode().equals("LM/HO/065")
-								|| employeeDetailsMasterObj.getEmployeeCode().equals("LM/HO/068")) {
+						// finding professional tax after checking whether he is eligible for it or not
+						if (!employeeDetailsMasterObj.isNotElibibleForProfessionalTax()) {
 							totalProffessionalTax = getProfessionalTaxOfAnEmployee(SalaryProfessionaltaxSlabArr,
 									totalSalaryOffered);
 

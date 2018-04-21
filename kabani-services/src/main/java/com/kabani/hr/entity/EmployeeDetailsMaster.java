@@ -56,6 +56,7 @@ public class EmployeeDetailsMaster {
 	private float otherDeduction;
 	private float totalDeduction;
 	private boolean notElibibleForWelfareFund;
+	private boolean notElibibleForProfessionalTax;
 
 	public int getId() {
 		return id;
@@ -408,4 +409,13 @@ public class EmployeeDetailsMaster {
 	public void setNotElibibleForWelfareFund(boolean notElibibleForWelfareFund) {
 		this.notElibibleForWelfareFund = notElibibleForWelfareFund;
 	}
+
+	public boolean isNotElibibleForProfessionalTax() {
+		return notElibibleForProfessionalTax;
+	}
+
+	public void setNotElibibleForProfessionalTax(boolean notElibibleForProfessionalTax) {
+		this.notElibibleForProfessionalTax = notElibibleForProfessionalTax;
+	}
+	
 }

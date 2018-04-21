@@ -53,6 +53,7 @@ export class ViewEmployeesComponent implements OnInit {
     totalLineShort: '',
     otherDeduction: '',
     notElibibleForWelfareFund: '',
+    notElibibleForProfessionalTax: '',
     numberOfWeeklyOffGranted:''
   };
   public currentSalaryItem = [];
@@ -149,6 +150,7 @@ export class ViewEmployeesComponent implements OnInit {
     totalLineShort: '',
     otherDeduction: '',
     notElibibleForWelfareFund: '',
+    notElibibleForProfessionalTax:'',
     numberOfWeeklyOffGranted:''
   };
     }

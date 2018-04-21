@@ -11,13 +11,30 @@ import { DatePipe } from '@angular/common';
 })
 export class AddIncomeTaxComponent implements OnInit {
 
-
+  public monthSelectArrIT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  public yearSelectArrIT = ["2017", "2018", "2019", "2020", "2020", "2021",
+    "2022", "2023", "2024", "2025", "2026", "2027"];
+     public month = this.dataService.getSelectedMonth();
+  public year = this.dataService.getSelectedYear();
+  objChanged() {
+    this.employeeTaxArr = [];
+    this.loadIncomeTax(this.year, this.month);
+  }
   public employeeArr;
-  public employeeAttendanceArr;
-  public currentItem: any = [];
+  public employeeTaxArr;
+  public currentItem ={
+    employeeCode:'',
+    employeeName:'',
+    monthlySalry:0,
+    taxAmount:0,
+    taxForTheYear:'',
+    taxForTheMonth:'',
+    status:''
+   } ;
   public infoModal;
   public searchText;
-   public currentItem_employeeCode;
+  public currentItem_employeeCode;
   public statusArr = ["Absent", "Present", "1/2Present"]
   @BlockUI() blockUI: NgBlockUI;
   public notificationOptions = {
@@ -29,13 +46,13 @@ export class AddIncomeTaxComponent implements OnInit {
     clickToClose: true,
   }
   // constructor(private dataService: DataService, private datePipe: DatePipe, protected notificationsService: NotificationsService, public toastr: ToastsManager, vcr: ViewContainerRef) {
-    constructor(private dataService: DataService, private datePipe: DatePipe,  public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor(private dataService: DataService, private datePipe: DatePipe, public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.toastr.setRootViewContainerRef(vcr);
   }
   ngOnInit() {
     if (this.dataService.appDefined()) {
       this.loadEmployees();
-      this.loadExtraAddedAttendance();
+      this.loadIncomeTax(this.year, this.month);
     }
   }
 
@@ -52,10 +69,10 @@ export class AddIncomeTaxComponent implements OnInit {
     },
       (error => { this.handleError(error, "loadEmployees()"); }));
   }
-  loadExtraAddedAttendance() {
+  loadIncomeTax(year, month: string) {
     this.blockUI.start("Loading..");
-    this.dataService.getPostData(this.dataService.serviceurl + 'tax/income/all',null).subscribe(data => {
-      this.employeeAttendanceArr = data;
+    this.dataService.getData(this.dataService.serviceurl + 'tax/income/all/'+(this.monthSelectArrIT.indexOf(this.month)+1)+'/'+this.year).subscribe(data => {
+      this.employeeTaxArr = data;
       setTimeout(() => {
         this.blockUI.stop();
       }, 1500);
@@ -67,9 +84,10 @@ export class AddIncomeTaxComponent implements OnInit {
 
   saveChanges() {
     this.blockUI.start("Saving..");
-    this.dataService.getPostData(this.dataService.serviceurl + 'manualattendance/addorupdate', this.currentItem).subscribe(data => {
+    this.dataService.getPostData(this.dataService.serviceurl + 'tax/income/addorupdate', this.currentItem).subscribe(data => {
       if (data == true) {
         // this.notificationsService.addInfo('Changes Saved');
+         this.loadIncomeTax(this.year, this.month);
         this.toastr.success(' Changes Saved', 'Success!', { duration: 1500, dismiss: 'auto' });
       } else {
         // this.notificationsService.addWarning('Changes couldnt be saved');
@@ -85,7 +103,7 @@ export class AddIncomeTaxComponent implements OnInit {
   }
   onEditClick(infoModal, item) {
     this.blockUI.start("Loading..");
-     this.infoModal =infoModal;
+    this.infoModal = infoModal;
     this.currentItem = item;
     item.dayOfextraDay = this.datePipe.transform(item.dayOfextraDay, 'yyyy-MM-dd');
     item.dayOfOtherExtraDay = this.datePipe.transform(item.dayOfOtherExtraDay, 'yyyy-MM-dd');
@@ -94,14 +112,19 @@ export class AddIncomeTaxComponent implements OnInit {
     setTimeout(() => {
       this.blockUI.stop();
     }, 100);
-  }
-  changeinLeave() {
-    this.currentItem.casualLeavesRemaining = parseInt(this.currentItem.totalCasualAlloted) - parseInt(this.currentItem.casualLeavesTaken)
-  }
+  } 
 
   onAddClick(infoModal) {
-    this.currentItem = {};
-    this.infoModal =infoModal;
+    this.currentItem ={
+    employeeCode:'',
+    employeeName:'',
+    monthlySalry:0,
+    taxAmount:0,
+    taxForTheYear:'',
+    taxForTheMonth:'',
+    status:''
+   };
+    this.infoModal = infoModal;
 
     infoModal.show();
   }

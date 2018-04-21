@@ -437,6 +437,19 @@
                 </select>
               </td>
             </tr>
+            <tr>
+              <td>Professional Tax Member</td>
+              <td><ng-container *ngIf="currentItem.notElibibleForProfessionalTax">No</ng-container>
+                <ng-container *ngIf="!currentItem.notElibibleForProfessionalTax">Yes</ng-container>
+              </td>
+              <td>
+
+                <select [(ngModel)]="currentItem.notElibibleForProfessionalTax" (change)="changeSearchValue()">
+                  <option value="true">No</option>
+                  <option value="false">Yes</option>
+                </select>
+              </td>
+            </tr>
             <!-- <tr>
             <td>totalDeduction</td>
             <td>{{currentItem.totalDeduction}}</td>

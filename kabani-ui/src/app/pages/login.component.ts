@@ -24,13 +24,8 @@ export class LoginComponent {
     this.dataService.getUser(this.name, this.password).subscribe(data => {
       if (data) {
           this.toastr.success('You are successfully logged in !', 'Success!');
-        setTimeout(() => {
-          this.blockUI.stop();
           this.dataService.setBranch(this.name);
-          this.router.navigate(link);
-        }, 1000);
-
-
+           this.router.navigate(link);
       } else {
         //  this.notificationsService.addError('The user name or password is incorrect.');
         //  this.notificationsService.addWarning('Some warning message');

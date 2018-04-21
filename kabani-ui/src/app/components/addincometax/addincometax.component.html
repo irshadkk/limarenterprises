@@ -9,7 +9,18 @@
           <strong>Horizontal</strong> Form
         </div>
         <div class="card-body">
+           <select [(ngModel)]="year">
+              <!-- (change)="objChanged()" -->
+              <option *ngFor="let year of  yearSelectArrIT" [value]="year">{{year}}
+              </option>
+            </select>
 
+            <select [(ngModel)]="month" (change)="objChanged()">
+              <option *ngFor="let month of  monthSelectArrIT" [value]="month">{{month}}
+              </option>
+            </select>
+
+            <button (click)="objChanged()">Submit</button>
 
           <table class="table table-bordered table-striped table-sm">
             <tr>
@@ -32,11 +43,11 @@
               <th>taxAmount</th>
               <th>taxForTheYear</th>  
               <th>taxForTheMonth</th>
-              <th>status</th>
+              <!-- <th>status</th> -->
               <th>Action</th>
             </tr>
             
-            <tr *ngFor="let item of employeeAttendanceArr | filter : searchText; let i = index">
+            <tr *ngFor="let item of employeeTaxArr | filter : searchText; let i = index">
               <td>{{i+1}}</td>
               <td>{{item.employeeCode}}</td>
               <td>{{item.employeeName}}</td> 
@@ -44,7 +55,7 @@
               <td>{{item.taxAmount}}</td> 
               <td>{{item.taxForTheYear}}</td> 
               <td>{{item.taxForTheMonth}}</td> 
-              <td>{{item.status }}</td>  
+              <!-- <td>{{item.status }}</td>   -->
                
               <td><button type="button" class="btn btn-info" data-toggle="modal" (click)="onEditClick(infoModal,item)">Edit</button></td>
             </tr>
@@ -70,13 +81,11 @@
   <div class="modal-dialog modal-info" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Modify Leave</h4>
+        <h4 class="modal-title">Modify Tax</h4>
         <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>
-      
-        
+      </div>    
       <div class="modal-body">
         <!--<p>One fine body&hellip;</p>-->
         <table class="table table-bordered table-striped table-sm">
@@ -88,43 +97,46 @@
           <tr>
             <td>ECode</td>
             <td>{{currentItem.employeeCode}}</td>
-             <td> 
-               <select [(ngModel)]="currentItem_employeeCode" (ngModelChange)="onChange($event)">
-                <option *ngFor="let x of employeeArr" [ngValue]="x">{{x.employeeName}}</option>
-                 </select>
-             </td>
+            <td>&nbsp</td>
+             
           </tr> 
           <tr>
             <td>Employee Name</td>
             <td>{{currentItem.employeeName}}</td>
-            <td>&nbsp</td>
+            
+            <td> 
+               <select [(ngModel)]="currentItem_employeeCode" (ngModelChange)="onChange($event)">
+                <option *ngFor="let x of employeeArr" [ngValue]="x">{{x.employeeName}}</option>
+                 </select>
+             </td>
           </tr>
  
           <tr>
-            <td>26 % Addition</td>
-            <td>{{currentItem.twentySixPercentageAddition}}</td>
-            <td><input type="number" [(ngModel)]="currentItem.twentySixPercentageAddition"  ><span style="color:red">* number</span></td>
+            <td>monthlySalry</td>
+            <td>{{currentItem.monthlySalry}}</td>
+            <td><input type="number" [(ngModel)]="currentItem.monthlySalry"  ><span style="color:red">* number</span></td>
           </tr>
           <tr>
-            <td>ExtraDaysWorked</td>
-            <td>{{currentItem.extraDaysWorked}}</td>
-            <td><input type="number" [(ngModel)]="currentItem.extraDaysWorked"  ><span style="color:red">* number</span></td>
+            <td>taxAmount</td>
+            <td>{{currentItem.taxAmount}}</td>
+            <td><input type="number" [(ngModel)]="currentItem.taxAmount"  ><span style="color:red">* number</span></td>
           </tr>
           <tr>
-            <td>dayOfextraDay</td>
-            <td>{{currentItem.dayOfextraDay}}</td>
-            <td><input type="date" [(ngModel)]="currentItem.dayOfextraDay"  ></td>
+            <td>tax Month</td>
+            <td>{{currentItem.taxForTheMonth}}</td>
+            <td><input type="number" [(ngModel)]="currentItem.taxForTheMonth"  ></td>
           </tr>
+          
           <tr>
-            <td>otherExtraDays</td>
-            <td>{{currentItem.otherExtraDays}}</td>
-            <td><input type="number" [(ngModel)]="currentItem.otherExtraDays"  ><span style="color:red">* number</span></td>
+            <td>tax Year</td>
+            <td>{{currentItem.taxForTheYear}}</td>
+            <td><input type="number" [(ngModel)]="currentItem.taxForTheYear"  ></td>
           </tr>
-          <tr>
-            <td>dayOfOtherExtraDay</td>
-            <td>{{currentItem.dayOfOtherExtraDay}}</td>
-            <td><input type="date" [(ngModel)]="currentItem.dayOfOtherExtraDay"  ></td>
-          </tr>
+          <!-- <tr>
+            <td>status</td>
+            <td>{{currentItem.status}}</td>
+            <td><input type="text" [(ngModel)]="currentItem.status"  ></td>
+          </tr> -->
 
         </table>
 

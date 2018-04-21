@@ -1,15 +1,15 @@
 <header class="app-header navbar">
   <style>
     .nav-dropdown-toggle {
-      background-color: #63c2de !important;
+      
       border-bottom: 1px solid gray;
     }
 
     .icon-star {
       color: yellow !important;
-
     }
-    .nav-item{
+
+    .nav-item {
       padding-left: 5%!important;
     }
   </style>
@@ -75,7 +75,7 @@
   <div class="sidebar">
     <nav class="sidebar-nav">
       <ul class="nav">
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" routerLinkActive="active" [routerLink]="['/dashboard']">
             <i class="icon-speedometer"></i> Dashboard
             <span class="badge badge-info">NEW</span>
@@ -84,122 +84,117 @@
         <li class="divider"></li>
         <li class="nav-title">
           Modules
+        </li> -->
+         <li class="nav-title">
+          Modules
         </li>
 
 
         <li class="nav-item nav-dropdown" appNavDropdown>
           <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle>
-            <i class="icon-star"></i> Employee Details</a>
+            <i class="icon-star"></i> Employee</a>
           <ul class="nav-dropdown-items">
             <li class="nav-item">
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewemployees']">
-                <i class="icon-star"></i> View Employees</a>
+                 View Employees</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/employee-upload']">
-                <i class="icon-star"></i> Upload Employees</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/incometax-upload']">
-                <i class="icon-star"></i> Upload Income Tax</a>
-            </li>
-
-          </ul>
-        </li>
-
-        <!--<li class="nav-item nav-dropdown" appNavDropdown>
-          <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle><i class="icon-star"></i>Manage Leave</a>
-          <ul class="nav-dropdown-items">
-           
-             
-            <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewleavesummary']"><i class="icon-star"></i> View Leave Summary</a>
-            </li>
-           
-          </ul>
-        </li>-->
-
-        <li class="nav-item nav-dropdown" appNavDropdown>
-          <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle>
-            <i class="icon-star"></i> Manage Holidays</a>
-          <ul class="nav-dropdown-items">
-
+                 Upload Employees</a>
+            </li> 
             <li class="nav-item">
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/addholidays']">
-                <i class="icon-star"></i> Manage Annual Holidays</a>
+                 Annual Holidays</a>
             </li>
+
           </ul>
         </li>
 
 
         <li class="nav-item nav-dropdown" appNavDropdown>
           <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle>
-            <i class="icon-star"></i> Manage Attendance/Leave</a>
+            <i class="icon-star"></i> Income Tax</a>
+          <ul class="nav-dropdown-items">
+            
+            
+            <li class="nav-item">
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/incometax-upload']">
+                 Upload Income Tax</a>
+            </li> 
+             <li class="nav-item">
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/manageincomeTax']">
+                Add/Edit Income Tax</a>
+            </li>
+          </ul>
+        </li>
+
+
+
+        <li class="nav-item nav-dropdown" appNavDropdown>
+          <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle>
+            <i class="icon-star"></i>Attendance</a>
           <ul class="nav-dropdown-items">
 
             <li class="nav-item">
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/list-upload']">
-                <i class="icon-star"></i> Upload Attendance CSV</a>
+                 Upload Attendance</a>
             </li>
 
             <li class="nav-item">
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewattendance']">
-                <i class="icon-star"></i> View Attendance</a>
+                 View Attendance</a>
             </li>
 
             <li class="nav-item">
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/addpresent']">
-                <i class="icon-star"></i> Add Attendance</a>
+                 Add Attendance</a>
             </li>
 
           </ul>
         </li>
-
+        <li class="nav-item nav-dropdown" appNavDropdown>
+          <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle>
+                <i class="icon-star"></i> Salary </a>
+          <ul class="nav-dropdown-items">
+            <li class="nav-item">
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewsalary']">
+                    Full Month</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewHalfMonthSalary']">
+                   Mid Month Advance</a>
+            </li>
+          </ul>
+        </li>
 
 
         <li class="nav-item nav-dropdown" appNavDropdown>
           <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle>
             <i class="icon-star"></i> Payroll</a>
           <ul class="nav-dropdown-items">
-            <li class="nav-item nav-dropdown" appNavDropdown>
-              <a class="nav-link nav-dropdown-toggle" href="#" appNavDropdownToggle>
-                <i class="icon-star"></i> Salary</a>
-              <ul class="nav-dropdown-items">
-                <li class="nav-item">
-                  <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewsalary']">
-                    <i class="icon-star"></i> Full Month</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewHalfMonthSalary']">
-                    <i class="icon-star"></i> Mid Month Advance</a>
-                </li>                
-              </ul>
-            </li>
+
 
             <li class="nav-item">
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/manageLoan']">
-                <i class="icon-star"></i> Loan </a>
+                 Loan </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/manageAdvance']">
-                <i class="icon-star"></i> Advance</a>
+                  Advance</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/manageIncentives']">
-                <i class="icon-star"></i> Incentive </a>
+                 Incentive </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/manageOvertimeWages']">
-                <i class="icon-star"></i> Overtime Wages </a>
+                  Overtime Wages </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/manageincomeTax']">
-                <i class="icon-star"></i>Income Tax</a>
-            </li>
+            <!--
             <li class="nav-item">
               <a class="nav-link" routerLinkActive="active" [routerLink]="['/components/viewattendance']">
                 <i class="icon-star"></i> View Payslip</a>
-            </li>
+            </li> -->
 
           </ul>
         </li>

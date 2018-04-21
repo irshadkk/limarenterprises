@@ -3,26 +3,25 @@ package com.kabani.hr.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 
 @Entity
+@IdClass(IncomeTaxMasterKey.class)
 public class EmployeeIncomeTaxDetailsMaster {
-
-	@Id
-	@GeneratedValue
-	private int id;
+    @Id
 	private String employeeCode;
+	@Id
+	private int taxForTheYear; 
+	@Id
+	private int taxForTheMonth;
+	
+	
+	
 	private String employeeName;
 	private float monthlySalry;
-	private float taxAmount;
-	private int taxForTheYear;
-	private int taxForTheMonth;	
+	private float taxAmount; 
 	private String status;
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	 
 	public String getEmployeeCode() {
 		return employeeCode;
 	}

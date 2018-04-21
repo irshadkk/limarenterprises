@@ -41,7 +41,7 @@ public class TaxDetailsController {
 	}
 
 	@GetMapping(path = "/income/all/{month}/{year}")
-	public @ResponseBody List<EmployeeIncomeTaxDetailsMaster> getAllIncomeTaxInYearMonth(@PathVariable int year, @PathVariable int month) {
+	public @ResponseBody List<EmployeeIncomeTaxDetailsMaster> getAllIncomeTaxInYearMonth(@PathVariable int month, @PathVariable int year) {
 		 
 		// This returns a JSON or XML with the users
 		return employeeIncomeTaxDetailsMasterRepository.getTaxForMonthYearForEmployee(month, year);
@@ -69,8 +69,7 @@ public class TaxDetailsController {
 			return false;
 
 		}
-	}
-	
+	} 
 	@PostMapping(path = "/upload")
 	public @ResponseBody String[] handleFileUpload(@RequestParam("file") MultipartFile file)
 			throws Exception {
